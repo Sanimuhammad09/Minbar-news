@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Search Results | MINBAR NEWS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#141f30",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#e5e9eb",
+                    "secondary-fixed": "#ffdad6",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-background": "#181c1e",
+                    "on-primary-container": "#7686ab",
+                    "secondary-container": "#ff5a52",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "outline-variant": "#c5c6cf",
+                    "error": "#ba1a1a",
+                    "inverse-on-surface": "#eef1f3",
+                    "surface-container-low": "#f1f4f6",
+                    "surface": "#f7fafc",
+                    "surface-bright": "#f7fafc",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#374768",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#0c1e3d",
+                    "primary": "#000516",
+                    "on-surface-variant": "#44474e",
+                    "on-primary-fixed": "#081b3a",
+                    "surface-container": "#ebeef0",
+                    "inverse-primary": "#b6c6ee",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-dim": "#d7dadc",
+                    "secondary-fixed-dim": "#ffb4ac",
+                    "primary-fixed": "#d8e2ff",
+                    "tertiary-fixed": "#d8e3fa",
+                    "surface-variant": "#e0e3e5",
+                    "background": "#f7fafc",
+                    "on-secondary-fixed-variant": "#92030f",
+                    "tertiary": "#000613",
+                    "secondary": "#b52424",
+                    "surface-tint": "#4e5e81",
+                    "on-surface": "#181c1e",
+                    "on-secondary-container": "#600006",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "primary-fixed-dim": "#b6c6ee",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#7c879c",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "outline": "#75777f",
+                    "on-secondary-fixed": "#410003"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "grid-margin": "24px",
+                    "stack-lg": "32px",
+                    "section-gap": "64px",
+                    "gutter": "20px"
+            },
+            "fontFamily": {
+                    "label-sm": ["IBM Plex Sans"],
+                    "label-bold": ["IBM Plex Sans"],
+                    "headline-lg-mobile": ["\"Source Serif 4\""],
+                    "headline-lg": ["\"Source Serif 4\""],
+                    "headline-md": ["\"Source Serif 4\""],
+                    "display-lg": ["\"Source Serif 4\""],
+                    "body-lg": ["Work Sans"],
+                    "body-md": ["Work Sans"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Work Sans', sans-serif; }
+        .serif-text { font-family: 'Source Serif 4', serif; }
+        .ticker-scroll {
+            animation: scroll 30s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .active-filter { border-bottom: 2px solid #b52424; color: #b52424; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- News Ticker -->
+<div class="w-full bg-secondary text-on-secondary py-1 overflow-hidden whitespace-nowrap z-50">
+<div class="ticker-scroll inline-block font-label-bold text-label-bold uppercase">
+            Breaking News: Global economic summit reaches landmark climate agreement   •   Major technological breakthrough in renewable energy storage   •   Diplomatic ties strengthened in Middle East peace talks
+        </div>
+</div>
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant sticky top-0 z-40">
+<div class="flex flex-col w-full px-grid-margin py-4 max-w-7xl mx-auto">
+<div class="flex items-center justify-between w-full mb-4">
+<a class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter" href="#">MINBAR NEWS</a>
+<div class="flex items-center space-x-stack-md">
+<button class="bg-secondary text-on-secondary px-4 py-1 font-label-bold text-label-bold uppercase rounded-sm hover:opacity-90 transition-opacity">
+                        Breaking
+                    </button>
+<div class="hidden md:flex items-center bg-surface-container border border-outline-variant px-3 py-1 rounded-sm w-64">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full p-0" placeholder="Global recession" type="text" value="Global recession"/>
+</div>
+<div class="flex space-x-2">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-all" data-icon="search">search</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-all" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</div>
+<nav class="flex items-center justify-center space-x-8">
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">World</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Politics</a>
+<a class="font-label-bold text-label-bold uppercase text-secondary border-b-2 border-secondary pb-1" href="#">Economy</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Analysis</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Opinion</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Live</a>
+</nav>
+</div>
+</header>
+<main class="flex-grow max-w-7xl mx-auto w-full px-grid-margin py-stack-lg flex flex-col md:flex-row gap-gutter">
+<!-- Search Results Area (8 Columns) -->
+<div class="w-full md:w-2/3 lg:w-3/4 flex flex-col space-y-stack-lg">
+<!-- Search Stats & Filter Chips -->
+<div class="flex flex-col space-y-stack-md border-b border-outline-variant pb-stack-md">
+<div class="flex items-baseline justify-between">
+<h1 class="font-headline-md text-headline-md text-primary">
+                        Search Results for <span class="italic">"Global recession"</span>
+</h1>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2,482 results found</span>
+</div>
+<div class="flex flex-wrap gap-stack-sm items-center">
+<span class="font-label-bold text-label-bold text-primary mr-2">Filters:</span>
+<button class="px-4 py-1 border border-outline-variant bg-surface rounded-full font-label-bold text-label-bold hover:bg-surface-container transition-all flex items-center">
+                        All Time <span class="material-symbols-outlined text-xs ml-1" data-icon="expand_more">expand_more</span>
+</button>
+<button class="px-4 py-1 border border-secondary text-secondary bg-surface rounded-full font-label-bold text-label-bold flex items-center">
+                        Economy <span class="material-symbols-outlined text-xs ml-1" data-icon="close">close</span>
+</button>
+<button class="px-4 py-1 border border-outline-variant bg-surface rounded-full font-label-bold text-label-bold hover:bg-surface-container transition-all flex items-center">
+                        Author <span class="material-symbols-outlined text-xs ml-1" data-icon="expand_more">expand_more</span>
+</button>
+<button class="px-4 py-1 border border-outline-variant bg-surface rounded-full font-label-bold text-label-bold hover:bg-surface-container transition-all flex items-center">
+                        Sort by: Newest <span class="material-symbols-outlined text-xs ml-1" data-icon="swap_vert">swap_vert</span>
+</button>
+<button class="text-secondary font-label-bold text-label-bold hover:underline ml-auto">Clear All</button>
+</div>
+</div>
+<!-- Results List -->
+<div class="space-y-stack-lg">
+<!-- Result Item 1 -->
+<article class="flex gap-stack-md border-b border-outline-variant pb-stack-lg group cursor-pointer">
+<div class="flex-grow space-y-2">
+<div class="flex items-center space-x-2">
+<span class="font-label-bold text-label-bold text-secondary uppercase tracking-widest border-b border-secondary">Economy</span>
+<span class="text-on-surface-variant text-xs">•</span>
+<time class="font-label-sm text-label-sm text-on-surface-variant">Oct 24, 2024</time>
+</div>
+<h2 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors serif-text leading-tight">
+                            The Specter of Global Recession: Why Central Banks are Raising Rates Again
+                        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                            As inflationary pressures mount across European and North American markets, the World Bank warns of a systemic slowdown. Analysts suggest that the aggressive fiscal policies of the last decade are finally reaching a breaking point, necessitating a sharp pivot towards austerity measures.
+                        </p>
+<div class="flex items-center space-x-4 pt-2">
+<span class="font-label-bold text-label-bold text-primary">By Elena Rostova</span>
+<span class="flex items-center text-on-surface-variant text-xs">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="schedule">schedule</span> 8 min read
+                            </span>
+</div>
+</div>
+<div class="hidden sm:block flex-shrink-0 w-48 h-32 bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover grayscale-0 group-hover:scale-105 transition-transform duration-500" data-alt="A professional, high-contrast photo of a busy stock exchange floor in London. Traders are looking at large digital screens displaying plummeting red numbers. The lighting is dramatic, emphasizing the tension of an economic crisis. The color palette is dominated by deep navy blues and sharp red accents, maintaining the Minbar News corporate editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8q6sytREBtZ5lBaVeWwpimpC81GhqydLFgWl6l11o-1nLx97Z3orZ-dqJWg7neFUW7dCbtIYLvLnYWdJ_dxSur5q_YTNBVeSn5JoarpFNJi_8Vu2bf3JhqlyNDIhEVnvNsFbQ7VXkiF5xY8xir6nJu6Gm9AVoczd5KL2unSx9okjHZx2J4ll65nGeTsDxho2oTzWe1IjlmLiM53yCwDuk5MsTTH2LpWbp57aa9WCn4qJuqSlZ1j8"/>
+</div>
+</article>
+<!-- Result Item 2 -->
+<article class="flex gap-stack-md border-b border-outline-variant pb-stack-lg group cursor-pointer">
+<div class="flex-grow space-y-2">
+<div class="flex items-center space-x-2">
+<span class="font-label-bold text-label-bold text-secondary uppercase tracking-widest border-b border-secondary">Analysis</span>
+<span class="text-on-surface-variant text-xs">•</span>
+<time class="font-label-sm text-label-sm text-on-surface-variant">Oct 22, 2024</time>
+</div>
+<h2 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors serif-text leading-tight">
+                            Supply Chain Fragility: A Hidden Driver of the Coming Economic Contraction
+                        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                            Deep dive into how geopolitical tensions in the South China Sea are impacting semiconductor shipments, potentially triggering a localized industrial recession that could go global by Q1 2025.
+                        </p>
+<div class="flex items-center space-x-4 pt-2">
+<span class="font-label-bold text-label-bold text-primary">By Marcus Chen</span>
+<span class="flex items-center text-on-surface-variant text-xs">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="schedule">schedule</span> 12 min read
+                            </span>
+</div>
+</div>
+<div class="hidden sm:block flex-shrink-0 w-48 h-32 bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover grayscale-0 group-hover:scale-105 transition-transform duration-500" data-alt="A cinematic aerial shot of a massive shipping container terminal at sunset. The thousands of stacked containers create a complex, grid-like pattern. Warm golden light contrasts with deep shadows, symbolizing the complexity and vulnerability of global trade. The image is clean, sharp, and authoritative, fitting the professional news agency visual style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjmufj4zrOyuXdnRXlO9y7ZNilZe6SjPse1aVmybAGob0ZXB-mpkP3wNIMswbGNunYaQGqqRq-QAFnEQlXAN6P23Uv-LzheVXnDdTVLWlvOo7EBCfUHswhQc6IuLcv_8Cp_ng4OY59ECaydTXsaDK1Urvuhbim4HfNUFdXpRtQGJ-csDX0SJb8gAhz1Lhf0tbDtHZ7bXarBaM5QR2tX66ey0guV61hwFSoAtZsITaA6UFV-qHBcK8"/>
+</div>
+</article>
+<!-- Result Item 3 (Analysis variant) -->
+<article class="flex gap-stack-md border-b border-outline-variant pb-stack-lg group cursor-pointer">
+<div class="flex-grow space-y-2">
+<div class="flex items-center space-x-2">
+<span class="font-label-bold text-label-bold text-secondary uppercase tracking-widest border-b border-secondary">Economy</span>
+<span class="text-on-surface-variant text-xs">•</span>
+<time class="font-label-sm text-label-sm text-on-surface-variant">Oct 19, 2024</time>
+</div>
+<h2 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors serif-text leading-tight">
+                            The Middle Class Squeeze: Consumer Confidence Hits Record Lows in Major Hubs
+                        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                            From New York to Tokyo, the cost of living crisis is altering consumer behavior at a fundamental level. Retailers report a significant drop in non-essential spending as households prepare for a long, cold economic winter.
+                        </p>
+<div class="flex items-center space-x-4 pt-2">
+<span class="font-label-bold text-label-bold text-primary">By Sarah Jenkins</span>
+<span class="flex items-center text-on-surface-variant text-xs">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="schedule">schedule</span> 6 min read
+                            </span>
+</div>
+</div>
+<div class="hidden sm:block flex-shrink-0 w-48 h-32 bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover grayscale-0 group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist, stylized photograph of a single shopper walking through a vast, nearly empty modern mall. High-key lighting creates a sense of emptiness and quiet. The architecture is sleek and white, with deep blue shadows. This visual represents a decline in consumerism and economic cooling, maintaining a sophisticated and clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1xHRQlHuVSWH5UGoERj1MSsx1F8XSIm0oul-MqxtErun6SqnKrsjA0igQ_jo_-1Jvbj_4G20_ZCw2LW5iDa6BDILM96gFlSi1wR3hFLoRHputudoYbum_OVl4WwddMaazuwCW4zT5jdfahymkgtnhMlvK_ZaIk2VZQBn_k6Fe4QmE6Er4hfGzIqtsqBmO-ptOvbmRx5rE_sT0muLOqXwOjOz1VDh_MUdITaVYtFT5CJHeyrSaV0g"/>
+</div>
+</article>
+<!-- Pagination -->
+<div class="flex items-center justify-center py-stack-lg space-x-4">
+<button class="p-2 border border-outline-variant rounded-sm hover:bg-surface-container-low disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<div class="flex space-x-1">
+<button class="w-10 h-10 flex items-center justify-center font-label-bold bg-primary text-on-primary rounded-sm">1</button>
+<button class="w-10 h-10 flex items-center justify-center font-label-bold hover:bg-surface-container rounded-sm transition-all">2</button>
+<button class="w-10 h-10 flex items-center justify-center font-label-bold hover:bg-surface-container rounded-sm transition-all">3</button>
+<span class="flex items-center px-2">...</span>
+<button class="w-10 h-10 flex items-center justify-center font-label-bold hover:bg-surface-container rounded-sm transition-all">42</button>
+</div>
+<button class="p-2 border border-outline-variant rounded-sm hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sidebar Area (4 Columns) -->
+<aside class="w-full md:w-1/3 lg:w-1/4 flex flex-col space-y-stack-lg">
+<!-- Trending Keywords Widget -->
+<section class="bg-surface-container-low p-stack-md border-t-2 border-primary">
+<h3 class="font-label-bold text-label-bold uppercase text-primary mb-stack-md flex items-center">
+<span class="material-symbols-outlined text-sm mr-2" data-icon="trending_up">trending_up</span>
+                    Trending Keywords
+                </h3>
+<div class="flex flex-wrap gap-2">
+<a class="px-3 py-1 bg-surface-container-high hover:bg-primary hover:text-on-primary transition-all rounded-sm text-xs font-label-bold" href="#">Crypto Volatility</a>
+<a class="px-3 py-1 bg-surface-container-high hover:bg-primary hover:text-on-primary transition-all rounded-sm text-xs font-label-bold" href="#">Green Hydrogen</a>
+<a class="px-3 py-1 bg-surface-container-high hover:bg-primary hover:text-on-primary transition-all rounded-sm text-xs font-label-bold" href="#">Space Station</a>
+<a class="px-3 py-1 bg-surface-container-high hover:bg-primary hover:text-on-primary transition-all rounded-sm text-xs font-label-bold" href="#">Election 2024</a>
+<a class="px-3 py-1 bg-primary text-on-primary rounded-sm text-xs font-label-bold" href="#">Global Recession</a>
+<a class="px-3 py-1 bg-surface-container-high hover:bg-primary hover:text-on-primary transition-all rounded-sm text-xs font-label-bold" href="#">AI Ethics</a>
+<a class="px-3 py-1 bg-surface-container-high hover:bg-primary hover:text-on-primary transition-all rounded-sm text-xs font-label-bold" href="#">Urban Farming</a>
+</div>
+</section>
+<!-- Newsletter Signup -->
+<section class="bg-primary-container text-on-primary-container p-stack-md rounded-sm">
+<h3 class="font-headline-md text-headline-md mb-2 text-primary-fixed">The Daily Brief</h3>
+<p class="font-label-sm text-label-sm mb-4 text-on-primary-container opacity-80">
+                    Get the most critical global updates delivered straight to your inbox every morning.
+                </p>
+<div class="space-y-2">
+<input class="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:ring-secondary focus:border-secondary rounded-sm px-4 py-2 text-sm" placeholder="email@address.com" type="email"/>
+<button class="w-full bg-secondary text-on-secondary font-label-bold text-label-bold py-2 rounded-sm hover:bg-secondary-container transition-all">Subscribe</button>
+</div>
+</section>
+<!-- Related Topics Sidebar -->
+<section class="space-y-stack-md">
+<h3 class="font-label-bold text-label-bold uppercase text-primary flex items-center">
+<span class="material-symbols-outlined text-sm mr-2" data-icon="hub">hub</span>
+                    Related Topics
+                </h3>
+<ul class="space-y-2">
+<li class="border-b border-outline-variant pb-2 group">
+<a class="flex items-center justify-between hover:text-secondary transition-colors" href="#">
+<span class="font-body-md text-body-md">Federal Reserve Policies</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</li>
+<li class="border-b border-outline-variant pb-2 group">
+<a class="flex items-center justify-between hover:text-secondary transition-colors" href="#">
+<span class="font-body-md text-body-md">Inflation Forecasts</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</li>
+<li class="border-b border-outline-variant pb-2 group">
+<a class="flex items-center justify-between hover:text-secondary transition-colors" href="#">
+<span class="font-body-md text-body-md">Emerging Market Bonds</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</li>
+<li class="border-b border-outline-variant pb-2 group">
+<a class="flex items-center justify-between hover:text-secondary transition-colors" href="#">
+<span class="font-body-md text-body-md">Gold as a Safe Haven</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</li>
+</ul>
+</section>
+<!-- Live Ticker Style Widget -->
+<div class="relative h-64 w-full bg-surface-container rounded-sm overflow-hidden">
+
+<div class="absolute inset-0 p-stack-md flex flex-col justify-end bg-gradient-to-t from-primary/80 to-transparent">
+<span class="inline-block bg-secondary text-on-secondary text-[10px] px-2 py-0.5 font-label-bold rounded-sm mb-2 w-fit">LIVE DATA</span>
+<h4 class="text-white font-headline-md text-headline-md leading-tight mb-1">Market Volatility Index</h4>
+<p class="text-white/70 text-xs font-label-sm">Real-time indicators showing increased risk in tech and manufacturing sectors.</p>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg bg-primary text-on-primary border-t-4 border-secondary mt-section-gap">
+<div class="flex flex-col items-center justify-center space-y-stack-md w-full px-grid-margin max-w-7xl mx-auto">
+<div class="w-full flex flex-col md:flex-row justify-between items-center border-b border-on-primary-container pb-stack-lg gap-8">
+<span class="font-headline-md text-headline-md font-bold text-on-primary">MINBAR NEWS</span>
+<nav class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">About Us</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Editorial Guidelines</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Privacy Policy</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Terms of Service</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Contact</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Archive</a>
+</nav>
+</div>
+<div class="w-full flex flex-col md:flex-row justify-between items-center pt-stack-md">
+<p class="font-label-sm text-label-sm text-surface-variant mb-4 md:mb-0">
+                    © 2024 Minbar News. Truth. Perspective. Impact.
+                </p>
+<div class="flex space-x-6">
+<span class="material-symbols-outlined text-surface-variant hover:text-on-primary cursor-pointer transition-colors" data-icon="public">public</span>
+<span class="material-symbols-outlined text-surface-variant hover:text-on-primary cursor-pointer transition-colors" data-icon="podcasts">podcasts</span>
+<span class="material-symbols-outlined text-surface-variant hover:text-on-primary cursor-pointer transition-colors" data-icon="rss_feed">rss_feed</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for search input highlight
+        const searchInput = document.querySelector('input[type="text"]');
+        const searchContainer = searchInput.parentElement;
+
+        searchInput.addEventListener('focus', () => {
+            searchContainer.classList.add('border-secondary');
+            searchContainer.classList.remove('border-outline-variant');
+        });
+
+        searchInput.addEventListener('blur', () => {
+            searchContainer.classList.remove('border-secondary');
+            searchContainer.classList.add('border-outline-variant');
+        });
+
+        // Hover effect for article images
+        document.querySelectorAll('article').forEach(article => {
+            article.addEventListener('mouseenter', () => {
+                const img = article.querySelector('img');
+                if (img) img.classList.add('scale-105');
+            });
+            article.addEventListener('mouseleave', () => {
+                const img = article.querySelector('img');
+                if (img) img.classList.remove('scale-105');
+            });
+        });
+    </script>
+</body></html>

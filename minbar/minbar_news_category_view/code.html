@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>World News | Minbar News</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#141f30",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#e5e9eb",
+                    "secondary-fixed": "#ffdad6",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-background": "#181c1e",
+                    "on-primary-container": "#7686ab",
+                    "secondary-container": "#ff5a52",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "outline-variant": "#c5c6cf",
+                    "error": "#ba1a1a",
+                    "inverse-on-surface": "#eef1f3",
+                    "surface-container-low": "#f1f4f6",
+                    "surface": "#f7fafc",
+                    "surface-bright": "#f7fafc",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#374768",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#0c1e3d",
+                    "primary": "#000516",
+                    "on-surface-variant": "#44474e",
+                    "on-primary-fixed": "#081b3a",
+                    "surface-container": "#ebeef0",
+                    "inverse-primary": "#b6c6ee",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-dim": "#d7dadc",
+                    "secondary-fixed-dim": "#ffb4ac",
+                    "primary-fixed": "#d8e2ff",
+                    "tertiary-fixed": "#d8e3fa",
+                    "surface-variant": "#e0e3e5",
+                    "background": "#f7fafc",
+                    "on-secondary-fixed-variant": "#92030f",
+                    "tertiary": "#000613",
+                    "secondary": "#b52424",
+                    "surface-tint": "#4e5e81",
+                    "on-surface": "#181c1e",
+                    "on-secondary-container": "#600006",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "primary-fixed-dim": "#b6c6ee",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#7c879c",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "outline": "#75777f",
+                    "on-secondary-fixed": "#410003"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "grid-margin": "24px",
+                    "stack-lg": "32px",
+                    "section-gap": "64px",
+                    "gutter": "20px"
+            },
+            "fontFamily": {
+                    "label-sm": ["IBM Plex Sans"],
+                    "label-bold": ["IBM Plex Sans"],
+                    "headline-lg": ["\"Source Serif 4\""],
+                    "headline-md": ["\"Source Serif 4\""],
+                    "display-lg": ["\"Source Serif 4\""],
+                    "body-lg": ["Work Sans"],
+                    "body-md": ["Work Sans"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .breaking-ticker {
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .line-motif {
+            position: relative;
+        }
+        .line-motif::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: #b52424;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md">
+<!-- Top News Ticker -->
+<div class="w-full bg-secondary text-on-secondary py-2 overflow-hidden whitespace-nowrap z-50 sticky top-0">
+<div class="inline-block breaking-ticker font-label-bold uppercase">
+            Breaking: Global Economic Summit reaches historic climate accord in Brussels • Crisis averted in East Asian shipping lanes • New archeological discovery in Giza rewrites history books • 
+        </div>
+</div>
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant sticky top-[40px] z-40">
+<div class="flex flex-col w-full px-grid-margin py-4 max-w-7xl mx-auto">
+<div class="flex items-center justify-between w-full mb-4">
+<div class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter uppercase">MINBAR NEWS</div>
+<div class="flex items-center space-x-stack-md">
+<div class="hidden md:flex items-center bg-surface-container-low px-4 py-2 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-bold w-48" placeholder="Search news..." type="text"/>
+</div>
+<button class="flex items-center space-x-1 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+<button class="bg-secondary text-on-secondary px-4 py-2 font-label-bold uppercase text-xs tracking-widest">Breaking</button>
+</div>
+</div>
+<nav class="flex items-center space-x-8 overflow-x-auto no-scrollbar">
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">World</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Politics</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Economy</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Analysis</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Opinion</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Live</a>
+</nav>
+</div>
+</header>
+<!-- Sub-Navigation for Category -->
+<div class="bg-surface-container-low border-b border-outline-variant">
+<div class="max-w-7xl mx-auto px-grid-margin py-3 flex items-center justify-between">
+<div class="flex items-center space-x-6">
+<h1 class="font-headline-md text-headline-md text-primary border-r border-outline-variant pr-6">World</h1>
+<nav class="hidden md:flex items-center space-x-6">
+<a class="font-label-bold text-label-bold text-secondary border-b-2 border-secondary pb-1" href="#">Middle East</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-primary" href="#">Europe</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-primary" href="#">Americas</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-primary" href="#">Asia</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-primary" href="#">Africa</a>
+</nav>
+</div>
+<div class="flex items-center text-on-surface-variant text-label-sm">
+<span class="mr-2">Sort by:</span>
+<select class="bg-transparent border-none focus:ring-0 font-label-bold cursor-pointer">
+<option>Latest</option>
+<option>Trending</option>
+<option>Alphabetical</option>
+</select>
+</div>
+</div>
+</div>
+<main class="max-w-7xl mx-auto px-grid-margin py-stack-lg">
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Main Content Area -->
+<div class="col-span-12 lg:col-span-8 space-y-section-gap">
+<!-- Lead Story Card -->
+<section class="line-motif pt-stack-md">
+<div class="grid md:grid-cols-2 gap-stack-lg items-center">
+<div class="order-2 md:order-1 space-y-4">
+<div class="flex items-center space-x-2 text-secondary font-label-bold uppercase tracking-widest text-xs">
+<span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+<span>Developing Story</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-primary leading-tight">Navigating the New Silk Road: Geopolitics in the 21st Century</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">As infrastructure projects span across three continents, the shifting balance of power creates new economic realities for emerging markets and established superpowers alike. Our investigative team reports from the ground.</p>
+<div class="flex items-center space-x-4 pt-4">
+<button class="bg-primary text-on-primary px-8 py-3 font-label-bold uppercase tracking-tighter hover:opacity-90 transition-opacity">Full Analysis</button>
+<span class="text-on-surface-variant font-label-sm uppercase">12 Min Read • By Sarah Jenkins</span>
+</div>
+</div>
+<div class="order-1 md:order-2">
+<div class="aspect-video w-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="A wide-angle landscape photograph of a modern high-speed railway bridge stretching across a vast, dusty desert valley under a bright, high-contrast midday sun. The engineering marvel of the bridge stands in stark contrast to the ancient, rugged terrain below. The sky is a clear, brilliant blue, emphasizing a professional, journalistic photography style with deep blacks and sharp details. The composition conveys a sense of progress and geopolitical scale, perfectly aligned with a serious news agency aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKYuN-EnYBVuToS89Ioy3m3phfIDi3igKbW_lyDWNHRUg0ow1IvqFessSLQkWri2hyzO7np11y4q2RKJXiNupvvScsYLdQ1BNJ_TuGo_fjHa7zLba9HM-DqiqmjzVlbUKjRTIOjqCpCp_Nz2ifiOmgVqooPwbiY8Beu6zsChnyvjLzEwuyi2rJL855ngjqqmnjFJ1zZEtxFu7VMqqEqioyTGh1Q0UGQEvpc-kdZIwrnXE5mbEL61U"/>
+</div>
+</div>
+</div>
+</section>
+<!-- News Grid Section -->
+<section class="space-y-stack-lg">
+<div class="flex items-center justify-between border-b border-outline-variant pb-2">
+<h3 class="font-headline-md text-headline-md text-primary">Regional Updates</h3>
+<a class="text-secondary font-label-bold hover:underline" href="#">View All</a>
+</div>
+<div class="grid md:grid-cols-2 gap-gutter">
+<!-- Card 1 -->
+<div class="group cursor-pointer space-y-4 border-b border-outline-variant pb-6">
+<div class="aspect-[3/2] w-full overflow-hidden bg-surface-container border border-outline-variant">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A cinematic night shot of a bustling European city square illuminated by street lamps and the warm glow from historic cafe windows. Rain-slicked cobblestones reflect the amber and white lights, creating a moody and sophisticated urban atmosphere. The image uses a shallow depth of field to focus on a single silhouetted figure holding an umbrella, suggesting an editorial narrative on city life. The color palette is refined, dominated by deep blues and rich gold tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0PunIm37qYif-uMWbwLXjyt5SxAcvfLOLFa-f0RBgZ7u093G1xXddn4TrH1tfKf4YR5JJclZMLTtfxv8eBcpT5V8chndKBiXX0kMO2O2_KlaNTEIJRvJzXNxeNQ58mt1gwq0mR1LQwaWYl7lBP5zXx5joDgGZZqGlCqwTfLSmXtbU-RQNhhzcTanV10qUP1_srB8EA7Vi_iKPP4gj2zu8JqM5lltBqxKaUHqYt-C48v2a4L749uM"/>
+</div>
+<div class="space-y-2">
+<span class="font-label-bold text-secondary uppercase text-xs">Europe</span>
+<h4 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Stockholm Summit Focuses on Digital Privacy Legislation</h4>
+<p class="text-on-surface-variant font-body-md line-clamp-2">European leaders gather to discuss the implications of AI on individual data rights and cross-border security protocols.</p>
+<div class="text-label-sm text-outline pt-2">4 Hours Ago • 6 Min Read</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group cursor-pointer space-y-4 border-b border-outline-variant pb-6">
+<div class="aspect-[3/2] w-full overflow-hidden bg-surface-container border border-outline-variant">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A wide, majestic view of the Amazon rainforest canopy at dawn, with ethereal mist rising from the dense green foliage into a soft pink and orange sky. The lighting is high-key and atmospheric, capturing the immense scale and biodiversity of the region. The visual style is crisp and professional, emphasizing environmental themes with a palette of deep forest greens and soft morning pastels. It conveys a sense of both beauty and critical environmental urgency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUV5PA1f6gZod2lgblyUALrXHL-_94UrIAHY_ePI6bzwdNYg_eFk-7tV-v2U5jyYOs3f98oVhbakLs8JipC6DMDqQKb-kSQc68LvxK7pIomP4Vcrweb1yPRdY7gvQBETPXYQxUDaJQkWuQnjWdN2nOOGhAdXJduMeR7W6u3sf-BDuw1Lab8om9gE1iWB-jXHUHgZh46Ui4YPc6QNhQ0cgaBDJhwkCnmoO3UHOakduNZKy6XkFqop8"/>
+</div>
+<div class="space-y-2">
+<span class="font-label-bold text-secondary uppercase text-xs">Americas</span>
+<h4 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Rainforest Protection Pact Receives Multilateral Funding</h4>
+<p class="text-on-surface-variant font-body-md line-clamp-2">A coalition of twelve nations has pledged $4 billion towards the preservation of critical biodiversity hotspots in the Amazon basin.</p>
+<div class="text-label-sm text-outline pt-2">7 Hours Ago • 8 Min Read</div>
+</div>
+</div>
+</div>
+</section>
+<!-- List Style Previews -->
+<section class="space-y-stack-md">
+<div class="flex items-center justify-between border-b border-outline-variant pb-2">
+<h3 class="font-headline-md text-headline-md text-primary">Quick Reads</h3>
+</div>
+<div class="divide-y divide-outline-variant">
+<div class="py-6 flex gap-stack-md group cursor-pointer">
+<div class="flex-1 space-y-2">
+<span class="font-label-bold text-on-surface-variant uppercase text-xs">Asia • Economy</span>
+<h4 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Tokyo Markets Rally on News of Tech Merger</h4>
+<p class="text-on-surface-variant font-body-md hidden md:block">Leading semiconductor manufacturers announce a strategic partnership aimed at revolutionizing local supply chains.</p>
+<div class="text-label-sm text-outline">2 Hours Ago</div>
+</div>
+<div class="w-32 h-20 bg-surface-container border border-outline-variant shrink-0">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of high-tech silicon wafers reflecting vibrant blue and purple light in a clean-room environment. The geometric patterns of the microchips are intricate and sharp, representing advanced technology and industrial precision. The lighting is cold and clinical, using a palette of metallic silvers and electric blues to symbolize innovation and corporate growth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeKTczFg6mzu1FxzrLBPRWDHuFTzGae-KjisjGwzwWPn0anj1ignGpTQt2dRT-4mQcJVbWSm1V39qvQGZL6eWKfkcFo1D2pT9GEHwGPBgXTrtYYtCaxO6tAnuXC3tgqlSP-k77dQ2qV2LFRBfGn7CAmQE3Ox0ytP_wTTFj5d6zRwgLKTjeB_k1CYLp6mUAXtipsHCp-GuicjqVjZ9X9igcu6KgcQ2pF1Dgwzu_C8-0rzZlvGf_yrk"/>
+</div>
+</div>
+<div class="py-6 flex gap-stack-md group cursor-pointer">
+<div class="flex-1 space-y-2">
+<span class="font-label-bold text-on-surface-variant uppercase text-xs">Africa • Culture</span>
+<h4 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Nairobi Hosts Largest Pan-African Arts Festival in a Decade</h4>
+<p class="text-on-surface-variant font-body-md hidden md:block">Thousands of artists and curators converge to celebrate a new era of African creative influence on the global stage.</p>
+<div class="text-label-sm text-outline">9 Hours Ago</div>
+</div>
+<div class="w-32 h-20 bg-surface-container border border-outline-variant shrink-0">
+<img class="w-full h-full object-cover" data-alt="A vibrant, high-contrast photo of a contemporary art gallery filled with large-scale colorful paintings and sculptures. The gallery is spacious and modern with white walls and polished concrete floors. Diverse groups of people are engaged with the art, creating a lively and sophisticated cultural scene. The lighting is professional gallery-grade, highlighting the textures and bold primary colors of the artworks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9YV3H9pmd3YcUJyjK46JcR3LxfzM0V1Gd89fvUcWLSdp3BWL4Ewm3Ky44YHFqanh_8a7JPQUmjyN0HmnGV4SVqw22jugQoGUYRvorJ0WuYUdXGYkLPv7g-2QhTKYA14Dc_ljx-eTjXYkz-lmzJWCN7UD3Emf_VrFEgqng1mmMSzV-K03hgnrl79S0PG3MB0lpziDAPmjs4FhFHjhW5TItOwVxAOiJ7AVcibusjTjk0ZyQ9WtH1wY"/>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar -->
+<aside class="col-span-12 lg:col-span-4 space-y-stack-lg">
+<!-- Most Read in World -->
+<div class="bg-surface-container-low p-stack-md border border-outline-variant">
+<h3 class="font-label-bold text-label-bold uppercase tracking-widest border-b-2 border-primary pb-2 mb-4">Most Read in World</h3>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<span class="font-display-lg text-display-lg text-outline-variant leading-none">01</span>
+<div class="space-y-1">
+<a class="font-label-bold text-body-md hover:text-secondary leading-tight block" href="#">The Hidden Costs of Global Energy Transitions</a>
+<span class="text-label-sm text-outline">Analysis • 15k views</span>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="font-display-lg text-display-lg text-outline-variant leading-none">02</span>
+<div class="space-y-1">
+<a class="font-label-bold text-body-md hover:text-secondary leading-tight block" href="#">Tensions Rise at the Nordic Border Post-Accord</a>
+<span class="text-label-sm text-outline">Live Update • 12k views</span>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="font-display-lg text-display-lg text-outline-variant leading-none">03</span>
+<div class="space-y-1">
+<a class="font-label-bold text-body-md hover:text-secondary leading-tight block" href="#">The Future of Remote Work in Emerging Markets</a>
+<span class="text-label-sm text-outline">Economy • 10k views</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Newsletter Signup -->
+<div class="bg-primary-container text-on-primary-container p-stack-md space-y-4">
+<h3 class="font-headline-md text-headline-md text-on-primary font-bold">The World Brief</h3>
+<p class="font-label-sm">Get the most important global news delivered to your inbox every morning at 6:00 AM.</p>
+<div class="space-y-2">
+<input class="w-full bg-surface-container-lowest text-primary px-4 py-3 border-none focus:ring-2 focus:ring-secondary rounded-none" placeholder="email@agency.com" type="email"/>
+<button class="w-full bg-secondary text-on-secondary font-label-bold uppercase py-3 hover:opacity-90 transition-opacity">Subscribe Now</button>
+</div>
+</div>
+<!-- Live Ticker Sidebar -->
+<div class="border border-outline-variant p-stack-md">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-bold text-label-bold uppercase">Live Market Data</h3>
+<div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+</div>
+<div class="space-y-3 font-label-sm">
+<div class="flex justify-between border-b border-surface-container pb-2">
+<span>S&amp;P 500</span>
+<span class="text-green-600">+0.42%</span>
+</div>
+<div class="flex justify-between border-b border-surface-container pb-2">
+<span>Nikkei 225</span>
+<span class="text-red-600">-0.18%</span>
+</div>
+<div class="flex justify-between border-b border-surface-container pb-2">
+<span>Brent Crude</span>
+<span class="text-on-surface">$82.45</span>
+</div>
+<div class="flex justify-between">
+<span>Gold (XAU)</span>
+<span class="text-on-surface">$2,145.20</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-primary text-on-primary w-full py-stack-lg border-t-4 border-secondary mt-section-gap">
+<div class="flex flex-col items-center justify-center space-y-stack-md w-full px-grid-margin max-w-7xl mx-auto">
+<div class="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tighter">MINBAR NEWS</div>
+<nav class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm uppercase" href="#">About Us</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm uppercase" href="#">Editorial Guidelines</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm uppercase" href="#">Privacy Policy</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm uppercase" href="#">Terms of Service</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm uppercase" href="#">Contact</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm uppercase" href="#">Archive</a>
+</nav>
+<div class="text-surface-variant font-label-sm text-center pt-8 border-t border-primary-container w-full">
+                © 2024 Minbar News. Truth. Perspective. Impact.
+            </div>
+</div>
+</footer>
+<script>
+        // Interactive Hover Effects for Cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Search Bar Focus Effect
+        const searchInput = document.querySelector('input[type="text"]');
+        if(searchInput) {
+            searchInput.addEventListener('focus', () => {
+                searchInput.parentElement.classList.add('ring-2', 'ring-secondary');
+            });
+            searchInput.addEventListener('blur', () => {
+                searchInput.parentElement.classList.remove('ring-2', 'ring-secondary');
+            });
+        }
+    </script>
+</body></html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Minbar News | Asset Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:wght@600;700;900&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-container": "#7c879c",
+                "tertiary-container": "#141f30",
+                "primary-fixed": "#d8e2ff",
+                "outline": "#75777f",
+                "primary-container": "#0c1e3d",
+                "on-tertiary-fixed": "#111c2c",
+                "on-primary": "#ffffff",
+                "surface-variant": "#e0e3e5",
+                "inverse-surface": "#2d3133",
+                "secondary-container": "#ff5a52",
+                "secondary": "#b52424",
+                "on-surface-variant": "#44474e",
+                "surface-container": "#ebeef0",
+                "secondary-fixed": "#ffdad6",
+                "on-secondary-fixed": "#410003",
+                "error": "#ba1a1a",
+                "primary-fixed-dim": "#b6c6ee",
+                "tertiary-fixed-dim": "#bcc7dd",
+                "surface-dim": "#d7dadc",
+                "on-surface": "#181c1e",
+                "surface-tint": "#4e5e81",
+                "on-secondary-fixed-variant": "#92030f",
+                "error-container": "#ffdad6",
+                "on-primary-fixed-variant": "#374768",
+                "surface-container-lowest": "#ffffff",
+                "secondary-fixed-dim": "#ffb4ac",
+                "on-tertiary": "#ffffff",
+                "background": "#f7fafc",
+                "on-secondary-container": "#600006",
+                "on-primary-container": "#7686ab",
+                "inverse-on-surface": "#eef1f3",
+                "on-background": "#181c1e",
+                "surface-container-low": "#f1f4f6",
+                "inverse-primary": "#b6c6ee",
+                "surface-bright": "#f7fafc",
+                "tertiary-fixed": "#d8e3fa",
+                "surface-container-highest": "#e0e3e5",
+                "tertiary": "#000613",
+                "on-primary-fixed": "#081b3a",
+                "on-error-container": "#93000a",
+                "on-secondary": "#ffffff",
+                "surface": "#f7fafc",
+                "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-sm": "8px",
+                "stack-lg": "32px",
+                "section-gap": "64px",
+                "grid-margin": "24px",
+                "stack-md": "16px",
+                "gutter": "20px"
+            },
+            "fontFamily": {
+                "label-bold": ["IBM Plex Sans"],
+                "display-lg": ["\"Source Serif 4\""],
+                "body-md": ["Work Sans"],
+                "label-sm": ["IBM Plex Sans"],
+                "body-lg": ["Work Sans"],
+                "headline-lg": ["\"Source Serif 4\""],
+                "headline-md": ["\"Source Serif 4\""]
+            },
+            "fontSize": {
+                "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7fafc;
+            color: #181c1e;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom scrollbar for editorial feel */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f4f6; }
+        ::-webkit-scrollbar-thumb { background: #000516; }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="bg-surface border-b border-outline-variant fixed top-0 w-full z-50 flex justify-between items-center px-grid-margin py-4 max-w-none">
+<div class="flex items-center gap-12">
+<h1 class="font-display-lg text-[24px] font-bold tracking-tight text-primary">MINBAR NEWS</h1>
+<nav class="hidden md:flex gap-stack-md">
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-secondary transition-colors" href="#">World</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-secondary transition-colors" href="#">Politics</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-secondary transition-colors" href="#">Economy</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-secondary transition-colors" href="#">Analysis</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-none pl-10 pr-4 py-2 text-sm focus:border-primary focus:ring-0 w-64 transition-all" placeholder="Search archive..." type="text"/>
+</div>
+<button class="flex items-center justify-center p-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+<button class="bg-primary text-on-primary font-label-bold text-label-bold px-stack-md py-2 uppercase tracking-widest hover:bg-on-primary-fixed-variant transition-colors">
+                Subscribe
+            </button>
+</div>
+</header>
+<!-- Sidebar Navigation -->
+<aside class="flex flex-col fixed left-0 top-[72px] h-[calc(100vh-72px)] w-64 bg-surface-container border-r border-outline-variant z-40">
+<div class="p-stack-md border-b border-outline-variant">
+<div class="flex items-center gap-stack-sm mb-4">
+<div class="w-10 h-10 bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">shield</span>
+</div>
+<div>
+<p class="font-label-bold text-label-bold text-primary">Editorial Portal</p>
+<p class="font-label-sm text-label-sm text-on-tertiary-container">Authority Control</p>
+</div>
+</div>
+<button class="w-full bg-secondary text-on-primary font-label-bold text-label-bold py-3 flex items-center justify-center gap-2 hover:opacity-90 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]">upload</span>
+                UPLOAD ASSET
+            </button>
+</div>
+<nav class="flex-1 py-stack-md overflow-y-auto">
+<div class="px-stack-md mb-2">
+<p class="font-label-sm text-label-sm uppercase tracking-tighter text-outline mb-4">Main Navigation</p>
+<div class="space-y-1">
+<a class="flex items-center gap-stack-md px-stack-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span> Dashboard
+                    </a>
+<a class="flex items-center gap-stack-md px-stack-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span> Editorial Queue
+                    </a>
+<a class="flex items-center gap-stack-md px-stack-md py-3 bg-primary text-on-primary transition-colors font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined active-tab" data-icon="inventory_2">inventory_2</span> Asset Manager
+                    </a>
+<a class="flex items-center gap-stack-md px-stack-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined" data-icon="live_tv">live_tv</span> Live Feed
+                    </a>
+<a class="flex items-center gap-stack-md px-stack-md py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Settings
+                    </a>
+</div>
+</div>
+</nav>
+<div class="mt-auto border-t border-outline-variant p-stack-md">
+<a class="flex items-center gap-stack-md px-stack-md py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="help">help</span> Support
+            </a>
+<a class="flex items-center gap-stack-md px-stack-md py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="logout">logout</span> Sign Out
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-[72px] h-[calc(100vh-72px)] overflow-y-auto bg-background p-grid-margin">
+<!-- Dashboard Header & Search/Filters -->
+<header class="flex flex-col gap-stack-md mb-stack-lg">
+<div class="flex justify-between items-end border-b border-primary pb-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Asset Manager</h2>
+<p class="font-body-md text-on-surface-variant">Global Editorial Media Library &amp; Licensing Repository</p>
+</div>
+<div class="flex gap-stack-sm">
+<span class="bg-surface-container-high text-primary px-3 py-1 font-label-bold text-label-bold">Total: 12,408</span>
+<span class="bg-secondary text-on-primary px-3 py-1 font-label-bold text-label-bold">Urgent Licensing: 4</span>
+</div>
+</div>
+<!-- Filters Bar -->
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-stack-md items-center bg-white p-4 border border-outline-variant">
+<div class="col-span-1 md:col-span-2 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 border-outline-variant focus:border-primary focus:ring-0 rounded-none text-sm" placeholder="Search by tags, filename, or article ID..." type="text"/>
+</div>
+<div>
+<select class="w-full border-outline-variant focus:border-primary focus:ring-0 rounded-none text-sm">
+<option>All File Types</option>
+<option>Images (.jpg, .png)</option>
+<option>Video (.mp4, .mov)</option>
+<option>Graphics (.svg, .ai)</option>
+</select>
+</div>
+<div>
+<select class="w-full border-outline-variant focus:border-primary focus:ring-0 rounded-none text-sm">
+<option>Upload Date</option>
+<option>Last 24 Hours</option>
+<option>Last 7 Days</option>
+<option>This Month</option>
+</select>
+</div>
+<div>
+<select class="w-full border-outline-variant focus:border-primary focus:ring-0 rounded-none text-sm">
+<option>Licensing Status</option>
+<option>Public Domain</option>
+<option>Editorial Use Only</option>
+<option>Exclusive</option>
+</select>
+</div>
+<div class="flex justify-end">
+<button class="bg-surface-container-highest p-2 border border-outline-variant hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+</button>
+<button class="p-2 border border-l-0 border-outline-variant hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="list">list</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Bento Asset Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Asset Card 1: Featured Image -->
+<div class="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-video overflow-hidden bg-surface-container-low border-b border-outline-variant">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A professional, high-resolution editorial photograph of a bustling international summit in a grand, classically designed European hall. The lighting is bright and authoritative, reflecting a modern light-mode news aesthetic. The image captures several world leaders in deep discussion, emphasizing global diplomacy and serious news. The color palette is dominated by deep blues, crisp whites, and sharp architectural details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUN3ol58U71hiFMm8ubtBU_X5hmXqVsI_DIZUEXliyHn9Vw_RCsQhAUXTt9oZ4R5KF7r5qSyZrm8zmP3YMmlfwSBRaFfQ0ub0WReWugZNDpnQW_twRd0grFH8Vl4K_yP06J2jc-wFBwkkAgl_rK4svMLnNFKgY2q9BjZ1nLCiY1hVWjS_CXU-eal-vCt29Waka2WT5TpNfRS7ovN-zHVtORY04sNFw7ngpCdU561vEZDBDe_PW8NA"/>
+<div class="absolute top-2 left-2 bg-primary text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Exclusive</div>
+<div class="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+<button class="bg-white/90 p-1.5 hover:bg-secondary hover:text-white transition-colors"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="bg-white/90 p-1.5 hover:bg-secondary hover:text-white transition-colors"><span class="material-symbols-outlined text-[18px]">download</span></button>
+</div>
+</div>
+<div class="p-stack-md flex-1">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-label-bold text-label-bold text-primary truncate">G7_Summit_Final_2024.jpg</h3>
+<span class="font-label-sm text-[10px] text-on-surface-variant">4.2 MB</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-stack-md">
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Resolution</p>
+<p class="font-bold">4500 x 3000 px</p>
+</div>
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Usage</p>
+<p class="font-bold">3 Articles</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-1">
+<span class="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#politics</span>
+<span class="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#summit</span>
+</div>
+</div>
+</div>
+<!-- Asset Card 2: Video -->
+<div class="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-video overflow-hidden bg-surface-container-low border-b border-outline-variant flex items-center justify-center">
+<img class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A dynamic cinematic video frame showing an aerial drone view of a massive solar farm in a vast desert landscape. The lighting is golden hour, casting long, dramatic shadows across the shimmering panels. The style is professional documentary cinematography, clean and corporate. The aesthetic aligns with global energy and climate reporting, using high contrast and a vivid, authoritative color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDppgLg9h6i1rm3KEfTWh5wxJkSa6qG6g_aeuN8P0W1MC21XPjsV4RorMyQsoObziDOpnhhrM9V6HtqHlr20ZOHaf34UWbp0-TB5Rkk3cWKSeWz-JryhbS2M2OqmBtr7xNMj_zjxG2FxEU-F_kWF6F_N1Msy3E7WvFuNXzOLcX9izmz8dj7hd0rHv21z05d09Yx8oJm9unPvt1LujLCaaJL9AwLGgJWUDPBHzt65pjpj0MnKDrQFfU"/>
+<span class="material-symbols-outlined text-white text-[48px] absolute pointer-events-none group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<div class="absolute top-2 left-2 bg-on-tertiary-fixed-variant text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Video</div>
+<div class="absolute bottom-2 left-2 bg-black/50 text-white px-2 py-0.5 text-[10px] font-label-bold">02:45</div>
+</div>
+<div class="p-stack-md flex-1">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-label-bold text-label-bold text-primary truncate">Clean_Energy_B-Roll.mp4</h3>
+<span class="font-label-sm text-[10px] text-on-surface-variant">128 MB</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-stack-md">
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Format</p>
+<p class="font-bold">4K UHD / 60fps</p>
+</div>
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">License</p>
+<p class="font-bold text-secondary">Editorial</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-1">
+<span class="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#climate</span>
+<span class="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#energy</span>
+</div>
+</div>
+</div>
+<!-- Asset Card 3: Graphic/Infographic -->
+<div class="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-video overflow-hidden bg-surface-container-high border-b border-outline-variant p-4">
+<div class="w-full h-full border border-dashed border-outline-variant flex flex-col items-center justify-center bg-white">
+<span class="material-symbols-outlined text-outline mb-2">bar_chart</span>
+<p class="text-[10px] text-outline font-label-bold">INFOGRAPHIC_SVG</p>
+</div>
+<div class="absolute top-2 left-2 bg-on-primary-fixed-variant text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Vector</div>
+</div>
+<div class="p-stack-md flex-1">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-label-bold text-label-bold text-primary truncate">Economy_Stats_Q3_V2.svg</h3>
+<span class="font-label-sm text-[10px] text-on-surface-variant">450 KB</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-stack-md">
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Type</p>
+<p class="font-bold">Scalable Vector</p>
+</div>
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Designer</p>
+<p class="font-bold">Editorial Team</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-1">
+<span class="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#economy</span>
+<span class="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#data</span>
+</div>
+</div>
+</div>
+<!-- Asset Card 4: Archive Photo -->
+<div class="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-video overflow-hidden bg-surface-container-low border-b border-outline-variant">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A stark, minimalist black and white photograph of an empty, modern office corridor in Tokyo, Japan. The lighting is cool and clinical, emphasizing geometry and corporate silence. The style is architectural photography with deep shadows and bright highlights, communicating a sense of professional gravity and urban solitude. The overall aesthetic is clean, authoritative, and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyIu-IbWLxEB2agWIui1mkyTqMtMnHmFCJT6vREAoRE6xWbq7GEejZDhLT4Jlv_dhPGyz3NYDhuyxpz5rmYjydgq4qlHkeXBoCQuRjMSwfOo3YhKvRgAiBBm3BK8zXzKmAqpJHPLfKUvFUDo5ASZFEGHPT4eH0MJ4_pgEavWhUXcMBTOv0c3sFHQRD15JeluMkhpjEgXkY_K-CjwwBYFTWFASqXN0OiZ93Sfj1uzox1enYYJwHSos"/>
+<div class="absolute top-2 left-2 bg-on-tertiary-container text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Public Domain</div>
+</div>
+<div class="p-stack-md flex-1">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-label-bold text-label-bold text-primary truncate">Tokyo_Remote_Work.jpg</h3>
+<span class="font-label-sm text-[10px] text-on-surface-variant">1.8 MB</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-stack-md">
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Uploaded</p>
+<p class="font-bold">Oct 12, 2023</p>
+</div>
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Alt Text</p>
+<p class="font-bold text-on-tertiary-container">Completed</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-1">
+<span class="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#tokyo</span>
+<span class="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#society</span>
+</div>
+</div>
+</div>
+<!-- Repeat some cards for grid density -->
+<div class="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-video overflow-hidden bg-surface-container-low border-b border-outline-variant">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A high-contrast macro photograph of digital circuitry and microchips illuminated by intense blue and red neon lighting. The aesthetic is cyber-corporate and futuristic, suitable for tech journalism. Sharp focus on the silicon components creates a sense of intricate detail and high-tech authority. The lighting creates deep shadows and vibrant highlights, conveying power and speed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU0nbY3B9aV38JSmioQtOtWYX_5NcoVPPpq2LIqe15vMAOb89bKAh3X5GMD5eV1275c-d8CUa59bFDwDdaCboeWLaYL0IuYoI1k5etcK3SfQ-ltYN5L7z9JG6JvfyyiquDdYFowiuTGMhZifeppOBcq-UmZsc6G7OGPxwb2HdZSyFCGwVk3gA6Goza5izIddlFHh2xdy1EPT_CxUFEiUtMecUV5YA9ZeqhIOglJdxsrr73ndQTpMg"/>
+<div class="absolute top-2 left-2 bg-primary text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Stock</div>
+</div>
+<div class="p-stack-md flex-1">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-label-bold text-label-bold text-primary truncate">Microchip_Shortage_Hdr.jpg</h3>
+<span class="font-label-sm text-[10px] text-on-surface-variant">5.5 MB</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-stack-md">
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Resolution</p>
+<p class="font-bold">6000 x 4000 px</p>
+</div>
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Usage</p>
+<p class="font-bold">8 Articles</p>
+</div>
+</div>
+</div>
+</div>
+<div class="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-video overflow-hidden bg-surface-container-low border-b border-outline-variant">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A wide-angle landscape photograph of a melting glacier in Iceland, showing massive chunks of ancient ice floating in a deep turquoise lagoon. The lighting is overcast and moody, highlighting the textures of the ice and the severity of the climate crisis. The visual style is professional, high-end landscape photography with a documentary tone, using a palette of whites, blues, and dark volcanic sands." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbPL_UMjeN2p-91n3X2l_JT23709Knq2_lCpGDT9Q8-L_cc9stB1IXF6qdlJeHyn3qibWb-Xv6QeGTmbcodSlXQA05XCzvgvENFfZvgsNeSfiWKhA0iPt86vId9QR9t5HKa1-MrAHBD_SZWjsYTq9SMvb-oDoGFkrOluK0H_eCHROU5cuwCNHmzXHi9yTU7C9emmYB48G-1K2ekarkzzwrW6U0gfXw0lr6xYvQa2iDSWQSkzMZyNY"/>
+<div class="absolute top-2 left-2 bg-secondary text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Breaking</div>
+</div>
+<div class="p-stack-md flex-1">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-label-bold text-label-bold text-primary truncate">Glacier_Melt_Iceland.png</h3>
+<span class="font-label-sm text-[10px] text-on-surface-variant">8.9 MB</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-stack-md">
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">License</p>
+<p class="font-bold">Agency Rights</p>
+</div>
+<div class="text-[11px]">
+<p class="text-outline uppercase font-label-sm">Alt Text</p>
+<p class="font-bold text-error">Missing</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Drop Zone for New Assets -->
+<div class="border-2 border-dashed border-outline-variant flex flex-col items-center justify-center p-grid-margin bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-[48px] text-outline mb-stack-sm group-hover:text-primary group-hover:scale-110 transition-all">add_photo_alternate</span>
+<p class="font-label-bold text-label-bold text-outline group-hover:text-primary">Drag &amp; Drop to Upload</p>
+<p class="font-label-sm text-label-sm text-on-tertiary-container mt-2">Maximum file size: 500MB</p>
+</div>
+</div>
+<!-- Footer Agency Info -->
+<footer class="w-full py-stack-lg px-grid-margin mt-section-gap flex flex-col items-center gap-stack-md border-t-4 border-secondary bg-primary">
+<h2 class="font-headline-md text-headline-md font-black text-on-primary uppercase tracking-tighter">MINBAR NEWS AGENCY</h2>
+<div class="flex flex-wrap justify-center gap-stack-md text-on-tertiary-container font-label-sm text-label-sm">
+<a class="hover:text-on-primary transition-colors" href="#">Archive</a>
+<a class="hover:text-on-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-on-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-on-primary transition-colors" href="#">Ethics Code</a>
+<a class="hover:text-on-primary transition-colors" href="#">Contact Us</a>
+</div>
+<p class="text-on-tertiary-container font-label-sm text-label-sm opacity-60">© 2024 Minbar News Agency. All rights reserved. Global Editorial Standards Applied.</p>
+</footer>
+</main>
+<!-- Side Asset Details Panel (Hidden by default, can be toggled via JS) -->
+<div class="fixed right-0 top-[72px] h-[calc(100vh-72px)] w-[400px] bg-white border-l border-outline-variant shadow-2xl z-50 translate-x-full transition-transform duration-300" id="details-panel">
+<div class="p-stack-md flex justify-between items-center border-b border-outline-variant">
+<h3 class="font-headline-md text-primary">Asset Details</h3>
+<button class="p-1 hover:bg-surface-container-low" onclick="togglePanel()"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="p-stack-md space-y-stack-lg overflow-y-auto h-full pb-stack-lg">
+<div class="aspect-video bg-surface-container-low border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-contain" data-alt="A professional preview showing a detailed editorial asset with a focus on high resolution and clarity. The image is framed within a clean UI interface with technical metadata overlays, emphasizing its role in a high-impact news agency environment. Colors are sharp and authoritative, primarily deep navy and white." id="detail-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhIwzqdodpCASH9bVMYlXYgVVSGQ3Q2bHRZUYUE-F7a59YhWkpv8zjJPumCmJqnecYl0J3CLVrz_N3sStBIx0JMRVBS8mDhCLhRXasVimy6Uk-EEKujwQMRZQt1JI8nY_RSkitrb_Wl2oeZvPuHkjUGJBiI1ZAFHNBhmI9oNtzRJk47rHEYOCmD17wK7C4-Fd1Il-vLPlrhrGUGE8aPaJcIHYyp2h26ISxPBALFAskBs78Af3P-bQ"/>
+</div>
+<div class="space-y-4">
+<div>
+<label class="font-label-bold text-label-bold text-outline block mb-1">FILENAME</label>
+<input class="w-full border-outline-variant focus:border-primary focus:ring-0 rounded-none font-bold" type="text" value="G7_Summit_Final_2024.jpg"/>
+</div>
+<div>
+<label class="font-label-bold text-label-bold text-outline block mb-1">ALT TEXT (SEO &amp; ACCESSIBILITY)</label>
+<textarea class="w-full h-24 border-outline-variant focus:border-primary focus:ring-0 rounded-none text-sm">G7 world leaders posing for the official family photo in Berlin, 2024. Focus on Chancellor Scholz and President Biden in conversation.</textarea>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="font-label-bold text-label-bold text-outline block mb-1">RESOLUTION</label>
+<p class="text-sm font-bold">4500 x 3000 (13.5 MP)</p>
+</div>
+<div>
+<label class="font-label-bold text-label-bold text-outline block mb-1">COLOR SPACE</label>
+<p class="text-sm font-bold">Adobe RGB (1998)</p>
+</div>
+</div>
+<div>
+<label class="font-label-bold text-label-bold text-outline block mb-1">LICENSING STATUS</label>
+<div class="flex items-center gap-2 p-3 bg-secondary-fixed text-on-secondary-fixed border-l-4 border-secondary">
+<span class="material-symbols-outlined">gavel</span>
+<span class="font-label-bold">Exclusive Editorial Rights</span>
+</div>
+<p class="text-[11px] text-outline mt-2 italic">Valid until: Dec 31, 2026. Global distribution permitted.</p>
+</div>
+</div>
+<div class="pt-stack-md flex flex-col gap-2">
+<button class="w-full bg-primary text-on-primary font-label-bold py-3 uppercase tracking-widest hover:opacity-90">Save Changes</button>
+<button class="w-full border border-primary text-primary font-label-bold py-3 uppercase tracking-widest hover:bg-surface-container-low transition-colors">Download Original</button>
+<button class="w-full text-secondary font-label-bold py-3 flex items-center justify-center gap-2 hover:bg-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span> Delete Permanently
+                </button>
+</div>
+</div>
+</div>
+<script>
+        // Micro-interactions for the Asset Manager
+        const panel = document.getElementById('details-panel');
+        const cards = document.querySelectorAll('.group');
+
+        function togglePanel() {
+            panel.classList.toggle('translate-x-full');
+        }
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                // In a real app, we'd update content here
+                panel.classList.remove('translate-x-full');
+            });
+        });
+
+        // Search bar micro-interaction
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-105');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-105');
+        });
+    </script>
+</body></html>

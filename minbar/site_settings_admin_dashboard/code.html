@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Minbar News CMS | Site Settings</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:wght@600;700;900&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#7c879c",
+                    "tertiary-container": "#141f30",
+                    "primary-fixed": "#d8e2ff",
+                    "outline": "#75777f",
+                    "primary-container": "#0c1e3d",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "inverse-surface": "#2d3133",
+                    "secondary-container": "#ff5a52",
+                    "secondary": "#b52424",
+                    "on-surface-variant": "#44474e",
+                    "surface-container": "#ebeef0",
+                    "secondary-fixed": "#ffdad6",
+                    "on-secondary-fixed": "#410003",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#b6c6ee",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "surface-dim": "#d7dadc",
+                    "on-surface": "#181c1e",
+                    "surface-tint": "#4e5e81",
+                    "on-secondary-fixed-variant": "#92030f",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#374768",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#ffb4ac",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f7fafc",
+                    "on-secondary-container": "#600006",
+                    "on-primary-container": "#7686ab",
+                    "inverse-on-surface": "#eef1f3",
+                    "on-background": "#181c1e",
+                    "surface-container-low": "#f1f4f6",
+                    "inverse-primary": "#b6c6ee",
+                    "surface-container-high": "#e5e9eb",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "primary": "#000516",
+                    "outline-variant": "#c5c6cf",
+                    "surface-bright": "#f7fafc",
+                    "tertiary-fixed": "#d8e3fa",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#000613",
+                    "on-primary-fixed": "#081b3a",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f7fafc",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "section-gap": "64px",
+                    "grid-margin": "24px",
+                    "stack-md": "16px",
+                    "gutter": "20px"
+            },
+            "fontFamily": {
+                    "label-bold": ["IBM Plex Sans"],
+                    "display-lg": ["\"Source Serif 4\""],
+                    "body-md": ["Work Sans"],
+                    "label-sm": ["IBM Plex Sans"],
+                    "body-lg": ["Work Sans"],
+                    "headline-lg-mobile": ["\"Source Serif 4\""],
+                    "headline-lg": ["\"Source Serif 4\""],
+                    "headline-md": ["\"Source Serif 4\""]
+            },
+            "fontSize": {
+                    "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .active-tab-indicator {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #b52424;
+        }
+        .sidebar-active {
+            background-color: #000516 !important;
+            color: #ffffff !important;
+        }
+        .form-input-focus:focus {
+            outline: none;
+            border-color: #000516;
+            box-shadow: 0 0 0 1px #000516;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Shared SideNavBar -->
+<aside class="flex flex-col fixed left-0 top-0 h-full z-40 bg-surface-container dark:bg-tertiary-container border-r border-outline-variant dark:border-on-tertiary-fixed-variant w-64">
+<div class="px-6 py-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">MINBAR NEWS</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-tertiary-container mt-1">Editorial Portal</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform scale-95 active:scale-100 font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform scale-95 active:scale-100 font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">description</span>
+                Editorial Queue
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform scale-95 active:scale-100 font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">live_tv</span>
+                Live Feed
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-transform scale-95 active:scale-100 font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                Archives
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary dark:bg-primary-fixed text-on-primary dark:text-on-primary-fixed font-bold rounded-none transition-transform scale-95 active:scale-100 font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="p-4 border-t border-outline-variant">
+<div class="flex items-center gap-3 p-3 bg-surface-container-high rounded-lg mb-4">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A professional headshot of a high-ranking news editor in a corporate office, characterized by sharp focus and cinematic lighting. The editor is wearing a dark navy blazer, and the background features blurred monitors with live news feeds, maintaining a clean, high-contrast light-mode aesthetic with red accents on the screens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh0XbGJk7X9H7cpBM2kpXHk3h9N_tXyfh-lecJMwF3yPlyG-Ino0qHoK12wDyA4EXIeFqKRf7yJVY93RjXywTh2mBgOwcCVdWbW7MyF_T0MScQx_-b17cKWeJEg9ZxGEd5YoVgNGpAXkdn0WcnMcoWEFPo9xWaWiRuUqaEzEHG6hDs8fo0FWAt4Xkh255qj-iHUKjz6OA7rR7raf_Bu6obG7lPcsU3d1Cizxu8k1doD3XGbbVWl1w"/>
+<div>
+<p class="font-label-bold text-label-bold text-primary">Senior Editor</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Authority Control</p>
+</div>
+</div>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-secondary font-label-bold text-label-bold" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Sign Out
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- Top Navigation -->
+<header class="bg-surface border-b border-outline-variant sticky top-0 z-30">
+<div class="flex justify-between items-center w-full px-grid-margin py-4 max-w-7xl mx-auto">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary font-bold">Site Settings</h2>
+<p class="text-on-surface-variant font-label-sm text-label-sm">Configure global agency standards and technical integrations</p>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="px-6 py-2 border-2 border-primary text-primary font-label-bold text-label-bold hover:bg-surface-container-low transition-all">
+                        Discard Changes
+                    </button>
+<button class="px-6 py-2 bg-secondary text-on-primary font-label-bold text-label-bold hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                        Save All Changes
+                    </button>
+</div>
+</div>
+</header>
+<div class="max-w-7xl mx-auto px-grid-margin py-stack-lg">
+<!-- Settings Tabs -->
+<div class="flex gap-stack-lg border-b border-outline-variant mb-10 overflow-x-auto">
+<button class="pb-4 relative font-label-bold text-label-bold text-secondary border-b-2 border-secondary whitespace-nowrap" id="tab-identity" onclick="switchTab('identity')">
+                    Brand Identity
+                </button>
+<button class="pb-4 relative font-label-bold text-label-bold text-on-surface-variant hover:text-primary whitespace-nowrap transition-colors" id="tab-seo" onclick="switchTab('seo')">
+                    SEO &amp; Discovery
+                </button>
+<button class="pb-4 relative font-label-bold text-label-bold text-on-surface-variant hover:text-primary whitespace-nowrap transition-colors" id="tab-nav" onclick="switchTab('nav')">
+                    Navigation Management
+                </button>
+<button class="pb-4 relative font-label-bold text-label-bold text-on-surface-variant hover:text-primary whitespace-nowrap transition-colors" id="tab-api" onclick="switchTab('api')">
+                    Integrations &amp; APIs
+                </button>
+</div>
+<!-- Tab Content: Brand Identity -->
+<section class="space-y-section-gap" id="content-identity">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg">
+<div class="md:col-span-4">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Visual Heritage</h3>
+<p class="text-on-surface-variant font-body-md">Manage the primary logo, favicon, and brand marks that define Minbar News across all platforms.</p>
+</div>
+<div class="md:col-span-8 bg-white p-stack-lg border border-outline-variant">
+<div class="space-y-stack-lg">
+<div>
+<label class="block font-label-bold text-label-bold text-primary mb-2">Primary Agency Logo</label>
+<div class="flex items-center gap-stack-md border-2 border-dashed border-outline-variant p-stack-lg hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-24 h-24 bg-primary flex items-center justify-center">
+<span class="text-on-primary font-display-lg text-[24px]">M</span>
+</div>
+<div class="flex-1">
+<p class="font-label-bold text-label-bold">minbar_logo_main.svg</p>
+<p class="text-label-sm text-on-surface-variant">Recommended: SVG or 400x120 PNG</p>
+</div>
+<button class="text-secondary font-label-bold text-label-bold">Replace</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-stack-md">
+<div>
+<label class="block font-label-bold text-label-bold text-primary mb-2">Favicon (32x32)</label>
+<div class="border border-outline-variant p-4 flex items-center justify-between">
+<div class="w-8 h-8 bg-primary rounded-sm"></div>
+<button class="text-on-primary-container font-label-sm">Change</button>
+</div>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold text-primary mb-2">Social Sharing Image</label>
+<div class="border border-outline-variant p-4 flex items-center justify-between">
+<div class="w-12 h-8 bg-surface-variant"></div>
+<button class="text-on-primary-container font-label-sm">Change</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg">
+<div class="md:col-span-4">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Typography &amp; Tone</h3>
+<p class="text-on-surface-variant font-body-md">Configure the editorial font pairings and default legal disclaimers.</p>
+</div>
+<div class="md:col-span-8 bg-white p-stack-lg border border-outline-variant">
+<div class="space-y-stack-md">
+<div>
+<label class="block font-label-bold text-label-bold text-primary mb-2">Primary Headline Font</label>
+<select class="w-full border border-outline-variant p-3 font-body-md focus:border-primary focus:ring-0">
+<option>Source Serif 4 (Current)</option>
+<option>IBM Plex Sans</option>
+<option>System Sans-Serif</option>
+</select>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold text-primary mb-2">Copyright Disclaimer</label>
+<textarea class="w-full border border-outline-variant p-3 font-body-md focus:border-primary focus:ring-0" rows="3">© 2024 Minbar News Agency. All rights reserved. Global Editorial Standards Applied.</textarea>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Tab Content: SEO (Hidden by default via JS) -->
+<section class="hidden space-y-section-gap" id="content-seo">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg">
+<div class="md:col-span-4">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Metadata Mastery</h3>
+<p class="text-on-surface-variant font-body-md">Optimizing for global news indexers and search engines.</p>
+</div>
+<div class="md:col-span-8 bg-white p-stack-lg border border-outline-variant">
+<div class="space-y-stack-md">
+<div>
+<label class="block font-label-bold text-label-bold text-primary mb-1">Global Page Title Suffix</label>
+<input class="w-full border border-outline-variant p-3 font-body-md focus:border-primary focus:ring-0" type="text" value="| Minbar News Agency"/>
+</div>
+<div>
+<label class="block font-label-bold text-label-bold text-primary mb-1">Meta Description</label>
+<textarea class="w-full border border-outline-variant p-3 font-body-md focus:border-primary focus:ring-0" rows="3">Leading global news agency providing real-time analysis, breaking reports, and investigative journalism for decision-makers.</textarea>
+</div>
+<div class="flex items-center gap-2 pt-2">
+<input checked="" class="text-primary border-outline-variant focus:ring-0" type="checkbox"/>
+<span class="font-label-bold text-label-bold">Enable Google News Indexing (XML Sitemap)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Tab Content: Navigation (Hidden by default) -->
+<section class="hidden space-y-section-gap" id="content-nav">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg">
+<div class="md:col-span-4">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Primary Menu</h3>
+<p class="text-on-surface-variant font-body-md">Drag and drop to reorder the main categories in the top navigation bar.</p>
+</div>
+<div class="md:col-span-8 bg-white border border-outline-variant divide-y divide-outline-variant">
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline">drag_indicator</span>
+<span class="font-label-bold text-label-bold">World</span>
+</div>
+<div class="flex gap-4">
+<button class="text-on-primary-container material-symbols-outlined">edit</button>
+<button class="text-secondary material-symbols-outlined">delete</button>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline">drag_indicator</span>
+<span class="font-label-bold text-label-bold">Politics</span>
+</div>
+<div class="flex gap-4">
+<button class="text-on-primary-container material-symbols-outlined">edit</button>
+<button class="text-secondary material-symbols-outlined">delete</button>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline">drag_indicator</span>
+<span class="font-label-bold text-label-bold">Economy</span>
+</div>
+<div class="flex gap-4">
+<button class="text-on-primary-container material-symbols-outlined">edit</button>
+<button class="text-secondary material-symbols-outlined">delete</button>
+</div>
+</div>
+<button class="w-full p-4 text-center text-primary font-label-bold text-label-bold bg-surface-container-low border-t border-outline-variant hover:bg-surface-container-high transition-colors">
+                            + Add Navigation Link
+                        </button>
+</div>
+</div>
+</section>
+<!-- Tab Content: Integrations (Hidden by default) -->
+<section class="hidden space-y-section-gap" id="content-api">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg">
+<div class="md:col-span-4">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Connected Systems</h3>
+<p class="text-on-surface-variant font-body-md">Connect third-party analytics, social broadcasters, and wire service APIs.</p>
+</div>
+<div class="md:col-span-8 space-y-stack-md">
+<div class="bg-white p-6 border border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-secondary-container flex items-center justify-center text-on-secondary-container font-black text-xl italic">G</div>
+<div>
+<h4 class="font-label-bold text-label-bold">Google Analytics 4</h4>
+<p class="text-label-sm text-on-tertiary-container">Status: Connected (G-XXXXXXX)</p>
+</div>
+</div>
+<button class="px-4 py-2 border border-outline text-label-bold font-label-bold">Settings</button>
+</div>
+<div class="bg-white p-6 border border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary flex items-center justify-center text-on-primary material-symbols-outlined">rss_feed</div>
+<div>
+<h4 class="font-label-bold text-label-bold">Reuters Wire API</h4>
+<p class="text-label-sm text-on-tertiary-container">Status: Active Service</p>
+</div>
+</div>
+<button class="px-4 py-2 border border-outline text-label-bold font-label-bold">Settings</button>
+</div>
+<div class="bg-surface-container-low p-6 border-2 border-dashed border-outline-variant flex items-center justify-center">
+<button class="flex items-center gap-2 text-primary font-label-bold text-label-bold">
+<span class="material-symbols-outlined">add_circle</span>
+                                Connect New Integration
+                            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Shared Footer -->
+<footer class="w-full py-stack-lg px-grid-margin mt-section-gap flex flex-col items-center gap-stack-md bg-primary text-on-primary border-t-4 border-secondary">
+<h2 class="font-headline-md text-headline-md font-black text-on-primary">MINBAR NEWS</h2>
+<nav class="flex gap-stack-md flex-wrap justify-center">
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Archive</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors text-secondary-fixed font-bold underline" href="#">Ethics Code</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Contact Us</a>
+</nav>
+<p class="font-label-sm text-label-sm text-on-primary-container opacity-80">© 2024 Minbar News Agency. All rights reserved. Global Editorial Standards Applied.</p>
+</footer>
+</main>
+<!-- FAB for Quick Actions (Suppressed on settings as per mandate, but adding here as a ghost reference if logic allowed) -->
+<!-- The mandate says: "You MUST suppress the FAB on Settings..." -->
+<script>
+        function switchTab(tabName) {
+            const tabs = ['identity', 'seo', 'nav', 'api'];
+            const contents = {
+                'identity': document.getElementById('content-identity'),
+                'seo': document.getElementById('content-seo'),
+                'nav': document.getElementById('content-nav'),
+                'api': document.getElementById('content-api')
+            };
+            const buttons = {
+                'identity': document.getElementById('tab-identity'),
+                'seo': document.getElementById('tab-seo'),
+                'nav': document.getElementById('tab-nav'),
+                'api': document.getElementById('tab-api')
+            };
+
+            tabs.forEach(t => {
+                if (t === tabName) {
+                    contents[t].classList.remove('hidden');
+                    buttons[t].classList.remove('text-on-surface-variant');
+                    buttons[t].classList.add('text-secondary', 'border-b-2', 'border-secondary');
+                } else {
+                    contents[t].classList.add('hidden');
+                    buttons[t].classList.add('text-on-surface-variant');
+                    buttons[t].classList.remove('text-secondary', 'border-b-2', 'border-secondary');
+                }
+            });
+        }
+
+        // Micro-interaction: visual feedback on input focus
+        document.querySelectorAll('input, textarea, select').forEach(el => {
+            el.addEventListener('focus', () => {
+                el.parentElement.classList.add('border-primary');
+            });
+            el.addEventListener('blur', () => {
+                el.parentElement.classList.remove('border-primary');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Editorial Portal | Minbar News CMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:wght@600;700&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: 256px 1fr;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#141f30",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e5e9eb",
+                        "secondary-fixed": "#ffdad6",
+                        "on-tertiary-fixed": "#111c2c",
+                        "on-background": "#181c1e",
+                        "on-primary-container": "#7686ab",
+                        "secondary-container": "#ff5a52",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "outline-variant": "#c5c6cf",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eef1f3",
+                        "surface-container-low": "#f1f4f6",
+                        "surface": "#f7fafc",
+                        "surface-bright": "#f7fafc",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#374768",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0c1e3d",
+                        "primary": "#000516",
+                        "on-surface-variant": "#44474e",
+                        "on-primary-fixed": "#081b3a",
+                        "surface-container": "#ebeef0",
+                        "inverse-primary": "#b6c6ee",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-dim": "#d7dadc",
+                        "secondary-fixed-dim": "#ffb4ac",
+                        "primary-fixed": "#d8e2ff",
+                        "tertiary-fixed": "#d8e3fa",
+                        "surface-variant": "#e0e3e5",
+                        "background": "#f7fafc",
+                        "on-secondary-fixed-variant": "#92030f",
+                        "tertiary": "#000613",
+                        "secondary": "#b52424",
+                        "surface-tint": "#4e5e81",
+                        "on-surface": "#181c1e",
+                        "on-secondary-container": "#600006",
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "primary-fixed-dim": "#b6c6ee",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#7c879c",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#bcc7dd",
+                        "outline": "#75777f",
+                        "on-secondary-fixed": "#410003"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "grid-margin": "24px",
+                        "stack-lg": "32px",
+                        "section-gap": "64px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["IBM Plex Sans"],
+                        "label-bold": ["IBM Plex Sans"],
+                        "headline-lg": ["\"Source Serif 4\""],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "display-lg": ["\"Source Serif 4\""],
+                        "body-lg": ["Work Sans"],
+                        "body-md": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<div class="editorial-grid h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="flex flex-col h-full py-stack-lg bg-surface-container-low border-r border-outline-variant h-screen w-64 docked left-0">
+<!-- Header Section -->
+<div class="px-6 mb-8">
+<div class="font-headline-md text-headline-md font-bold text-primary tracking-tighter mb-6">MINBAR NEWS</div>
+<div class="flex items-center space-x-3 mb-4">
+<img class="w-10 h-10 rounded-full bg-surface-container-highest object-cover" data-alt="Professional headshot of a senior editorial director in a modern glass office, wearing a dark navy blazer. The lighting is crisp and cinematic, emphasizing a position of authority and corporate leadership. The overall aesthetic is professional, clean, and high-trust, consistent with a global news agency executive profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7jg60Plw55B4Sg8kCK8JzDn7M242zmuDbd_0jceQJNATmuQ-AdQAWv0gcmO0RayNpYNYsda8Wmx1gUszp3a3TpNSG5SPJsL8e7Lip-EMpLGdfP3UfBc4pdYQ4HQ6WWTnvGS7yQMIcqsNBMnA5u-rCgDltY_BNzMydz6aAohvcozFY_ox6hZGYM_dFrJSNI-FgddB8BmUFJGrRR5ayIj9okVqbpi0H1dwLfUtUxjNl-ASN5B7KyAU"/>
+<div class="overflow-hidden">
+<p class="font-label-bold text-label-bold text-on-surface truncate">Editorial Portal</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">Minbar News CMS</p>
+</div>
+</div>
+<button class="w-full py-3 bg-secondary text-on-secondary font-label-bold text-label-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm">edit</span>
+                    New Article
+                </button>
+</div>
+<!-- Main Navigation -->
+<nav class="flex-grow space-y-1 overflow-y-auto px-2 custom-scrollbar">
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all mx-2 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary" data-icon="dashboard">dashboard</span>
+<span class="font-label-bold text-label-bold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all mx-2 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary" data-icon="edit_note">edit_note</span>
+<span class="font-label-bold text-label-bold">Editorial Desk</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all mx-2 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary" data-icon="auto_stories">auto_stories</span>
+<span class="font-label-bold text-label-bold">Article Library</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all mx-2 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary" data-icon="analytics">analytics</span>
+<span class="font-label-bold text-label-bold">Analytics</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 py-3 px-4 bg-primary text-on-primary rounded-lg mx-2 shadow-sm transition-all active:scale-98 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-label-bold text-label-bold">Staff Settings</span>
+</a>
+</nav>
+<!-- Footer Navigation -->
+<div class="mt-auto px-2 pt-4 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all mx-2" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-bold text-label-bold">Help Center</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-secondary hover:bg-secondary-fixed rounded-lg transition-all mx-2" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-bold text-label-bold">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="h-screen overflow-y-auto custom-scrollbar flex flex-col">
+<!-- Top Header Action Bar -->
+<header class="bg-surface px-grid-margin py-6 border-b border-outline-variant flex items-center justify-between sticky top-0 z-10">
+<div>
+<h1 class="font-headline-md text-headline-md text-primary">Staff Management</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Real-time status and performance tracking for the global newsroom.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded focus:border-primary focus:ring-0 font-label-bold text-label-bold transition-all w-64" placeholder="Search staff..." type="text"/>
+</div>
+<button class="px-4 py-2 border-2 border-primary text-primary font-label-bold text-label-bold rounded hover:bg-primary hover:text-on-primary transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                        Filters
+                    </button>
+</div>
+</header>
+<div class="p-grid-margin space-y-stack-lg max-w-7xl">
+<!-- Metrics Overview Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Staff</p>
+<h3 class="font-headline-md text-headline-md text-primary mt-1">142</h3>
+<div class="mt-2 text-xs text-green-600 font-medium">+4 this month</div>
+</div>
+<div class="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Currently Active</p>
+<h3 class="font-headline-md text-headline-md text-primary mt-1">86</h3>
+<div class="mt-2 flex items-center">
+<span class="status-dot bg-green-500"></span>
+<span class="text-xs text-on-surface-variant">In Office/Remote</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">On Assignment</p>
+<h3 class="font-headline-md text-headline-md text-primary mt-1">24</h3>
+<div class="mt-2 flex items-center">
+<span class="status-dot bg-amber-500"></span>
+<span class="text-xs text-on-surface-variant">Field Reporting</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Avg Content Score</p>
+<h3 class="font-headline-md text-headline-md text-primary mt-1">8.4</h3>
+<div class="mt-2 w-full bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[84%]"></div>
+</div>
+</div>
+</div>
+<!-- Staff Table Container -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden">
+<table class="w-full border-collapse text-left">
+<thead class="bg-surface-container border-b border-outline-variant">
+<tr>
+<th class="py-4 px-6 font-label-bold text-label-bold text-on-surface uppercase">Name &amp; Role</th>
+<th class="py-4 px-6 font-label-bold text-label-bold text-on-surface uppercase">Status</th>
+<th class="py-4 px-6 font-label-bold text-label-bold text-on-surface uppercase text-center">Avg. Turnaround</th>
+<th class="py-4 px-6 font-label-bold text-label-bold text-on-surface uppercase text-center">Performance</th>
+<th class="py-4 px-6 font-label-bold text-label-bold text-on-surface uppercase text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded bg-surface-container-high object-cover" data-alt="A portrait of a senior political correspondent with salt-and-pepper hair, looking focused and intellectual. He wears a neutral-toned turtleneck and glasses. The background is a blurred newsroom with soft corporate lighting. High contrast, sharp focus, professional photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnnqurX_44GglgqQOcYzmBLdM-H7NHsEVdvjIETcctKFBgLt896UIUlWgmS6p0M5hm8ylxPpW3Ww4GyTyRKG5IPJAozGU7aiVwdj-Zy-Vjw_IKwwcMkkoxTGlkN8DsUJ5z6NvCZdCgoMDaLGgHTslb2XqAOZB_0plQ1TLavaGxOKJaNo_Eq34s6wjowpjX4Ah4rop_2-Sv-Waxdd_zVF0MUpOobGiDXHj2FT5UUJSk9_BKJEZO_WQ"/>
+<div>
+<div class="font-label-bold text-label-bold text-primary">Julian Thorne</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Senior Political Correspondent</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+<span class="status-dot bg-green-500"></span> Active
+                                    </span>
+</td>
+<td class="py-4 px-6 text-center font-label-bold text-label-bold text-on-surface">4.2h</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-outline-variant text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right space-x-2">
+<button class="p-2 text-primary hover:bg-primary hover:text-on-primary rounded transition-all" title="Quick Message">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+<button class="p-2 text-secondary border border-secondary hover:bg-secondary hover:text-on-secondary rounded transition-all" title="Assign Story">
+<span class="material-symbols-outlined" data-icon="assignment_add">assignment_add</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded bg-surface-container-high object-cover" data-alt="Close up of a young female journalist with a determined expression, wearing a weather-resistant olive jacket. She is in an outdoor urban setting with rainy, moody lighting. Professional documentary style photography, high clarity, natural colors with a slate grey undertone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZTcPtd6BnRnzupkZorerYXt7q8savsYsO0WzWorKlKy_6ZYbjSlZyjlwMPrBFQ3JyCmSSRolvE9irzReRiDGa2GMaegVPbq4hHJ4PusvBCRUKngeuKd31KEY1zAHoNbIme-QYrvdrpGgWNoH4HlyymlmpSbcM4n9ebEIjRa94WcD1UVy4UXd6ZPBsqpJch4wR6CCGhfn1hp7wasJjsgXeWu30cvjIQkoDDus79VeKubo15JUSK_c"/>
+<div>
+<div class="font-label-bold text-label-bold text-primary">Elena Rodriguez</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Field Reporter - Middle East</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+<span class="status-dot bg-amber-500"></span> On Assignment
+                                    </span>
+</td>
+<td class="py-4 px-6 text-center font-label-bold text-label-bold text-on-surface">6.8h</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right space-x-2">
+<button class="p-2 text-primary hover:bg-primary hover:text-on-primary rounded transition-all" title="Quick Message">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+<button class="p-2 text-secondary border border-secondary hover:bg-secondary hover:text-on-secondary rounded transition-all" title="Assign Story">
+<span class="material-symbols-outlined" data-icon="assignment_add">assignment_add</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded bg-surface-container-high object-cover" data-alt="Headshot of a male data journalist in his late 20s, smiling subtly. He wears a clean white shirt and is positioned against a background of multiple monitor screens showing complex data charts. High-tech, corporate environment, bright and clean light-mode aesthetic, professional portrait." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPWFmLLLDQzqnfPogmATwAPS0POl8ZFkKhh36kuxcsNE_K0psFG4DBE9iHGcZTrvuq_uDCbNTbRmeLITY7dPSop7NJb7M5AQSxODV0DiqSVs99ZJia0ZlgiURU0cC4Mf7GFIeaKZayLQDO4CJNBZvdvuP_S5Uzp5OhD8hj2k7DaDPriPKRMXZ3dVLCYQQd_72Ff9cYCAJbdhDfe8Ab6ipIcVy8xwkXh0A2WanjLoYLltma_usqeDo"/>
+<div>
+<div class="font-label-bold text-label-bold text-primary">Marcus Chen</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Data Investigative Editor</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+<span class="status-dot bg-red-500"></span> Out
+                                    </span>
+</td>
+<td class="py-4 px-6 text-center font-label-bold text-label-bold text-on-surface">3.5h</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-outline-variant text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-outline-variant text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right space-x-2">
+<button class="p-2 text-primary hover:bg-primary hover:text-on-primary rounded transition-all opacity-50 cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+<button class="p-2 text-secondary border border-secondary hover:bg-secondary hover:text-on-secondary rounded transition-all" title="Assign Story">
+<span class="material-symbols-outlined" data-icon="assignment_add">assignment_add</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded bg-surface-container-high object-cover" data-alt="Portrait of a senior female editor with silver hair, wearing a structured navy blazer and gold glasses. She is holding a tablet and looking towards the camera with a calm, expert expression. The lighting is sophisticated and warm, studio-quality, conveying wisdom and experience in journalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhKGsNIvcqSKQg0JrEGOzZnOqj8kmMxT6o917dhCaxkbex94nCYMWBe40LsZVPG-9XuBYOux3rHC9r6Af48zd9Zb6HAQFDGYqGwQtiIo6Tr5X9iC5QMDUnk1X0lp3DcUKAGkK_VCbpgAAiQqJwnym60bGV2QP1oEwwGG0LH20nciJKBDg5U53eyi_-qSfVrey9Emo9-qYEUirRFNCtGNjwrHmPMS_5Zl2VEiOOvkZeJ5k8FJpQvcQ"/>
+<div>
+<div class="font-label-bold text-label-bold text-primary">Sarah Jenkins</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Global Economy Editor</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+<span class="status-dot bg-green-500"></span> Active
+                                    </span>
+</td>
+<td class="py-4 px-6 text-center font-label-bold text-label-bold text-on-surface">5.1h</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-amber-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right space-x-2">
+<button class="p-2 text-primary hover:bg-primary hover:text-on-primary rounded transition-all" title="Quick Message">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+<button class="p-2 text-secondary border border-secondary hover:bg-secondary hover:text-on-secondary rounded transition-all" title="Assign Story">
+<span class="material-symbols-outlined" data-icon="assignment_add">assignment_add</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="px-6 py-4 bg-surface-container border-t border-outline-variant flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Showing 1 to 4 of 142 entries</span>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-xl">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary text-on-primary font-label-bold text-label-bold">1</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container-high font-label-bold text-label-bold">2</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container-high font-label-bold text-label-bold">3</button>
+<span class="px-2">...</span>
+<button class="w-8 h-8 rounded hover:bg-surface-container-high font-label-bold text-label-bold">36</button>
+<button class="p-1 rounded hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-xl">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Assignment Trends / Performance Board (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Column 1: Priority Queue -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-stack-md flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<h4 class="font-label-bold text-label-bold text-primary">Unassigned Hot Topics</h4>
+<span class="material-symbols-outlined text-secondary" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="space-y-stack-sm flex-grow">
+<div class="p-3 border-l-4 border-secondary bg-surface-container-low rounded">
+<p class="text-xs font-bold text-secondary uppercase mb-1">Breaking</p>
+<p class="font-label-bold text-label-bold text-on-surface mb-2">G7 Summit: Unexpected Trade Shift</p>
+<button class="text-xs font-bold text-primary hover:underline">Draft Brief →</button>
+</div>
+<div class="p-3 border-l-4 border-primary bg-surface-container-low rounded">
+<p class="text-xs font-bold text-primary uppercase mb-1">Analysis</p>
+<p class="font-label-bold text-label-bold text-on-surface mb-2">The Future of AI in Regional Markets</p>
+<button class="text-xs font-bold text-primary hover:underline">Draft Brief →</button>
+</div>
+</div>
+</div>
+<!-- Column 2: Activity Map (Placeholder) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-stack-md relative overflow-hidden">
+<div class="flex items-center justify-between mb-4 relative z-10">
+<h4 class="font-label-bold text-label-bold text-primary">Global Reporting Heatmap</h4>
+<span class="material-symbols-outlined text-outline" data-icon="map">map</span>
+</div>
+<div class="h-32 bg-surface-container-high rounded flex items-center justify-center relative">
+<img class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A stylized digital world map showing heat clusters in major global cities like New York, London, Tokyo, and Dubai. The aesthetic is data-driven and modern, with thin glowing lines and subtle circular pulses indicating active reporting locations. Palette is predominantly deep navy and slate with soft white highlights." data-location="Global" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF46L1-Y3EmuWa21k5mrRQBA22HUrlcuJ1jiWebWC2qBvumZY9-RF_QZV-S-nmMSEUwI7jxIAFQ4W5CrFrXJF0QCqR3zDNxQLXX1QUBU3yRmLwp9f70hwhi0ljq6eIA86NU2RVsPpJfW2pWxe4YgY90nblp6bVCzLiA159g-bg_9U_muQTP7n3jv0JQrWaI7ezSwTqoRkTvECGqPIJI6W4-S4VZ9HwEjdv47ZHi0N8CazTHuD5NSM"/>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<p class="font-label-bold text-label-bold text-primary">12 Active Regions</p>
+<p class="text-[10px] text-on-surface-variant">Live Dispatch View</p>
+</div>
+</div>
+<div class="mt-4 flex gap-4">
+<div class="flex-1 text-center">
+<p class="text-[10px] text-on-surface-variant uppercase">Europe</p>
+<p class="font-label-bold text-label-bold">8</p>
+</div>
+<div class="flex-1 text-center border-x border-outline-variant">
+<p class="text-[10px] text-on-surface-variant uppercase">Asia</p>
+<p class="font-label-bold text-label-bold">14</p>
+</div>
+<div class="flex-1 text-center">
+<p class="text-[10px] text-on-surface-variant uppercase">NA</p>
+<p class="font-label-bold text-label-bold">22</p>
+</div>
+</div>
+</div>
+<!-- Column 3: Quick Desk Actions -->
+<div class="bg-primary text-on-primary border border-primary rounded-lg p-stack-md flex flex-col justify-between">
+<div>
+<h4 class="font-label-bold text-label-bold mb-4">Editorial Desk Quick-Sync</h4>
+<p class="font-body-md text-body-md text-on-primary-container leading-snug">Sync all active field reports with the main editorial calendar for the next 24h cycle.</p>
+</div>
+<div class="space-y-2 mt-4">
+<button class="w-full py-2 bg-secondary text-on-secondary rounded font-label-bold text-label-bold hover:brightness-110 transition-all">Broadcast Emergency Alert</button>
+<button class="w-full py-2 border border-on-primary text-on-primary rounded font-label-bold text-label-bold hover:bg-on-primary hover:text-primary transition-all">Export Staff Audit</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Area (Admin specific) -->
+<footer class="mt-auto py-stack-md border-t-4 border-secondary bg-primary flex flex-col items-center justify-center space-y-stack-md w-full px-grid-margin">
+<div class="font-headline-md text-headline-md font-bold text-on-primary tracking-tighter">MINBAR NEWS</div>
+<div class="flex flex-wrap justify-center gap-x-gutter gap-y-2">
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Admin Dashboard</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Staff Compliance</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Privacy Protocols</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">CMS Manual</a>
+</div>
+<div class="font-body-md text-body-md text-on-primary opacity-80">© 2024 Minbar News. Truth. Perspective. Impact.</div>
+</footer>
+</main>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        // Simple search highlighting
+        const searchInput = document.querySelector('input[placeholder="Search staff..."]');
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const name = row.querySelector('.font-label-bold').textContent.toLowerCase();
+                if(name.includes(term)) {
+                    row.style.display = 'table-row';
+                    row.style.opacity = '1';
+                } else {
+                    row.style.display = 'none';
+                    row.style.opacity = '0';
+                }
+            });
+        });
+
+        // Toggle Active States on Sidebar (Visual Only)
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => {
+                    l.classList.remove('bg-primary', 'text-on-primary');
+                    l.classList.add('text-on-surface-variant');
+                });
+                link.classList.add('bg-primary', 'text-on-primary');
+                link.classList.remove('text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Minbar News | Newsletter Archive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:wght@600;700;900&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#7c879c",
+                    "tertiary-container": "#141f30",
+                    "primary-fixed": "#d8e2ff",
+                    "outline": "#75777f",
+                    "primary-container": "#0c1e3d",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "inverse-surface": "#2d3133",
+                    "secondary-container": "#ff5a52",
+                    "secondary": "#b52424",
+                    "on-surface-variant": "#44474e",
+                    "surface-container": "#ebeef0",
+                    "secondary-fixed": "#ffdad6",
+                    "on-secondary-fixed": "#410003",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#b6c6ee",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "surface-dim": "#d7dadc",
+                    "on-surface": "#181c1e",
+                    "surface-tint": "#4e5e81",
+                    "on-secondary-fixed-variant": "#92030f",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#374768",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#ffb4ac",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f7fafc",
+                    "on-secondary-container": "#600006",
+                    "on-primary-container": "#7686ab",
+                    "inverse-on-surface": "#eef1f3",
+                    "on-background": "#181c1e",
+                    "surface-container-low": "#f1f4f6",
+                    "inverse-primary": "#b6c6ee",
+                    "surface-bright": "#f7fafc",
+                    "tertiary-fixed": "#d8e3fa",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#000613",
+                    "on-primary-fixed": "#081b3a",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f7fafc",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "section-gap": "64px",
+                    "grid-margin": "24px",
+                    "stack-md": "16px",
+                    "gutter": "20px"
+            },
+            "fontFamily": {
+                    "label-bold": ["IBM Plex Sans"],
+                    "display-lg": ["\"Source Serif 4\""],
+                    "body-md": ["Work Sans"],
+                    "label-sm": ["IBM Plex Sans"],
+                    "body-lg": ["Work Sans"],
+                    "headline-lg-mobile": ["\"Source Serif 4\""],
+                    "headline-lg": ["\"Source Serif 4\""],
+                    "headline-md": ["\"Source Serif 4\""]
+            },
+            "fontSize": {
+                    "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab {
+            border-bottom: 2px solid #b52424;
+            color: #b52424;
+        }
+        .editorial-line {
+            height: 1px;
+            background: linear-gradient(to right, #b52424, transparent);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopNavBar -->
+<header class="bg-surface docked full-width top-0 border-b border-outline-variant z-50 sticky">
+<div class="flex justify-between items-center w-full px-grid-margin py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-8">
+<a class="font-display-lg text-display-lg font-bold tracking-tight text-primary" href="#">MINBAR NEWS</a>
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-label-bold text-label-bold text-on-surface hover:text-secondary transition-colors" href="#">World</a>
+<a class="font-label-bold text-label-bold text-on-surface hover:text-secondary transition-colors" href="#">Politics</a>
+<a class="font-label-bold text-label-bold text-on-surface hover:text-secondary transition-colors" href="#">Economy</a>
+<a class="font-label-bold text-label-bold text-on-surface hover:text-secondary transition-colors" href="#">Analysis</a>
+<a class="font-label-bold text-label-bold text-on-surface hover:text-secondary transition-colors" href="#">Tech</a>
+<a class="font-label-bold text-label-bold text-on-surface hover:text-secondary transition-colors" href="#">Climate</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-low transition-all rounded-full">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low transition-all rounded-full">
+<span class="material-symbols-outlined text-primary">person</span>
+</button>
+<button class="bg-primary text-on-primary px-6 py-2 font-label-bold text-label-bold rounded-none hover:bg-opacity-90 transition-all">Subscribe</button>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-grid-margin py-stack-lg">
+<!-- Hero Section: Subscription Value Prop -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center mb-section-gap">
+<div class="md:col-span-7 flex flex-col gap-stack-md">
+<div class="flex items-center gap-2 text-secondary font-label-bold uppercase tracking-widest">
+<span class="w-8 h-[2px] bg-secondary"></span>
+                    Global Intelligence
+                </div>
+<h1 class="font-display-lg text-display-lg md:text-[64px] md:leading-[72px] tracking-tight">
+                    Truth. Perspective. Impact.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    Join 250,000+ global citizens who start their day with Minbar's rigorous analysis. No noise, just the stories that shape our world.
+                </p>
+<form class="mt-stack-md flex flex-col sm:flex-row gap-0 max-w-lg">
+<input class="flex-grow border border-outline px-4 py-4 bg-surface focus:ring-2 focus:ring-primary focus:border-primary outline-none text-body-md rounded-none" placeholder="Enter your email address" type="email"/>
+<button class="bg-primary text-on-primary px-8 py-4 font-label-bold text-label-bold hover:bg-opacity-90 transition-all uppercase" type="submit">Join Now</button>
+</form>
+<p class="font-label-sm text-label-sm text-outline">Free daily brief. Unsubscribe anytime.</p>
+</div>
+<div class="md:col-span-5 relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover grayscale-[0.2] hover:scale-105 transition-transform duration-700" data-alt="A professional editorial-style photograph of a minimalist office space with a large window overlooking a blurred metropolitan city skyline at dawn. A tablet sits on a dark wooden desk displaying a clean, high-contrast news interface with a bold red header. The lighting is soft and corporate, creating a mood of quiet focus and intellectual authority. The color palette is dominated by deep blues, crisp whites, and sharp red accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjDjqIe1SdnfNg0KHxQvW9au5NRuSnO2iae4gkypcK0B_9njKY_5YKit0XxgcWWME31G51v_wh0YBEpw_0SwWqWoAy908NcWbV2k1Xsyi-o0pdR2LVeX906LMjy2751XuJX_VQG87jPJzirmN2dGARB3cu-IDreCEYe_i_F-jJUSBrZm5bVJmDvM3b_KUDVbPkxAbNquKvWhjy9LKaMwodH1IcC59pQJtAne1kOxPtjId5elfjVJQ"/>
+<div class="absolute inset-0 border-[16px] border-surface pointer-events-none"></div>
+</div>
+</section>
+<!-- Newsletter Category Navigation -->
+<section class="mb-stack-lg border-b border-outline-variant">
+<div class="flex flex-wrap gap-stack-lg overflow-x-auto no-scrollbar">
+<button class="pb-stack-sm font-label-bold text-label-bold active-tab whitespace-nowrap transition-all uppercase">All Archives</button>
+<button class="pb-stack-sm font-label-bold text-label-bold text-on-surface-variant hover:text-secondary whitespace-nowrap transition-all uppercase">Daily Brief</button>
+<button class="pb-stack-sm font-label-bold text-label-bold text-on-surface-variant hover:text-secondary whitespace-nowrap transition-all uppercase">Weekly Digest</button>
+<button class="pb-stack-sm font-label-bold text-label-bold text-on-surface-variant hover:text-secondary whitespace-nowrap transition-all uppercase">Breaking Alerts</button>
+<button class="pb-stack-sm font-label-bold text-label-bold text-on-surface-variant hover:text-secondary whitespace-nowrap transition-all uppercase">Tech Dispatch</button>
+</div>
+</section>
+<!-- Archive Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-section-gap">
+<!-- Newsletter Card 1: Featured -->
+<article class="flex flex-col gap-stack-md group cursor-pointer">
+<div class="editorial-line w-full mb-1"></div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline uppercase tracking-wider">
+<span>Daily Brief</span>
+<span>October 24, 2024</span>
+</div>
+<div class="overflow-hidden aspect-video relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-contrast wide-angle photograph of a modern stock exchange floor with digital ticker displays glowing in vibrant red and blue against a dark, professional interior. Motion blur from busy traders creates a sense of speed and high-stakes financial activity. The image has a clean, editorial aesthetic with sharp focus on the data screens, reflecting global economic movement and market authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqJtOet8amCceEAR9gcw7OrMcdnyH4rVzlH6tlww-Lf4iy1FOkOEPOpX9IhVf6rxdj5MdEe6rkjEPRme8Ybj1TZV1DejncnHoJlOYL6eI4fFgiLB78Fmjw-KjAngzkDXp115gk6t3Zfnk-j8yrrC1jV-InotLBELEX1eylh-qMta73PifjHg-gEbue_hsxnm0ekOs8h6O3VlXZ3UdZ3SLPKyCjtfi7pBTpKiVdBqwWqUuPCv4fjdU"/>
+<div class="absolute top-4 left-4 bg-secondary text-on-primary px-3 py-1 font-label-sm text-label-sm font-bold uppercase">Must Read</div>
+</div>
+<h2 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">The Pivot Point: Global Markets and the Energy Transition</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                    As major economies re-evaluate their reliance on traditional fuel sources, a new geopolitical map is emerging. We explore the winners, the losers, and the hidden costs of the 2025 energy mandate.
+                </p>
+<a class="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link" href="#">
+                    Read Full Brief
+                    <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</article>
+<!-- Newsletter Card 2 -->
+<article class="flex flex-col gap-stack-md group cursor-pointer">
+<div class="editorial-line w-full mb-1"></div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline uppercase tracking-wider">
+<span>Weekly Digest</span>
+<span>October 20, 2024</span>
+</div>
+<div class="overflow-hidden aspect-video">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist architectural photograph of a futuristic library or research center featuring vast glass walls and clean white geometric structures. The scene is illuminated by crisp morning light, casting long shadows across a polished grey floor. A few silhouetted figures move through the space, emphasizing a mood of knowledge, transparency, and modern intellectual progress. The aesthetic is corporate and highly structured." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtLIcLquq2Tl5s99fShXG3KxcszCfh7FZmFi_sDZoh3u6rFShFVJlMlyTqoNX9SunVw-zUAFx5bFg5e99alzqpN1Vwp1Lvm72QR1wzHf6dyrPAjirMPWr1unTx3Nir2pYXn6RLyea578V9p-wWAxK2hBvacMC7eDOXruyhNLTNJYZevgEO5P_SpEqQKZ3lRLPnygzIAuQDokhM7t0pedGLmro3NHgHP4kBr5-li1yDMTRlI2R9b7E"/>
+</div>
+<h2 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Weekly Digest: The Architecture of Intelligence</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                    A deep dive into how silicon valley is rethinking urban planning through the lens of artificial intelligence and community-driven data.
+                </p>
+<a class="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link" href="#">
+                    Read Full Brief
+                    <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</article>
+<!-- Newsletter Card 3 -->
+<article class="flex flex-col gap-stack-md group cursor-pointer">
+<div class="editorial-line w-full mb-1"></div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline uppercase tracking-wider">
+<span>Breaking Alerts</span>
+<span>October 19, 2024</span>
+</div>
+<div class="overflow-hidden aspect-video">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An atmospheric aerial view of a dense, neon-lit cityscape at night, with rivers of light from traffic flowing between dark skyscrapers. The lighting is dominated by cold blues and hot red accents from signage, creating a high-contrast 'Breaking News' atmosphere. The image communicates the fast-paced, interconnected nature of global urban life and the constant flow of information in a digital age." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3ssSGZzxO-X462Oe8q0p2RfQwNGB7Jt9-NLM1qZL8QqrjKYmo3PJXY7R-NplqQX6pjgYrTuWXIGiCDDqPsbaB2WgfYpeOdkrde942uaLSmk7-CF4dNhxq-t1w7SXwSxFe_CkOplpofXjuz722EQjEZCSGG30Ah9LTdOZBnm6g8RNxLOF4S9d44maN-VItmq4hgLD8Bl2nx_wqy-sXwqYrXsv-ky9PgATrZ-24XFr2PUUlE8FVccI"/>
+</div>
+<h2 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Alert: Global Supply Chain Disruptions Intensify</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                    Instant analysis on the port closures across three continents and the projected impact on holiday retail pricing. 
+                </p>
+<a class="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link" href="#">
+                    Read Full Brief
+                    <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</article>
+<!-- Newsletter Card 4 -->
+<article class="flex flex-col gap-stack-md group cursor-pointer">
+<div class="editorial-line w-full mb-1"></div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline uppercase tracking-wider">
+<span>Daily Brief</span>
+<span>October 18, 2024</span>
+</div>
+<h2 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Diplomatic Shifts in the Indo-Pacific</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                    The latest treaty signatures could redefine regional security for the next decade. Our experts weigh in on the strategic implications.
+                </p>
+<a class="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link" href="#">
+                    Read Full Brief
+                    <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</article>
+<!-- Newsletter Card 5 -->
+<article class="flex flex-col gap-stack-md group cursor-pointer">
+<div class="editorial-line w-full mb-1"></div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline uppercase tracking-wider">
+<span>Daily Brief</span>
+<span>October 17, 2024</span>
+</div>
+<h2 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Fintech: The Death of the Physical Card?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                    Consumer behavior is shifting faster than the banking infrastructure. Why 2024 is the tipping point for biometric payments.
+                </p>
+<a class="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link" href="#">
+                    Read Full Brief
+                    <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</article>
+<!-- Newsletter Card 6 -->
+<article class="flex flex-col gap-stack-md group cursor-pointer">
+<div class="editorial-line w-full mb-1"></div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline uppercase tracking-wider">
+<span>Daily Brief</span>
+<span>October 16, 2024</span>
+</div>
+<h2 class="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Climate: The Rise of Regenerative Urbanism</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                    How cities in arid regions are using centuries-old techniques combined with modern sensors to solve water scarcity.
+                </p>
+<a class="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link" href="#">
+                    Read Full Brief
+                    <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</article>
+</section>
+<!-- Pagination -->
+<div class="mt-section-gap flex items-center justify-center gap-4">
+<button class="p-3 border border-outline hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<span class="font-label-bold text-label-bold text-primary px-4">Page 1 of 42</span>
+<button class="p-3 border border-outline hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</main>
+<!-- Mid-Page CTA Section -->
+<section class="bg-primary py-section-gap">
+<div class="max-w-7xl mx-auto px-grid-margin grid grid-cols-1 md:grid-cols-2 gap-stack-lg items-center">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-primary mb-stack-md">Never miss a perspective.</h2>
+<p class="font-body-lg text-body-lg text-on-primary-container">
+                    Get our premium Weekly Digest sent straight to your inbox every Sunday morning. Expert curation of the week's most critical developments.
+                </p>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex gap-0">
+<input class="flex-grow border-none px-4 py-4 bg-surface text-primary focus:ring-0 outline-none rounded-none" placeholder="Email Address" type="email"/>
+<button class="bg-secondary text-on-primary px-8 py-4 font-label-bold text-label-bold hover:bg-opacity-90 transition-all uppercase">Get Digest</button>
+</div>
+<div class="flex items-center gap-4 text-on-primary-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-label-sm text-label-sm">No Spam</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span class="font-label-sm text-label-sm">Data Secured</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-grid-margin mt-section-gap flex flex-col items-center gap-stack-md bg-primary border-t-4 border-secondary">
+<div class="font-headline-md text-headline-md font-black text-on-primary mb-4 uppercase tracking-tighter">MINBAR NEWS AGENCY</div>
+<div class="flex flex-wrap justify-center gap-stack-lg mb-8">
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Archive</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Ethics Code</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Contact Us</a>
+</div>
+<div class="flex gap-6 mb-8">
+<a class="text-on-primary opacity-80 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="text-on-primary opacity-80 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined">rss_feed</span>
+</a>
+<a class="text-on-primary opacity-80 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined">mail</span>
+</a>
+</div>
+<p class="font-label-sm text-label-sm text-on-primary opacity-60 text-center max-w-2xl px-4">
+            © 2024 Minbar News Agency. All rights reserved. Global Editorial Standards Applied. Information published here is subject to rigorous fact-checking and independent verification by our international bureau.
+        </p>
+</footer>
+<script>
+        // Micro-interactions for form focus
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('ring-2', 'ring-secondary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('ring-2', 'ring-secondary');
+            });
+        });
+
+        // Simple tab switching logic simulation
+        const tabs = document.querySelectorAll('button.whitespace-nowrap');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('active-tab');
+                    t.classList.add('text-on-surface-variant');
+                });
+                tab.classList.add('active-tab');
+                tab.classList.remove('text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

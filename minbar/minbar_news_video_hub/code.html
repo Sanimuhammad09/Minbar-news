@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Minbar News | Video Hub</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:wght@600;700&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Shared Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#141f30",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#e5e9eb",
+                    "secondary-fixed": "#ffdad6",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-background": "#181c1e",
+                    "on-primary-container": "#7686ab",
+                    "secondary-container": "#ff5a52",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "outline-variant": "#c5c6cf",
+                    "error": "#ba1a1a",
+                    "inverse-on-surface": "#eef1f3",
+                    "surface-container-low": "#f1f4f6",
+                    "surface": "#f7fafc",
+                    "surface-bright": "#f7fafc",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#374768",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#0c1e3d",
+                    "primary": "#000516",
+                    "on-surface-variant": "#44474e",
+                    "on-primary-fixed": "#081b3a",
+                    "surface-container": "#ebeef0",
+                    "inverse-primary": "#b6c6ee",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-dim": "#d7dadc",
+                    "secondary-fixed-dim": "#ffb4ac",
+                    "primary-fixed": "#d8e2ff",
+                    "tertiary-fixed": "#d8e3fa",
+                    "surface-variant": "#e0e3e5",
+                    "background": "#f7fafc",
+                    "on-secondary-fixed-variant": "#92030f",
+                    "tertiary": "#000613",
+                    "secondary": "#b52424",
+                    "surface-tint": "#4e5e81",
+                    "on-surface": "#181c1e",
+                    "on-secondary-container": "#600006",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "primary-fixed-dim": "#b6c6ee",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#7c879c",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "outline": "#75777f",
+                    "on-secondary-fixed": "#410003"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "grid-margin": "24px",
+                    "stack-lg": "32px",
+                    "section-gap": "64px",
+                    "gutter": "20px"
+            },
+            "fontFamily": {
+                    "label-sm": ["IBM Plex Sans"],
+                    "label-bold": ["IBM Plex Sans"],
+                    "headline-lg": ["\"Source Serif 4\""],
+                    "headline-md": ["\"Source Serif 4\""],
+                    "display-lg": ["\"Source Serif 4\""],
+                    "body-lg": ["Work Sans"],
+                    "body-md": ["Work Sans"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chat-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .news-ticker-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .news-ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- Top News Ticker -->
+<div class="bg-secondary text-on-secondary py-2 overflow-hidden sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-grid-margin flex items-center">
+<span class="font-label-bold text-label-bold uppercase bg-on-secondary text-secondary px-2 py-0.5 mr-4 shrink-0">Breaking</span>
+<div class="news-ticker-container flex-1">
+<p class="news-ticker-content font-label-bold text-label-bold">
+                    Global Markets React to New Economic Policy Shifts • Peace Talks Resume in Central Summit • Breakthrough in Renewable Energy Grid Efficiency Announced • Live Coverage of Presidential Press Briefing Starting Soon
+                </p>
+</div>
+</div>
+</div>
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant w-full">
+<div class="flex flex-col w-full px-grid-margin py-4 max-w-7xl mx-auto">
+<div class="flex items-center justify-between">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter">MINBAR NEWS</h1>
+<div class="flex items-center gap-stack-md">
+<div class="hidden md:flex items-center bg-surface-container-low px-4 py-2 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-sm w-48" placeholder="Search broadcasts..." type="text"/>
+</div>
+<button class="flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+<nav class="mt-4 flex items-center justify-between border-t border-outline-variant pt-4 overflow-x-auto">
+<ul class="flex gap-stack-lg shrink-0">
+<li class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors cursor-pointer">World</li>
+<li class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Politics</li>
+<li class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Economy</li>
+<li class="font-label-bold text-label-bold uppercase text-secondary border-b-2 border-secondary pb-1 cursor-pointer">Live</li>
+<li class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Analysis</li>
+<li class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Opinion</li>
+</ul>
+<div class="hidden lg:block">
+<button class="bg-secondary text-on-secondary px-4 py-2 font-label-bold text-label-bold uppercase tracking-widest hover:opacity-90 transition-opacity">
+                        Breaking
+                    </button>
+</div>
+</nav>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-grid-margin py-stack-lg">
+<!-- Main Featured Video Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
+<div class="lg:col-span-8 flex flex-col gap-stack-md">
+<!-- Video Player Container -->
+<div class="relative aspect-video bg-black group overflow-hidden border border-outline-variant">
+<div class="w-full h-full bg-cover bg-center" data-alt="A cinematic, high-quality video freeze frame of a global news broadcast anchor in a state-of-the-art glass studio with a deep navy and red digital backdrop. The lighting is sophisticated and professional, creating an atmosphere of authority. Digital data visualizations and world maps are subtly visible in the background, maintaining the corporate modern aesthetic of Minbar News." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlUKDb6_Ay27XZr4Zl5xXYqP-h2sXPTTvB8t6gCTKoMfh8fKjFOOsWB9Jvzdvumsrp3FLHN9LFsNh50ZqehVs_dQvpEERmSabkixnH0J68KaI8J1cS_EF9TIk6nCeJs45jR7za6-OS2BSMRvnMOklHQu9x5fq7ASv3RfjIPdo17damIlqoMUGEn5aMBhdZpaZSeURgQ6OsWQp-nnfSoHvcUEL5UO41yPi3_aC1j-DEiChvRMgvaJ4')"></div>
+<!-- Overlay Controls -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-stack-lg">
+<div class="flex items-center justify-between text-white">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined cursor-pointer" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span class="material-symbols-outlined cursor-pointer">volume_up</span>
+<span class="text-label-sm">LIVE | 12,403 viewers</span>
+</div>
+<span class="material-symbols-outlined cursor-pointer">fullscreen</span>
+</div>
+<div class="w-full bg-white/20 h-1 mt-4">
+<div class="bg-secondary w-full h-full"></div>
+</div>
+</div>
+<!-- Live Badge -->
+<div class="absolute top-4 left-4 bg-secondary text-white px-3 py-1 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+<span class="font-label-bold text-label-sm uppercase tracking-widest">Live Now</span>
+</div>
+</div>
+<!-- Video Info -->
+<div class="py-stack-md">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-2">Global Summit: Decisive Agreements on Climate and Trade Security</h2>
+<div class="flex items-center gap-stack-lg text-on-surface-variant font-label-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">calendar_today</span> Oct 24, 2024</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">visibility</span> 1.2M views</span>
+<span class="flex items-center gap-1 text-secondary font-bold uppercase tracking-tighter">Minbar Exclusive Broadcast</span>
+</div>
+<p class="mt-4 text-body-md text-on-surface-variant max-w-3xl">
+                        Join our lead correspondents live from the International Summit Hall as global leaders sign the historic treaty. We provide deep analysis on the economic ramifications and what this means for the global trade landscape over the next decade.
+                    </p>
+</div>
+</div>
+<!-- Live Chat Overlay / Sidebar -->
+<aside class="lg:col-span-4 h-[500px] lg:h-auto flex flex-col border border-outline-variant bg-surface-container-low">
+<div class="p-4 border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-label-bold text-label-bold uppercase">Live Chat</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">more_vert</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4 chat-scroll">
+<!-- Chat Messages -->
+<div class="flex flex-col gap-1">
+<span class="font-label-bold text-label-sm text-secondary">Ahmad Khalil</span>
+<p class="text-body-md text-on-surface-variant leading-tight bg-white p-3 rounded-lg border border-slate-100">The implications for the energy sector are massive.</p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-bold text-label-sm text-on-primary-fixed-variant">Sarah Jenkins</span>
+<p class="text-body-md text-on-surface-variant leading-tight bg-white p-3 rounded-lg border border-slate-100">Does anyone have the full text of the trade agreement yet?</p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-bold text-label-sm text-secondary">Moderator</span>
+<p class="text-body-md text-secondary leading-tight italic">Welcome to the Minbar News Live Portal. Please keep discussions professional.</p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-bold text-label-sm text-primary">Dr. Marcus Vane</span>
+<p class="text-body-md text-on-surface-variant leading-tight bg-white p-3 rounded-lg border border-slate-100">Watching closely from Singapore. The carbon tax credits are the real story here.</p>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface">
+<div class="relative">
+<input class="w-full bg-surface-container text-body-md border border-outline-variant px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Join the discussion..." type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-primary">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</aside>
+</section>
+<!-- Latest Broadcasts Grid -->
+<section class="mb-section-gap">
+<div class="flex items-center justify-between mb-stack-lg border-b-4 border-secondary pb-2">
+<h3 class="font-headline-md text-headline-md text-primary">Latest Broadcasts</h3>
+<a class="font-label-bold text-label-sm text-secondary uppercase hover:underline" href="#">View All Archive</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Video Card 1 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video mb-3 overflow-hidden border border-outline-variant">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A high-contrast wide shot of a futuristic urban skyline at dusk, with digital overlays showing stock market fluctuations. The scene is crisp and professional, using a cool blue and deep navy palette with subtle red accent lines, perfectly aligning with the corporate modern Minbar News aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAluMMJmYsf5gIyWfoME5WOQCQGyp9DOOfS-ebnZyhp87pLQGLQRPGJ2-yGGD9pb4a92lvgv8UB34leuHLii3Bj5np65qA60fXT_kjDeUzGMR3foe5SxiLkaD8h2KXs6UscRJQ7xYMdhByxSRIt9Ly8Q1-sU6VPKrqs3viJ4bt_Rq3LZLSvciFBCf80Ay96b8sPJzVDACjE1zZuMqRF65gEg4XfSWvXvFzQUPey2a3RsPTwDSRme2k')"></div>
+<span class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1 font-label-bold">12:45</span>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[48px]" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<div class="border-t-2 border-slate-200 pt-2">
+<span class="font-label-bold text-label-sm text-secondary uppercase">Economy</span>
+<h4 class="font-label-bold text-body-lg text-primary mt-1 line-clamp-2">Quarterly Analysis: Tech Sector Resiliency in Emerging Markets</h4>
+<p class="text-label-sm text-on-surface-variant mt-2">2 hours ago • 45k views</p>
+</div>
+</article>
+<!-- Video Card 2 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video mb-3 overflow-hidden border border-outline-variant">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Close-up of a high-tech robotic arm in a brightly lit, sterile laboratory setting. The background is slightly blurred, focusing on the intricate mechanical details. The image is clean and minimalist with professional studio lighting, using a palette of white, silver, and deep navy accents." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD07kzNDb-InHEaR9Fi565gnWqMm-RAanWEzqMLV8vL00G-M4_YpwVtHTWukkkzj7JRISIRl08olldfdIEYYpdWUG8kf7I8KyOWkmR2-noPIletdRQJgyfsUBE9oDKFqYSODZ9SQ5wrU5mL2z8aZ6Oecx5ThSJ8-qzexQ2JO3JZC8fZy8tJLEoRK4FtFFNRs5v0PnhfiWmMstERmDzyPlHKGMpI_HRuERpM4nYEYK1461W24wC5PjI')"></div>
+<span class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1 font-label-bold">08:20</span>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[48px]" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<div class="border-t-2 border-slate-200 pt-2">
+<span class="font-label-bold text-label-sm text-secondary uppercase">Science</span>
+<h4 class="font-label-bold text-body-lg text-primary mt-1 line-clamp-2">Automation Frontiers: The Next Phase of Industrial Evolution</h4>
+<p class="text-label-sm text-on-surface-variant mt-2">5 hours ago • 12k views</p>
+</div>
+</article>
+<!-- Video Card 3 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video mb-3 overflow-hidden border border-outline-variant">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A dramatic aerial perspective of a massive container ship entering a busy global port at sunrise. The warm golden light of the sun creates high contrast against the deep blue sea. The composition is structured and powerful, reflecting the themes of global trade and impact inherent to Minbar News." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRO_Bdf7D8oP30anOqX7knxK3VyZzotA4QSfYG1I7mNlJdyyKFjGs9KeMC1nN5xzAsZXCwyEwdKUjCMa3GdHldkXB45GRR87Op34Yp-4-B5cI0MluCQ305UBJn2dAHZvZiXGZn2OuOkIiPjKawyg_ONdK1zvXUcnWEqa3Uef7-BBEhq7rQUVuA79aBBVPNwEKEZoc_kE_1GWLK_zkEOXNxLOh545tX8O1Lv_Jhw9NFUFPgBtrPFSU')"></div>
+<span class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1 font-label-bold">15:10</span>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[48px]" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<div class="border-t-2 border-slate-200 pt-2">
+<span class="font-label-bold text-label-sm text-secondary uppercase">Trade</span>
+<h4 class="font-label-bold text-body-lg text-primary mt-1 line-clamp-2">Supply Chain Realignment: Navigating the New Maritime Corridors</h4>
+<p class="text-label-sm text-on-surface-variant mt-2">Yesterday • 89k views</p>
+</div>
+</article>
+<!-- Video Card 4 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video mb-3 overflow-hidden border border-outline-variant">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A professional documentary-style portrait of a world-renowned diplomat in a wood-paneled library. The lighting is low-key and dramatic, emphasizing wisdom and authority. The color palette is dominated by deep browns, rich navy blues, and subtle red details in the diplomat's attire." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDyUcyURWr5Hi26efivvlP_47f8-4ctx_1UiwMqfAqrqbI6VCSaOugm1u10gUM76ms01ycX23PNr-2AlY_baUkbqNvS6HY3zbMZ4NzqopBiDpRjfXBlf1vKgsmgRUWfFomdlfaNf9UjrkN_Sfv7zRw5lNp_K_9Toq8TaE68gNgV0ekFB-ZSfp_KtJcrNQuuk3oWiJTfHuBzng71s_MEKau3ojsd1CwCpWq9a7GvTsELgmka9ouU_J8')"></div>
+<span class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1 font-label-bold">22:30</span>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[48px]" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<div class="border-t-2 border-slate-200 pt-2">
+<span class="font-label-bold text-label-sm text-secondary uppercase">Documentary</span>
+<h4 class="font-label-bold text-body-lg text-primary mt-1 line-clamp-2">Legacy of Diplomacy: Behind the Closed Doors of History</h4>
+<p class="text-label-sm text-on-surface-variant mt-2">2 days ago • 150k views</p>
+</div>
+</article>
+</div>
+</section>
+<!-- Category Playlists / Bento Grid Layout -->
+<section>
+<div class="flex items-center justify-between mb-stack-lg border-b-4 border-primary pb-2">
+<h3 class="font-headline-md text-headline-md text-primary uppercase tracking-tight">Curated Channels</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Large Featured Category -->
+<div class="md:col-span-2 relative group overflow-hidden h-80 border border-outline-variant">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" data-alt="A series of cinematic, high-definition video thumbnails arranged in a sleek digital gallery. The imagery showcases diverse global events—from space exploration to humanitarian efforts—all treated with a consistent professional color grading of deep navy and sharp highlights. The overall mood is one of comprehensive global coverage and impact." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDbebRcGBbjtviJpgS_HKHThUrNu-ggpgW9wOfK_D3u0s9jCwHxQVo02XOiqKhuYq1yn08rsnuwtaQXZ3b0pbKM6a9dMZDvncJdZCg9LkE0Vn-ye4QoU1Ot8K_U_mdnXP19D6GfVMTyrBgZ9XjswGUlXx-FKA_ydTRDS8m926FO7F57IhGYjRMztRDd3oKbubeLmX8zjFRk0j8NJkElVMVNruqN2dxYqpta_Nd5Tew0KGUXItNVAvU')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/40 to-transparent flex flex-col justify-center p-stack-lg">
+<span class="font-label-bold text-label-sm text-secondary-fixed-dim uppercase tracking-[0.2em] mb-2">Signature Series</span>
+<h3 class="font-display-lg text-white max-w-sm mb-4">Minbar Documentaries</h3>
+<p class="text-white/80 text-body-md max-w-sm mb-6">Deep-dive investigative journalism exploring the stories that shape our world.</p>
+<button class="w-fit bg-white text-primary px-6 py-2 font-label-bold text-label-bold uppercase flex items-center gap-2 hover:bg-secondary hover:text-white transition-colors">
+                            Explore Channel <span class="material-symbols-outlined">trending_flat</span>
+</button>
+</div>
+</div>
+<!-- Column of smaller categories -->
+<div class="flex flex-col gap-gutter">
+<div class="flex-1 bg-tertiary-container text-white p-stack-lg border border-outline-variant group hover:bg-secondary transition-colors cursor-pointer relative overflow-hidden">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-secondary group-hover:text-white mb-2">bolt</span>
+<h4 class="font-headline-md text-headline-md">Short Clips</h4>
+<p class="text-white/60 group-hover:text-white/90 text-label-sm mt-1">Key highlights in under 3 minutes.</p>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-[120px] opacity-10 rotate-12">movie</span>
+</div>
+<div class="flex-1 bg-surface-container-high p-stack-lg border border-outline-variant group hover:border-primary transition-all cursor-pointer relative">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-primary mb-2">podcasts</span>
+<h4 class="font-headline-md text-headline-md text-primary">Live Briefings</h4>
+<p class="text-on-surface-variant text-label-sm mt-1">Daily updates from our global bureaus.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-primary text-on-primary w-full border-t-4 border-secondary mt-section-gap">
+<div class="flex flex-col items-center justify-center space-y-stack-md w-full px-grid-margin py-stack-lg max-w-7xl mx-auto">
+<div class="w-full flex flex-col md:flex-row justify-between items-center gap-stack-lg border-b border-white/10 pb-stack-lg">
+<h2 class="font-headline-md text-headline-md font-bold text-on-primary">MINBAR NEWS</h2>
+<div class="flex flex-wrap justify-center gap-stack-lg">
+<a class="font-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">About Us</a>
+<a class="font-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Editorial Guidelines</a>
+<a class="font-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Contact</a>
+<a class="font-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Archive</a>
+</div>
+</div>
+<div class="w-full flex flex-col md:flex-row justify-between items-center pt-stack-sm text-surface-variant">
+<p class="font-body-md text-body-md">© 2024 Minbar News. Truth. Perspective. Impact.</p>
+<div class="flex gap-stack-md mt-4 md:mt-0">
+<span class="material-symbols-outlined cursor-pointer hover:text-on-primary">public</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-on-primary">rss_feed</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-on-primary">video_library</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- SideNavBar (Hidden by default, triggered on mobile or admin interaction) -->
+<div class="fixed top-0 left-0 h-screen w-64 bg-surface-container-low border-r border-outline-variant z-[100] transform -translate-x-full transition-transform duration-300 md:hidden" id="side-nav">
+<div class="flex flex-col h-full py-stack-lg">
+<div class="px-4 mb-stack-lg">
+<h2 class="font-headline-md text-headline-md font-bold text-primary">MINBAR</h2>
+</div>
+<nav class="flex-1">
+<ul class="space-y-2">
+<li class="bg-primary text-on-primary rounded-lg mx-2 flex items-center gap-3 px-4 py-3">
+<span class="material-symbols-outlined">live_tv</span>
+<span class="font-label-bold text-label-bold">Live Hub</span>
+</li>
+<li class="text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 flex items-center gap-3 px-4 py-3 cursor-pointer">
+<span class="material-symbols-outlined">movie</span>
+<span class="font-label-bold text-label-bold">Broadcasts</span>
+</li>
+<li class="text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 flex items-center gap-3 px-4 py-3 cursor-pointer">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-label-bold text-label-bold">Library</span>
+</li>
+<li class="text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 flex items-center gap-3 px-4 py-3 cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-bold text-label-bold">Trends</span>
+</li>
+</ul>
+</nav>
+<div class="px-4 pt-4 border-t border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center text-white font-bold">JD</div>
+<div>
+<p class="font-label-bold text-label-bold text-primary">Guest User</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Free Access</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        // Simple chat simulation
+        const chatInput = document.querySelector('input[placeholder="Join the discussion..."]');
+        const chatContainer = document.querySelector('.chat-scroll');
+        const sendBtn = chatInput.nextElementSibling;
+
+        function addMessage() {
+            if (chatInput.value.trim() !== '') {
+                const msg = document.createElement('div');
+                msg.className = 'flex flex-col gap-1 opacity-0 translate-y-2 transition-all duration-300';
+                msg.innerHTML = `
+                    <span class="font-label-bold text-label-sm text-primary">You</span>
+                    <p class="text-body-md text-on-surface-variant leading-tight bg-white p-3 rounded-lg border border-slate-100">${chatInput.value}</p>
+                `;
+                chatContainer.appendChild(msg);
+                chatInput.value = '';
+                
+                // Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                // Animate in
+                setTimeout(() => {
+                    msg.classList.remove('opacity-0', 'translate-y-2');
+                }, 10);
+            }
+        }
+
+        sendBtn.addEventListener('click', addMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addMessage();
+        });
+
+        // Toggle Live Ticker on click for demonstration
+        const ticker = document.querySelector('.news-ticker-content');
+        ticker.addEventListener('mouseenter', () => {
+            ticker.style.animationPlayState = 'paused';
+        });
+        ticker.addEventListener('mouseleave', () => {
+            ticker.style.animationPlayState = 'running';
+        });
+    </script>
+</body></html>

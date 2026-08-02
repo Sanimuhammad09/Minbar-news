@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Editorial Dashboard | MINBAR NEWS</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f7fafc",
+                    "surface-container-high": "#e5e9eb",
+                    "on-primary-fixed-variant": "#374768",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "secondary": "#b52424",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "tertiary-container": "#141f30",
+                    "primary-fixed": "#d8e2ff",
+                    "on-surface": "#181c1e",
+                    "primary-container": "#0c1e3d",
+                    "on-primary": "#ffffff",
+                    "primary": "#000516",
+                    "inverse-on-surface": "#eef1f3",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "outline-variant": "#c5c6cf",
+                    "on-error-container": "#93000a",
+                    "background": "#f7fafc",
+                    "on-secondary-fixed-variant": "#92030f",
+                    "on-tertiary-container": "#7c879c",
+                    "secondary-fixed": "#ffdad6",
+                    "tertiary": "#000613",
+                    "on-surface-variant": "#44474e",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#d8e3fa",
+                    "secondary-container": "#ff5a52",
+                    "surface-container-low": "#f1f4f6",
+                    "on-background": "#181c1e",
+                    "surface-bright": "#f7fafc",
+                    "primary-fixed-dim": "#b6c6ee",
+                    "surface-dim": "#d7dadc",
+                    "outline": "#75777f",
+                    "on-primary-fixed": "#081b3a",
+                    "on-secondary-container": "#600006",
+                    "on-primary-container": "#7686ab",
+                    "surface-container": "#ebeef0",
+                    "surface-variant": "#e0e3e5",
+                    "surface-tint": "#4e5e81",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "on-secondary-fixed": "#410003",
+                    "inverse-primary": "#b6c6ee",
+                    "secondary-fixed-dim": "#ffb4ac"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "grid-margin": "24px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "gutter": "20px",
+                    "stack-lg": "32px",
+                    "section-gap": "64px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["\"Source Serif 4\""],
+                    "body-md": ["Work Sans"],
+                    "headline-md": ["\"Source Serif 4\""],
+                    "body-lg": ["Work Sans"],
+                    "display-lg": ["\"Source Serif 4\""],
+                    "label-sm": ["IBM Plex Sans"],
+                    "headline-lg": ["\"Source Serif 4\""],
+                    "label-bold": ["IBM Plex Sans"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background-color: #f7fafc;
+        }
+        .editorial-sidebar-item {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .editorial-card {
+            border-top: 4px solid #000516;
+            box-shadow: 0px 4px 12px rgba(12, 30, 61, 0.04);
+        }
+        .status-pill {
+            padding: 2px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .status-published { background-color: #d1fae5; color: #065f46; }
+        .status-draft { background-color: #fef3c7; color: #92400e; }
+        .status-review { background-color: #e0e7ff; color: #3730a3; }
+        
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .news-ticker-scroll {
+            animation: ticker 30s linear infinite;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar Component -->
+<aside class="hidden md:flex flex-col h-screen w-64 bg-surface-container-low dark:bg-tertiary-container border-r border-outline-variant py-stack-lg fixed left-0 top-0 overflow-y-auto">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed leading-tight">Editorial Portal</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Minbar News CMS</p>
+</div>
+<nav class="flex-grow space-y-1">
+<!-- Active State Dashboard -->
+<a class="editorial-sidebar-item flex items-center px-4 py-3 mx-2 bg-primary text-on-primary rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-bold text-label-bold">Dashboard</span>
+</a>
+<a class="editorial-sidebar-item flex items-center px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">edit_note</span>
+<span class="font-label-bold text-label-bold">Editorial Desk</span>
+</a>
+<a class="editorial-sidebar-item flex items-center px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">auto_stories</span>
+<span class="font-label-bold text-label-bold">Article Library</span>
+</a>
+<a class="editorial-sidebar-item flex items-center px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">analytics</span>
+<span class="font-label-bold text-label-bold">Analytics</span>
+</a>
+<a class="editorial-sidebar-item flex items-center px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">group</span>
+<span class="font-label-bold text-label-bold">Staff Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-4">
+<button class="w-full flex items-center justify-center gap-2 bg-secondary text-on-secondary py-3 px-4 font-label-bold text-label-bold rounded-lg hover:opacity-90 active:scale-95 transition-all uppercase tracking-wider">
+<span class="material-symbols-outlined">add</span>
+                New Article
+            </button>
+<div class="pt-4 border-t border-outline-variant space-y-1">
+<a class="flex items-center px-4 py-2 text-on-surface-variant font-label-bold text-label-bold hover:text-primary" href="#">
+<span class="material-symbols-outlined mr-3">help</span> Help Center
+                </a>
+<a class="flex items-center px-4 py-2 text-on-surface-variant font-label-bold text-label-bold hover:text-secondary" href="#">
+<span class="material-symbols-outlined mr-3">logout</span> Log Out
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-grow md:ml-64 bg-surface min-h-screen">
+<!-- Breaking News Ticker (Branding/Status) -->
+<div class="w-full bg-secondary text-on-secondary py-2 overflow-hidden relative">
+<div class="news-ticker-scroll whitespace-nowrap flex items-center">
+<span class="mx-8 font-label-bold uppercase tracking-widest text-[10px]">Breaking: Global markets respond to election results</span>
+<span class="mx-8 font-label-bold uppercase tracking-widest text-[10px]">Alert: Middle East peace summit scheduled for Monday</span>
+<span class="mx-8 font-label-bold uppercase tracking-widest text-[10px]">Politics: Analysis of the new policy framework now live</span>
+<span class="mx-8 font-label-bold uppercase tracking-widest text-[10px]">World: Humanitarian aid arrives in disaster zones</span>
+</div>
+</div>
+<!-- Dashboard Body -->
+<div class="max-w-7xl mx-auto px-grid-margin py-stack-lg space-y-stack-lg">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Editorial Overview</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Welcome back, Admin. Today is Tuesday, May 14th, 2024.</p>
+</div>
+<div class="flex items-center gap-stack-sm">
+<div class="relative">
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Search articles..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant">search</span>
+</div>
+<div class="h-10 w-10 bg-surface-container-highest rounded-full flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+</div>
+</header>
+<!-- Key Metrics Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-stack-md">
+<div class="editorial-card bg-surface-container-lowest p-6 rounded-lg flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Articles Published Today</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="font-display-lg text-display-lg text-primary">12</span>
+<div class="mt-2 flex items-center text-green-600 gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-label-sm text-label-sm">+4 vs yesterday</span>
+</div>
+</div>
+<div class="editorial-card bg-surface-container-lowest p-6 rounded-lg flex flex-col" style="border-top-color: #b52424;">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Active Drafts</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">pending_actions</span>
+</div>
+<span class="font-display-lg text-display-lg text-primary">08</span>
+<div class="mt-2 font-label-sm text-label-sm text-on-surface-variant">4 under priority review</div>
+</div>
+<div class="editorial-card bg-surface-container-lowest p-6 rounded-lg flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Site Traffic</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+</div>
+<span class="font-display-lg text-display-lg text-primary">48.2k</span>
+<div class="mt-2 flex items-center text-on-surface-variant gap-1">
+<span class="font-label-sm text-label-sm">Concurrent users: 1.2k</span>
+</div>
+</div>
+</section>
+<!-- Main Dashboard Layout (Asymmetric 8/4) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Recent Stories Table (8 Columns) -->
+<section class="lg:col-span-8 space-y-stack-md">
+<div class="flex items-center justify-between border-b-2 border-primary pb-2">
+<h3 class="font-headline-md text-headline-md text-primary">Recent Stories</h3>
+<a class="font-label-bold text-label-bold text-secondary uppercase hover:underline" href="#">View All</a>
+</div>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant overflow-hidden">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Headline</th>
+<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Author</th>
+<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Status</th>
+<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="font-headline-md text-[16px] text-primary leading-snug">The Geopolitical Shift in the Global Energy Sector</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-1">World • Updated 2h ago</div>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md">Sarah Jenkins</td>
+<td class="px-6 py-4">
+<span class="status-pill status-published">Published</span>
+</td>
+<td class="px-6 py-4">
+<button class="p-1 hover:bg-surface-container-highest rounded transition-colors">
+<span class="material-symbols-outlined text-primary">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="font-headline-md text-[16px] text-primary leading-snug">Impact Analysis: The New Trade Agreement</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-1">Economy • Updated 4h ago</div>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md">Marcus Thorne</td>
+<td class="px-6 py-4">
+<span class="status-pill status-review">Under Review</span>
+</td>
+<td class="px-6 py-4">
+<button class="p-1 hover:bg-surface-container-highest rounded transition-colors">
+<span class="material-symbols-outlined text-primary">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="font-headline-md text-[16px] text-primary leading-snug">Rethinking Urban Infrastructure for 2050</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-1">Analysis • Draft saved 10m ago</div>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md">Elena Rodriguez</td>
+<td class="px-6 py-4">
+<span class="status-pill status-draft">Draft</span>
+</td>
+<td class="px-6 py-4">
+<button class="p-1 hover:bg-surface-container-highest rounded transition-colors">
+<span class="material-symbols-outlined text-primary">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="font-headline-md text-[16px] text-primary leading-snug">Cultural Perspectives: The Rise of Virtual Museums</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-1">Opinion • Published 6h ago</div>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md">Julian Voss</td>
+<td class="px-6 py-4">
+<span class="status-pill status-published">Published</span>
+</td>
+<td class="px-6 py-4">
+<button class="p-1 hover:bg-surface-container-highest rounded transition-colors">
+<span class="material-symbols-outlined text-primary">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Sidebar (4 Columns) -->
+<aside class="lg:col-span-4 space-y-stack-lg">
+<!-- Editorial Performance Card -->
+<div class="bg-surface-container-low p-6 rounded-lg border border-outline-variant">
+<h4 class="font-label-bold text-label-bold text-primary uppercase mb-4">Desk Performance</h4>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span>Goal: 20 Articles/Day</span>
+<span>60%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 60%"></div>
+</div>
+</div>
+<div class="pt-4 grid grid-cols-2 gap-4">
+<div class="text-center p-3 bg-surface-container-lowest rounded border border-outline-variant">
+<div class="font-headline-md text-headline-md text-primary">94%</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Fact Check Score</div>
+</div>
+<div class="text-center p-3 bg-surface-container-lowest rounded border border-outline-variant">
+<div class="font-headline-md text-headline-md text-secondary">1.2m</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Total Monthly Views</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Staff Activity -->
+<div class="bg-surface-container-lowest p-6 rounded-lg border border-outline-variant">
+<h4 class="font-label-bold text-label-bold text-primary uppercase mb-4">Recent Activity</h4>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="h-8 w-8 bg-primary rounded-full flex-shrink-0 flex items-center justify-center">
+<span class="text-white text-[10px] font-bold">SJ</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface"><span class="font-bold">Sarah J.</span> published "The Geopolitical Shift..."</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 minutes ago</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="h-8 w-8 bg-secondary rounded-full flex-shrink-0 flex items-center justify-center">
+<span class="text-white text-[10px] font-bold">MT</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface"><span class="font-bold">Marcus T.</span> submitted a new draft for review</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">45 minutes ago</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="h-8 w-8 bg-surface-container-highest rounded-full flex-shrink-0 flex items-center justify-center border border-outline-variant">
+<span class="text-primary text-[10px] font-bold">ER</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface"><span class="font-bold">Elena R.</span> updated "Rethinking Urban..."</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1 hour ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Visual Asset Placeholder -->
+<div class="rounded-lg overflow-hidden border border-outline-variant relative group">
+<img class="w-full h-48 object-cover grayscale transition-all group-hover:grayscale-0" data-alt="A sophisticated editorial workspace with high-end monitors showing news data visualizations, a clean desk with a glass of water, minimalist decor, and soft natural lighting coming from a large window. The aesthetic is corporate and modern, mirroring the Minbar News navy and white color palette with sharp lines and high-end professional feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA60hVhlVa54LzKCNDL2vzr8uBsASLQZngOqAHl7lU0L2efmGTN87J_jVFbrShl-i8zY_Oq9tHYj76eqxZ3iXVoaNW1CLVSH37h8ERje4F80npOdD27yj8OPgX5hFDspJ7ZRPO4YfxNIlQ3DaY3GCfz4V1gG2KhxzCsMQnBInd95ERQHKNx1BYUyeXTStxeWr_12_Rc48rHOoTUXV3UnC0WN-7PxLRta_OJPFyAwstLWRh3rd_RLI4"/>
+<div class="absolute inset-0 bg-primary/20 flex items-end p-4">
+<span class="bg-white/90 text-primary px-3 py-1 font-label-bold text-label-bold uppercase">Editorial Guidelines Update</span>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<!-- Footer (Shared Component Guidance) -->
+<footer class="w-full mt-section-gap py-stack-lg bg-primary border-t-4 border-secondary flex flex-col items-center justify-center space-y-stack-md px-grid-margin">
+<div class="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight">MINBAR NEWS</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Editorial Guidelines</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Archive</a>
+</div>
+<p class="font-body-md text-body-md text-on-primary opacity-60">© 2024 Minbar News. Truth. Perspective. Impact.</p>
+</footer>
+</main>
+<script>
+        // Micro-interactions for the editorial dashboard
+        document.querySelectorAll('.editorial-sidebar-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                // If not already active
+                if (!this.classList.contains('bg-primary')) {
+                    // Remove active from others
+                    document.querySelectorAll('.editorial-sidebar-item').forEach(i => {
+                        i.classList.remove('bg-primary', 'text-on-primary');
+                        i.classList.add('text-on-surface-variant');
+                    });
+                    // Add active to this
+                    this.classList.add('bg-primary', 'text-on-primary');
+                    this.classList.remove('text-on-surface-variant');
+                }
+            });
+        });
+
+        // Search highlight effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-105');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-105');
+        });
+    </script>
+</body></html>

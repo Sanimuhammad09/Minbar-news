@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Profile | MINBAR NEWS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#7c879c",
+                        "tertiary-container": "#141f30",
+                        "primary-fixed": "#d8e2ff",
+                        "outline": "#75777f",
+                        "primary-container": "#0c1e3d",
+                        "on-tertiary-fixed": "#111c2c",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "inverse-surface": "#2d3133",
+                        "secondary-container": "#ff5a52",
+                        "secondary": "#b52424",
+                        "on-surface-variant": "#44474e",
+                        "surface-container": "#ebeef0",
+                        "secondary-fixed": "#ffdad6",
+                        "on-secondary-fixed": "#410003",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#b6c6ee",
+                        "tertiary-fixed-dim": "#bcc7dd",
+                        "surface-dim": "#d7dadc",
+                        "on-surface": "#181c1e",
+                        "surface-tint": "#4e5e81",
+                        "on-secondary-fixed-variant": "#92030f",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#374768",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#ffb4ac",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f7fafc",
+                        "on-secondary-container": "#600006",
+                        "on-primary-container": "#7686ab",
+                        "inverse-on-surface": "#eef1f3",
+                        "on-background": "#181c1e",
+                        "surface-container-low": "#f1f4f6",
+                        "inverse-primary": "#b6c6ee",
+                        "surface-container-high": "#e5e9eb",
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "primary": "#000516",
+                        "outline-variant": "#c5c6cf",
+                        "surface-bright": "#f7fafc",
+                        "tertiary-fixed": "#d8e3fa",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary": "#000613",
+                        "on-primary-fixed": "#081b3a",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f7fafc",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "section-gap": "64px",
+                        "grid-margin": "24px",
+                        "stack-md": "16px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "label-bold": ["IBM Plex Sans"],
+                        "display-lg": ["\"Source Serif 4\""],
+                        "body-md": ["Work Sans"],
+                        "label-sm": ["IBM Plex Sans"],
+                        "body-lg": ["Work Sans"],
+                        "headline-lg-mobile": ["\"Source Serif 4\""],
+                        "headline-lg": ["\"Source Serif 4\""],
+                        "headline-md": ["\"Source Serif 4\""]
+                    },
+                    "fontSize": {
+                        "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background-color: #f7fafc;
+            color: #181c1e;
+        }
+        .serif-text { font-family: 'Source Serif 4', serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .news-rule { border-top: 2px solid #000516; }
+        .ticker-wrap {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .ticker-move {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .bento-card {
+            border: 1px solid #e2e8f0;
+            background: white;
+            transition: all 0.2s ease-in-out;
+        }
+        .bento-card:hover {
+            box-shadow: 0px 4px 12px rgba(12, 30, 61, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- News Ticker -->
+<div class="w-full bg-secondary text-white py-2 z-50 sticky top-0 ticker-wrap">
+<div class="ticker-move font-label-bold text-label-bold uppercase">
+            BREAKING: Global Economic Summit Announces New Trade Accord • Live Updates from the Tech Frontier • Climate Reform Policy Passed in Parliament • Breaking: Market Fluctuations in Tech Sector •
+        </div>
+</div>
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant docked full-width z-40">
+<div class="flex justify-between items-center w-full px-grid-margin py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-8">
+<a class="font-display-lg text-display-lg font-bold tracking-tight text-primary" href="#">MINBAR NEWS</a>
+<nav class="hidden md:flex gap-6 font-label-bold text-label-bold">
+<a class="text-on-surface hover:text-secondary transition-colors" href="#">World</a>
+<a class="text-on-surface hover:text-secondary transition-colors" href="#">Politics</a>
+<a class="text-on-surface hover:text-secondary transition-colors" href="#">Economy</a>
+<a class="text-on-surface hover:text-secondary transition-colors" href="#">Analysis</a>
+<a class="text-on-surface hover:text-secondary transition-colors" href="#">Tech</a>
+<a class="text-on-surface hover:text-secondary transition-colors" href="#">Climate</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface hover:bg-surface-container-low p-2 rounded-full transition-all">search</button>
+<button class="material-symbols-outlined text-secondary border-b-2 border-secondary p-2 transition-all">person</button>
+<button class="bg-primary text-on-primary px-6 py-2 font-label-bold text-label-bold uppercase tracking-widest hover:opacity-90">Subscribe</button>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-grid-margin py-stack-lg min-h-screen">
+<!-- Profile Header Section -->
+<section class="mb-section-gap flex flex-col md:flex-row justify-between items-start md:items-end gap-stack-md">
+<div class="flex items-center gap-stack-md">
+<div class="w-24 h-24 bg-primary-container rounded-none relative overflow-hidden flex items-center justify-center">
+<img class="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-500" data-alt="A professional, clean studio portrait of a modern business individual against a neutral grey background. The lighting is soft and corporate, matching a high-end editorial news aesthetic. The person wears professional dark navy attire, fitting the primary brand color of Minbar News." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1nXn1MEXAhffrjGfaGtM4Wsme6ms2Tgr1h9TlbZnjyB-PT4qASY_VPsHUu3wmriDkjnaY_WKQYL037eF6PVshwl-jJLrS3r1S84AD8N2uH26gEZ15jgxYibguj3TDHB2Po3OrmM72IG1-jic2GOoRn6aFPZ6RIelIm-gSE0W6ncYGLgIKVoQD1ePdL27CVMiyJF911TfvD3SFtbZCpnDaMBauyxs1pxD0eIMLTBsy5xaGo4ruEW4"/>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary serif-text">Welcome back, Marcus Thorne</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Member since October 2023 • <span class="text-secondary font-bold">Premium Subscriber</span></p>
+</div>
+</div>
+<div class="flex gap-stack-sm">
+<button class="border border-primary px-6 py-2 font-label-bold text-label-bold uppercase flex items-center gap-2 hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-sm">edit</span> Edit Profile
+                </button>
+<button class="bg-surface-container-high px-6 py-2 font-label-bold text-label-bold uppercase flex items-center gap-2 hover:bg-on-surface-variant hover:text-white transition-all">
+<span class="material-symbols-outlined text-sm">settings</span> Account
+                </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Account Overview / Subscription -->
+<div class="md:col-span-4 bento-card p-stack-md flex flex-col justify-between">
+<div>
+<div class="news-rule pt-2 mb-4">
+<span class="font-label-bold text-label-bold text-secondary uppercase tracking-widest">Subscription</span>
+</div>
+<h3 class="font-headline-md text-headline-md serif-text mb-2">The Authority Access</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md">Your annual plan expires in 242 days. Automatic renewal is active.</p>
+</div>
+<div class="bg-surface-container-low p-4 space-y-2 border border-outline-variant">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span>Last Billing:</span>
+<span class="font-bold text-primary">Feb 12, 2024</span>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm">
+<span>Amount:</span>
+<span class="font-bold text-primary">$189.00 USD</span>
+</div>
+<button class="w-full mt-4 text-secondary font-label-bold text-label-bold hover:underline text-left">Manage Billing Methods</button>
+</div>
+</div>
+<!-- Reading List -->
+<div class="md:col-span-8 bento-card p-stack-md">
+<div class="news-rule pt-2 mb-4 flex justify-between items-center">
+<span class="font-label-bold text-label-bold text-secondary uppercase tracking-widest">My Reading List</span>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary underline" href="#">View All (24)</a>
+</div>
+<div class="space-y-4">
+<!-- Article 1 -->
+<div class="flex gap-4 group cursor-pointer pb-4 border-b border-surface-variant">
+<div class="w-32 h-20 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="A cinematic wide shot of a futuristic offshore wind farm silhouetted against a deep indigo twilight sky. Cold blue and silver tones dominate the palette, with a single sharp red light on one turbine. The aesthetic is clean, professional, and news-oriented." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCQR6sLQYN7mvM3EHcFMt65M2Hm2lvXLsSwtyAbfMCGA3wrZo_sdP5g6ugjXh2j3xyXRHbt9HXB_v4Pa9hO7ZuI_8yK9rgH70c2UAK0IpwsQwBsuzSelJNmpWFy_YWM30oDl3q09wtjotZWv7YinpFcPmCXDb_HTqGkLNFYlchxkGUn4NDz1eEvauDOC0R9rC9Ww2-B-5vwtC0NgPNnxC4i__S_70dLqgnNNr2CA-NcpjWeS0BMII"/>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="font-label-bold text-label-bold serif-text group-hover:text-secondary transition-colors">The Geopolitics of Renewables: Why the Arctic is the New Frontier</h4>
+<p class="text-[12px] text-on-surface-variant uppercase tracking-tighter mt-1">Saved 2 hours ago • Economy</p>
+</div>
+</div>
+<!-- Article 2 -->
+<div class="flex gap-4 group cursor-pointer pb-4 border-b border-surface-variant">
+<div class="w-32 h-20 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="A macro photograph of an advanced microchip glistening under blue-toned laboratory lighting. The intricate gold and silver pathways are sharp and clear, conveying technological precision and expert analysis. Modern corporate news style with high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbJuAnrXeHT-K_WalYllCFLaBSaXhjvrgbbzfgc2O6f0FZ7nHaXE5rDnPnCzS3T60tBOr6N7gbQ6RIPEq4eK3fVG4dOSwWivBsQuUSfhdm5FOodsFOqIsnkh_BwAmLgjNRK8kyGNykzWdRh1j94Bi5L3TM2jReSd0210JkP-ZWga3__MUUh9GwJM12v0miygMrTW2G7g_Klq4BrzkFpLh3h3ObakAqjd0VL69MPqNlZWUmCO9kqnQ"/>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="font-label-bold text-label-bold serif-text group-hover:text-secondary transition-colors">Semi-conductor Sovereignty: Navigating the Global Tech Shortage</h4>
+<p class="text-[12px] text-on-surface-variant uppercase tracking-tighter mt-1">Saved Yesterday • Tech</p>
+</div>
+</div>
+<!-- Article 3 -->
+<div class="flex gap-4 group cursor-pointer">
+<div class="w-32 h-20 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="A dramatic low-angle shot of a classic government building facade with tall white pillars under a stormy navy blue sky. A single crimson flag waves in the distance, creating a sense of political weight and authority. Broadsheet newspaper style photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3If5OqH-gFHObF_LHl_kcxcoSg9baxY0vyCl0fIYnX1DMoL51Pk0O-wVD6gT-f5zHdITdnCA5Bj9iEW1RLoXzy5bjdq7WTOMQ6fXfcvRF1XYbVkKJHtg7eP1YuIpBp-YmKqN4urFrYXPBKSTughMKCMvHndgEcKLZoQwjrSf8hID9tBoR_98KVlljroCZvxHDSPvwHhlb1iHIW57L3Q9UAnSQDFvU7ArMn7usem6qNcLnUzBVvQg"/>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="font-label-bold text-label-bold serif-text group-hover:text-secondary transition-colors">Policy Shift: The Implications of the New Trans-Atlantic Treaty</h4>
+<p class="text-[12px] text-on-surface-variant uppercase tracking-tighter mt-1">Saved 3 days ago • Politics</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Following Topics -->
+<div class="md:col-span-6 bento-card p-stack-md">
+<div class="news-rule pt-2 mb-6 flex justify-between items-center">
+<span class="font-label-bold text-label-bold text-secondary uppercase tracking-widest">Following Topics</span>
+<button class="material-symbols-outlined text-primary">add_circle</button>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="border border-primary px-3 py-1 font-label-sm text-label-sm uppercase flex items-center gap-2 bg-primary text-white">
+                        Cybersecurity <button class="material-symbols-outlined text-[14px]">close</button>
+</span>
+<span class="border border-outline-variant px-3 py-1 font-label-sm text-label-sm uppercase flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+                        Monetary Policy <button class="material-symbols-outlined text-[14px]">close</button>
+</span>
+<span class="border border-outline-variant px-3 py-1 font-label-sm text-label-sm uppercase flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+                        Quantum Computing <button class="material-symbols-outlined text-[14px]">close</button>
+</span>
+<span class="border border-primary px-3 py-1 font-label-sm text-label-sm uppercase flex items-center gap-2 bg-primary text-white">
+                        AI Ethics <button class="material-symbols-outlined text-[14px]">close</button>
+</span>
+<span class="border border-outline-variant px-3 py-1 font-label-sm text-label-sm uppercase flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+                        Space Exploration <button class="material-symbols-outlined text-[14px]">close</button>
+</span>
+<span class="border border-outline-variant px-3 py-1 font-label-sm text-label-sm uppercase flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+                        Green Energy <button class="material-symbols-outlined text-[14px]">close</button>
+</span>
+</div>
+</div>
+<!-- Comment History -->
+<div class="md:col-span-6 bento-card p-stack-md">
+<div class="news-rule pt-2 mb-4">
+<span class="font-label-bold text-label-bold text-secondary uppercase tracking-widest">Comment History</span>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-low p-3 border-l-4 border-primary">
+<p class="font-label-sm text-label-sm text-on-surface-variant italic mb-2">"The analysis misses the critical impact of local currency devaluation in emerging markets..."</p>
+<div class="flex justify-between items-center">
+<span class="text-[10px] uppercase font-bold text-primary">On Article: The Fall of the Dollar?</span>
+<span class="text-[10px] text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">thumb_up</span> 42 Likes</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 border-l-4 border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant italic mb-2">"Impressive deep dive into the logistics of the new polar route. We need more of this."</p>
+<div class="flex justify-between items-center">
+<span class="text-[10px] uppercase font-bold text-primary">On Article: Arctic Trade Routes</span>
+<span class="text-[10px] text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">thumb_up</span> 18 Likes</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 border-t border-surface-variant pt-2 text-center font-label-bold text-label-bold text-primary hover:text-secondary transition-colors uppercase tracking-widest">View All Comments</button>
+</div>
+<!-- Newsletter Management (Wide) -->
+<div class="md:col-span-12 bento-card p-stack-md bg-primary-container text-white overflow-hidden relative">
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-stack-md">
+<div class="max-w-2xl">
+<h3 class="font-headline-md text-headline-md serif-text mb-2">Refine Your Morning Intelligence</h3>
+<p class="font-body-md text-body-md text-on-primary-container">Get curated briefs directly from our Bureau Chiefs. Currently receiving: <span class="font-bold text-white">Daily Intelligence Brief, Global Tech Review.</span></p>
+</div>
+<button class="bg-secondary text-white px-8 py-3 font-label-bold text-label-bold uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-3">
+                        Edit Newsletter Preferences <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Subtle Background Texture -->
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary to-transparent"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-grid-margin mt-section-gap flex flex-col items-center gap-stack-md bg-primary text-on-primary border-t-4 border-secondary">
+<div class="font-headline-md text-headline-md font-black text-on-primary mb-2">MINBAR NEWS</div>
+<nav class="flex flex-wrap justify-center gap-6 font-label-sm text-label-sm mb-4">
+<a class="text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Archive</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Privacy Policy</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Terms of Service</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Ethics Code</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors hover:underline" href="#">Contact Us</a>
+</nav>
+<p class="font-label-sm text-label-sm text-center opacity-80 max-w-lg">
+            © 2024 Minbar News Agency. All rights reserved. Global Editorial Standards Applied.
+        </p>
+<div class="flex gap-4 mt-4 opacity-60">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-100">share</span>
+<span class="material-symbols-outlined cursor-pointer hover:opacity-100">public</span>
+<span class="material-symbols-outlined cursor-pointer hover:opacity-100">rss_feed</span>
+</div>
+</footer>
+<script>
+        // Simple Micro-interaction for hover states
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

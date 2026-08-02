@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Minbar News | Truth. Perspective. Impact.</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&amp;family=Work+Sans:wght@400;500&amp;family=IBM+Plex+Sans:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f7fafc",
+                        "surface-container-high": "#e5e9eb",
+                        "on-primary-fixed-variant": "#374768",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary": "#b52424",
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "tertiary-container": "#141f30",
+                        "primary-fixed": "#d8e2ff",
+                        "on-surface": "#181c1e",
+                        "primary-container": "#0c1e3d",
+                        "on-primary": "#ffffff",
+                        "primary": "#000516",
+                        "inverse-on-surface": "#eef1f3",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed": "#111c2c",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "outline-variant": "#c5c6cf",
+                        "on-error-container": "#93000a",
+                        "background": "#f7fafc",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#92030f",
+                        "on-tertiary-container": "#7c879c",
+                        "secondary-fixed": "#ffdad6",
+                        "tertiary": "#000613",
+                        "on-surface-variant": "#44474e",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#d8e3fa",
+                        "secondary-container": "#ff5a52",
+                        "surface-container-low": "#f1f4f6",
+                        "on-background": "#181c1e",
+                        "surface-bright": "#f7fafc",
+                        "primary-fixed-dim": "#b6c6ee",
+                        "surface-dim": "#d7dadc",
+                        "outline": "#75777f",
+                        "on-primary-fixed": "#081b3a",
+                        "on-secondary-container": "#600006",
+                        "on-surface-variant": "#44474e",
+                        "surface-container": "#ebeef0",
+                        "surface-variant": "#e0e3e5",
+                        "surface-tint": "#4e5e81",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#bcc7dd",
+                        "on-secondary-fixed": "#410003",
+                        "inverse-primary": "#b6c6ee",
+                        "secondary-fixed-dim": "#ffb4ac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "grid-margin": "24px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "gutter": "20px",
+                        "stack-lg": "32px",
+                        "section-gap": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["\"Source Serif 4\""],
+                        "body-md": ["Work Sans"],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "body-lg": ["Work Sans"],
+                        "display-lg": ["\"Source Serif 4\""],
+                        "label-sm": ["IBM Plex Sans"],
+                        "headline-lg": ["\"Source Serif 4\""],
+                        "label-bold": ["IBM Plex Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .breaking-ticker-animation {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-left 30s linear infinite;
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .hero-gradient {
+            background: linear-gradient(0deg, rgba(0,5,22,0.9) 0%, rgba(0,5,22,0) 100%);
+        }
+        .sidebar-rule::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background-color: #b52424;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- BREAKING NEWS TICKER -->
+<section class="w-full bg-secondary text-on-secondary py-2 overflow-hidden sticky top-0 z-50">
+<div class="flex items-center">
+<div class="px-4 py-1 bg-primary text-on-primary font-label-bold text-label-bold uppercase z-10 shrink-0">
+                Breaking
+            </div>
+<div class="breaking-ticker-animation font-label-bold text-label-bold uppercase flex gap-x-12 px-6">
+<span>Global Markets React to New Energy Policy Reforms</span>
+<span>Unprecedented Peace Accord Signed in Eastern Europe</span>
+<span>Space Agency Confirms Discovery of Water on Remote Exoplanet</span>
+<span>New Tech Innovations Lead to Sustainable Urban Development Plans</span>
+<span>International Sports Committee Announces Location for 2032 Games</span>
+</div>
+</div>
+</section>
+<!-- HEADER / TOP NAV BAR -->
+<header class="bg-surface border-b border-outline-variant">
+<div class="flex flex-col w-full px-grid-margin py-4 max-w-7xl mx-auto">
+<!-- Brand & Search Row -->
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-4xl">menu</span>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter uppercase">
+                        MINBAR NEWS
+                    </h1>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<div class="flex items-center bg-surface-container-low px-4 py-2 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-bold font-label-bold w-48" placeholder="Search news..." type="text"/>
+</div>
+<span class="material-symbols-outlined text-primary cursor-pointer">account_circle</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex items-center justify-center space-x-8">
+<a class="font-label-bold text-label-bold uppercase text-secondary border-b-2 border-secondary pb-1" href="#">World</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Politics</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Economy</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Analysis</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Opinion</a>
+<a class="font-label-bold text-label-bold uppercase text-on-surface-variant hover:text-primary transition-colors" href="#">Live</a>
+</nav>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-grid-margin py-stack-lg">
+<!-- HERO SECTION -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
+<div class="lg:col-span-8 relative group overflow-hidden bg-primary cursor-pointer">
+<div class="aspect-[16/9] w-full">
+<img class="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" data-alt="A cinematic, wide-angle photograph of a global summit meeting. World leaders are silhouetted against a massive, bright projection of a world map in a dark, modernist hall. The lighting is high-contrast, with deep navy shadows and sharp white highlights, reflecting the professional and authoritative aesthetic of Minbar News. The atmosphere is tense and historically significant." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzhmeXFqkH9aKCQbLE4uJN_eyF0nE5cJ_uEhrCth46U3aDfXAUaQ_otqLDpe1Dp7nePZr9LPcOoAUoxqUokCRvvC5VsvPE-SfWfKwcg8dGt0m9xqQcaJkw0Xiv-3AyC4Ym70uKKabXAFA8AsGrAcMWDQ5JOwqLQ32R8z069KeQGnDqR7uD2Nw3QvYBEsNFYo0KrlOKIfEMBrih4TLdjV0Dpwj5-CKpEjcmTSrA0wM5nnAg0CD168s"/>
+</div>
+<div class="absolute inset-0 hero-gradient flex flex-col justify-end p-stack-lg">
+<span class="inline-block bg-secondary text-on-secondary px-3 py-1 text-label-sm font-label-bold uppercase mb-4 w-fit">World News</span>
+<h2 class="font-headline-lg text-headline-lg text-on-primary mb-4 leading-tight">
+                        Summit for the Future: Global Leaders Converge to Address Climate Debt and Economic Sovereignty
+                    </h2>
+<p class="text-on-primary-container font-body-md line-clamp-2 mb-4 opacity-90">
+                        In a historic move, representatives from over 150 nations have gathered to draft a new framework for international cooperation, focusing on the redistribution of resources and the mitigation of historical environmental impact.
+                    </p>
+<div class="flex items-center gap-4 text-on-primary-container text-label-sm">
+<span>By Elena Vance</span>
+<span class="w-1 h-1 bg-secondary rounded-full"></span>
+<span>4 mins read</span>
+</div>
+</div>
+</div>
+<!-- Side Live Updates -->
+<aside class="lg:col-span-4 flex flex-col gap-stack-md">
+<div class="flex items-center justify-between border-b border-primary pb-2">
+<h3 class="font-label-bold text-label-bold uppercase tracking-widest flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+                        Live Updates
+                    </h3>
+<a class="text-secondary text-label-sm font-label-bold hover:underline" href="#">View All</a>
+</div>
+<div class="space-y-4">
+<div class="group cursor-pointer">
+<p class="text-label-sm text-secondary font-label-bold mb-1">14:32 GMT</p>
+<h4 class="font-headline-md text-[18px] leading-snug group-hover:text-secondary transition-colors">
+                            Central Bank announces surprise rate hike to combat inflation
+                        </h4>
+</div>
+<div class="group cursor-pointer border-t border-outline-variant pt-4">
+<p class="text-label-sm text-secondary font-label-bold mb-1">13:15 GMT</p>
+<h4 class="font-headline-md text-[18px] leading-snug group-hover:text-secondary transition-colors">
+                            Protests erupt in major coastal cities over housing costs
+                        </h4>
+</div>
+<div class="group cursor-pointer border-t border-outline-variant pt-4">
+<p class="text-label-sm text-secondary font-label-bold mb-1">11:50 GMT</p>
+<h4 class="font-headline-md text-[18px] leading-snug group-hover:text-secondary transition-colors">
+                            Tech giant reveals 'Neural-Sync' chip for public testing
+                        </h4>
+</div>
+</div>
+<!-- Mini Ad/CTA -->
+<div class="mt-auto bg-primary-container p-6 border-t-4 border-secondary">
+<h5 class="text-on-primary font-headline-md mb-2">Support Independent Journalism</h5>
+<p class="text-on-primary-container text-label-sm mb-4">Deep analysis and truth-driven reporting for a complex world.</p>
+<button class="w-full bg-secondary text-on-secondary py-2 font-label-bold uppercase hover:bg-opacity-90 transition-all">Subscribe Now</button>
+</div>
+</aside>
+</section>
+<!-- MAIN GRID SECTIONS -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: News Grid -->
+<div class="lg:col-span-8 space-y-section-gap">
+<!-- World News Section -->
+<section>
+<div class="flex items-center justify-between mb-stack-lg border-b-2 border-primary pb-2">
+<h2 class="font-headline-lg text-headline-lg uppercase tracking-tighter">World News</h2>
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-lg">
+<article class="group">
+<div class="aspect-video bg-surface-container-high mb-4 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-alt="A crisp, editorial photograph of a bustling international port at sunrise. Massive cargo cranes are silhouetted against a vibrant orange and navy sky. The scene is clean, organized, and powerful, illustrating global economic trade. The lighting is dramatic and warm, contrasting with the cool navy tones of the machinery, perfectly aligned with the Minbar News corporate color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd5G_GfP8jAyWOuet7uLiD9P9D07N44beU77p_1k0alhX4saRzdoF1HDM4b8XHA_jJLmIV4rHSVJrWITiHsaQnigu7NdGOEFvCS6XrZmMsh3HvQskmP9ehzRh9VrVlFNlVUaQ3T_5zUgtD8chT9mFuEXLhwl601FIdS-YRL6MV3e408H39nxGK4jhwLfDJ4i_cpnFr7ICSof1GYx-7Em9E_tb-gGIZhgPx-f4qKfHQ-xgcGtwkBw8"/>
+</div>
+<span class="text-secondary font-label-bold text-label-sm uppercase tracking-widest mb-2 block">Supply Chain</span>
+<h3 class="font-headline-md text-headline-md leading-tight mb-2 group-hover:underline underline-offset-4 decoration-secondary">The Silent Shift: How Trade Routes are Bypassing Traditional Hubs</h3>
+<p class="text-on-surface-variant line-clamp-3">New geopolitical alliances are creating a second tier of global shipping routes that promise faster delivery but higher costs.</p>
+</article>
+<article class="group">
+<div class="aspect-video bg-surface-container-high mb-4 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-alt="An artistic, high-resolution photo of a dense, lush rainforest with a high-tech monitoring station in the foreground. The station features sleek metallic surfaces and glowing data screens. Light filters through the canopy in sharp rays, creating a serene and intellectually stimulating atmosphere. The color palette emphasizes deep greens, cool navies, and sharp whites." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHaRrVcAO-WAK5asVqLj5Fa3uozIBCZ6E5RFTJkkCgykdB-Zw9SEyQFka6QvmUVdi3g95qFh4cQGom983C6KLrUVT8sy6Sydvz1tEYGF7wG8KqfNAF5YaS9UakGhU86Asxxa6VMYZidlsr8wzcSRr652telte4cRfqmavtfeueYUeLbajsOZvWkBwowDxccMlEE9ez1TDbpDMxRemFwCny4R_1FbTMxhPXnn6_tkpumBI4Vzb0gXI"/>
+</div>
+<span class="text-secondary font-label-bold text-label-sm uppercase tracking-widest mb-2 block">Sustainability</span>
+<h3 class="font-headline-md text-headline-md leading-tight mb-2 group-hover:underline underline-offset-4 decoration-secondary">Tech-Infused Conservation: The New Era of Forest Guardianship</h3>
+<p class="text-on-surface-variant line-clamp-3">Autonomous drones and AI sensors are now the primary defense against illegal logging in the world's most vulnerable ecosystems.</p>
+</article>
+</div>
+</section>
+<!-- Politics & Economy Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-lg">
+<!-- Politics Column -->
+<section>
+<div class="flex items-center justify-between mb-stack-md border-b border-outline-variant pb-2">
+<h2 class="font-label-bold text-label-bold uppercase text-primary">Politics</h2>
+</div>
+<div class="space-y-6">
+<article class="flex gap-4 group">
+<div class="w-24 h-24 shrink-0 bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform" data-alt="A portrait-style photograph of a modern legislative chamber. The focus is on a podium with a single microphone, with blurred rows of leather seats in the background. The aesthetic is clean, professional, and powerful, utilizing a palette of deep navy and polished wood. Soft, overhead studio lighting creates a dignified atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_ygndrSoi19WuxLce1FK5E4cT7bJ78-V1-MJjZ-c7yiHLsIGXMZOAX0skx_IA0uZT4GXl_IWeXlEjjMxn_J3DqeOOV6cVmXZuyETCpl1bcLrrVl2DvTAzCTORNcnqEpBTVXpSt88e5yBuQwGx9DSo3WyohXwSIA95o7L1W6d9muy0OdLTr-Yv-HFw4sK6qyBe4AoDy6ML2GP_JWuU9nhyxTAOZM_c8ni7AdrMbf8kl0pLoTY-wjw"/>
+</div>
+<div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-1 group-hover:text-secondary">Electoral Reform Bill Faces Crucial Vote in Senate</h4>
+<p class="text-label-sm text-on-surface-variant">2 hours ago</p>
+</div>
+</article>
+<article class="flex gap-4 group">
+<div class="w-24 h-24 shrink-0 bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform" data-alt="An editorial close-up of a diplomatic handshake between two suits. The focus is on the grip and the fabric of the dark navy suits. In the background, flags of multiple nations are softly blurred. The image conveys themes of agreement, power, and professional negotiation in a bright, modern office setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ74C3qi7n1Vzd8a5owQIc9n1ld2a7NpYKQYRgYxNVk3zXDewdhRvbr4Lonq6sr9LPdGCuo7Mz_sK8-38wbPitx9pxoRxYPZHbgOWSbacPdhFwZUU9cfmcag-VRD9LSmMDusx39nB83KTXVv1w7HMNvDNngxpc6i9QkWbqiedsneNNcN6K4UuJG9vb9ETQEjmXN_Gkfk3JtUM8h3i7aB-COOJN7_S5Tp6NSPc5Vri34RmGpf9VqZE"/>
+</div>
+<div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-1 group-hover:text-secondary">Bilateral Talks Begin Between Regional Superpowers</h4>
+<p class="text-label-sm text-on-surface-variant">5 hours ago</p>
+</div>
+</article>
+</div>
+</section>
+<!-- Economy Column -->
+<section>
+<div class="flex items-center justify-between mb-stack-md border-b border-outline-variant pb-2">
+<h2 class="font-label-bold text-label-bold uppercase text-primary">Economy</h2>
+</div>
+<div class="space-y-6">
+<article class="flex gap-4 group">
+<div class="w-24 h-24 shrink-0 bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform" data-alt="A minimalist photograph of a digital stock market display with green and red numbers glowing in the dark. The reflection of the numbers is visible on a polished glass surface. The composition is sleek and modern, emphasizing financial data and technology. The primary colors are deep navy and vibrant red, echoing the brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYm7FL7fEjA6TCATGU0cCFO4lCtE9vcmPqHGzDvCU9Z3jgvee_FBCeKR-sRAuP4GCjmQDPQEbJapJ-R3F9yOI04xn-ZidrObgIl5s3TCtfj5eNgJUyjL75TZakis_0_DHsDfzlS2FK8Mly0loFL7QYo8457NgeukDdkwE13hjKNaaB6XXRnkcOTJqSywFGDJSl6uehYjnEmZnCy-7IbuD2a5FyOalxJlvxm--cnTRKMeBLLtW6P5o"/>
+</div>
+<div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-1 group-hover:text-secondary">Market Volatility Increases Amid Energy Uncertainty</h4>
+<p class="text-label-sm text-on-surface-variant">1 hour ago</p>
+</div>
+</article>
+<article class="flex gap-4 group">
+<div class="w-24 h-24 shrink-0 bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform" data-alt="A creative photograph of a pile of gold coins neatly stacked on a dark, reflective surface. A single, crisp white light illuminates the texture of the metal. The mood is one of wealth, stability, and historical value. The background is a deep, matte navy, providing high contrast for the metallic subjects." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw9KSZLfROmVOXOPnD1urxGq-tBeKg6n1XbXP9cPqINABAo5R1GVutg_SiXJ5V1GczMI_f_vwtVuGcHpS-JBiBpYQviHUODkqvigbiaX3hrXyUnfp0h1X5dKymftNzptjMqCQ_S3GoEqbZ_13H_E-7VqjTNkoJAfI2XSWb-pxpR_qg9hSg1HV0GM0DyLP8NCyncGTE25gtfDBADSljCo5i0xc4ZULB10beTrNFfyBmKHChe9XRe_k"/>
+</div>
+<div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-1 group-hover:text-secondary">Gold Reaches Record Highs as Investors Seek Safe Havens</h4>
+<p class="text-label-sm text-on-surface-variant">8 hours ago</p>
+</div>
+</article>
+</div>
+</section>
+</div>
+</div>
+<!-- Right Column: Opinion Sidebar -->
+<aside class="lg:col-span-4">
+<div class="bg-surface-container-low p-stack-lg border-l border-outline-variant h-full">
+<h2 class="font-headline-lg text-headline-lg mb-stack-lg sidebar-rule uppercase tracking-tighter">Opinion</h2>
+<div class="space-y-stack-lg">
+<article class="group cursor-pointer">
+<h3 class="font-headline-md text-headline-md italic mb-2 group-hover:text-secondary">"The Death of Neutrality: Why Media Must Take a Stand on Global Ethics"</h3>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container"></div>
+<div>
+<p class="font-label-bold text-label-bold">Dr. Aris Thorne</p>
+<p class="text-label-sm text-on-surface-variant">Chief Correspondent</p>
+</div>
+</div>
+</article>
+<article class="group cursor-pointer pt-stack-md border-t border-outline-variant">
+<h3 class="font-headline-md text-headline-md italic mb-2 group-hover:text-secondary">"Universal Basic Income: Not a Welfare Dream, But a Robotic Reality"</h3>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary"></div>
+<div>
+<p class="font-label-bold text-label-bold">Sarah Jenkins</p>
+<p class="text-label-sm text-on-surface-variant">Economist</p>
+</div>
+</div>
+</article>
+<article class="group cursor-pointer pt-stack-md border-t border-outline-variant">
+<h3 class="font-headline-md text-headline-md italic mb-2 group-hover:text-secondary">"Architecture for a Flooded World: Reimagining Our Coastal Urban Sprawl"</h3>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary"></div>
+<div>
+<p class="font-label-bold text-label-bold">Marcus Ling</p>
+<p class="text-label-sm text-on-surface-variant">Urban Theorist</p>
+</div>
+</div>
+</article>
+<!-- Newsletter Box -->
+<div class="mt-section-gap p-6 bg-primary text-on-primary">
+<h4 class="font-headline-md mb-2">The Perspective</h4>
+<p class="text-label-sm mb-4 opacity-80">Our weekly deep-dive into the stories that define the decade. Delivered every Friday morning.</p>
+<input class="w-full bg-white text-primary border-none p-2 mb-2 font-label-bold" placeholder="Email Address" type="email"/>
+<button class="w-full bg-secondary text-on-secondary py-2 font-label-bold uppercase">Join The Briefing</button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- FOOTER -->
+<footer class="bg-primary text-on-primary w-full py-stack-lg border-t-4 border-secondary mt-section-gap">
+<div class="flex flex-col items-center justify-center space-y-stack-md w-full px-grid-margin max-w-7xl mx-auto">
+<h2 class="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-widest">MINBAR NEWS</h2>
+<div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">About Us</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Editorial Guidelines</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Contact</a>
+<a class="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors" href="#">Archive</a>
+</div>
+<div class="flex gap-6 pt-4">
+<span class="material-symbols-outlined text-surface-variant hover:text-on-primary cursor-pointer transition-colors">public</span>
+<span class="material-symbols-outlined text-surface-variant hover:text-on-primary cursor-pointer transition-colors">rss_feed</span>
+<span class="material-symbols-outlined text-surface-variant hover:text-on-primary cursor-pointer transition-colors">mail</span>
+</div>
+<p class="font-body-md text-body-md text-surface-variant pt-4 opacity-60">
+                © 2024 Minbar News. Truth. Perspective. Impact.
+            </p>
+</div>
+</footer>
+<script>
+        // Simple scroll behavior for the ticker - handled by CSS
+        // Placeholder for future micro-interactions
+        document.querySelectorAll('article').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'transform 0.2s ease-out';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

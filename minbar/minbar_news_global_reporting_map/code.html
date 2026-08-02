@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Global Intelligence Map | MINBAR NEWS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Shared Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#7c879c",
+                    "tertiary-container": "#141f30",
+                    "primary-fixed": "#d8e2ff",
+                    "outline": "#75777f",
+                    "primary-container": "#0c1e3d",
+                    "on-tertiary-fixed": "#111c2c",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "inverse-surface": "#2d3133",
+                    "secondary-container": "#ff5a52",
+                    "secondary": "#b52424",
+                    "on-surface-variant": "#44474e",
+                    "surface-container": "#ebeef0",
+                    "secondary-fixed": "#ffdad6",
+                    "on-secondary-fixed": "#410003",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#b6c6ee",
+                    "tertiary-fixed-dim": "#bcc7dd",
+                    "surface-dim": "#d7dadc",
+                    "on-surface": "#181c1e",
+                    "surface-tint": "#4e5e81",
+                    "on-secondary-fixed-variant": "#92030f",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#374768",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#ffb4ac",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f7fafc",
+                    "on-secondary-container": "#600006",
+                    "on-primary-container": "#7686ab",
+                    "inverse-on-surface": "#eef1f3",
+                    "on-background": "#181c1e",
+                    "surface-container-low": "#f1f4f6",
+                    "inverse-primary": "#b6c6ee",
+                    "surface-container-high": "#e5e9eb",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "primary": "#000516",
+                    "outline-variant": "#c5c6cf",
+                    "surface-bright": "#f7fafc",
+                    "tertiary-fixed": "#d8e3fa",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#000613",
+                    "on-primary-fixed": "#081b3a",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f7fafc",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "section-gap": "64px",
+                    "grid-margin": "24px",
+                    "stack-md": "16px",
+                    "gutter": "20px"
+            },
+            "fontFamily": {
+                    "label-bold": ["IBM Plex Sans"],
+                    "display-lg": ["\"Source Serif 4\""],
+                    "body-md": ["Work Sans"],
+                    "label-sm": ["IBM Plex Sans"],
+                    "body-lg": ["Work Sans"],
+                    "headline-lg-mobile": ["\"Source Serif 4\""],
+                    "headline-lg": ["\"Source Serif 4\""],
+                    "headline-md": ["\"Source Serif 4\""]
+            },
+            "fontSize": {
+                    "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom News Ticker Animation */
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .ticker-animate {
+            animation: ticker 30s linear infinite;
+        }
+
+        /* Scanline Effect for Map */
+        .scanline {
+            background: linear-gradient(to bottom, rgba(181, 36, 36, 0) 0%, rgba(181, 36, 36, 0.1) 50%, rgba(181, 36, 36, 0) 100%);
+            height: 100px;
+            width: 100%;
+            position: absolute;
+            top: -100px;
+            left: 0;
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+        @keyframes scan {
+            0% { top: -100px; }
+            100% { top: 100%; }
+        }
+
+        /* Map Pulse Effect */
+        .hotspot-pulse {
+            animation: pulse 2s ease-out infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            70% { transform: scale(2); opacity: 0; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* Glassmorphism sidebar override */
+        .glass-sidebar {
+            background: rgba(0, 5, 22, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-primary text-on-primary font-body-md selection:bg-secondary selection:text-white overflow-hidden">
+<!-- Top News Ticker (Branding Mandate) -->
+<div class="h-10 bg-secondary flex items-center overflow-hidden whitespace-nowrap z-50 relative">
+<div class="px-4 py-1 bg-primary text-white font-label-bold text-label-bold z-10 uppercase flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+            Breaking
+        </div>
+<div class="ticker-animate flex gap-stack-lg items-center">
+<span class="text-white font-label-bold text-label-bold">GLOBAL ENERGY SUMMIT CONCLUDES IN GENEVA — NEW ACCORDS SIGNED</span>
+<span class="text-white font-label-bold text-label-bold opacity-50">•</span>
+<span class="text-white font-label-bold text-label-bold">MARKET VOLATILITY INCREASES IN TECH SECTOR FOLLOWING LEGISLATIVE VOTE</span>
+<span class="text-white font-label-bold text-label-bold opacity-50">•</span>
+<span class="text-white font-label-bold text-label-bold">LIVE: DISPATCH FROM SOUTH CHINA SEA REGARDING MARITIME BOUNDARIES</span>
+</div>
+</div>
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-primary text-primary dark:text-primary-fixed font-label-bold text-label-bold docked full-width top-0 border-b border-outline-variant dark:border-on-primary-container z-40">
+<div class="flex justify-between items-center w-full px-grid-margin py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-stack-lg">
+<h1 class="font-display-lg text-display-lg font-bold tracking-tight text-primary dark:text-primary-fixed">MINBAR NEWS</h1>
+<nav class="hidden md:flex items-center gap-stack-md">
+<a class="text-on-surface dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors" href="#">World</a>
+<a class="text-secondary dark:text-secondary-fixed border-b-2 border-secondary dark:border-secondary-fixed pb-1" href="#">Politics</a>
+<a class="text-on-surface dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors" href="#">Economy</a>
+<a class="text-on-surface dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors" href="#">Analysis</a>
+<a class="text-on-surface dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors" href="#">Tech</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="hover:bg-surface-container-low dark:hover:bg-primary-container p-2 transition-all duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="hover:bg-surface-container-low dark:hover:bg-primary-container p-2 transition-all duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+<button class="bg-secondary text-white px-stack-md py-2 font-label-bold uppercase tracking-widest text-label-sm">Subscribe</button>
+</div>
+</div>
+</header>
+<div class="flex h-[calc(100vh-120px)] relative overflow-hidden">
+<!-- SideNavBar (Editorial Portal) -->
+<aside class="flex flex-col bg-surface-container dark:bg-tertiary-container text-primary dark:text-primary-fixed font-label-bold text-label-bold border-r border-outline-variant dark:border-on-tertiary-fixed-variant w-64 h-full z-30 transition-transform duration-300">
+<div class="p-stack-md border-b border-outline-variant dark:border-on-tertiary-fixed-variant">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-on-primary-container rounded-none flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="admin_panel_settings">admin_panel_settings</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed leading-none">Editorial</p>
+<p class="text-[10px] uppercase opacity-60 tracking-tighter">Authority Control</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 py-stack-md overflow-y-auto">
+<a class="flex items-center gap-4 px-6 py-4 bg-primary dark:bg-primary-fixed text-on-primary dark:text-on-primary-fixed rounded-none font-bold transition-transform scale-95 active:scale-100" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-tertiary-fixed-variant transition-transform scale-95 active:scale-100" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Editorial Queue</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-tertiary-fixed-variant transition-transform scale-95 active:scale-100" href="#">
+<span class="material-symbols-outlined" data-icon="live_tv">live_tv</span>
+<span>Live Feed</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-tertiary-fixed-variant transition-transform scale-95 active:scale-100" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Archives</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-on-tertiary-fixed-variant transition-transform scale-95 active:scale-100" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="p-stack-md mt-auto space-y-2 border-t border-outline-variant dark:border-on-tertiary-fixed-variant">
+<button class="w-full bg-secondary text-white py-3 font-label-bold uppercase flex items-center justify-center gap-2 hover:bg-on-secondary-fixed-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="campaign">campaign</span>
+                    Breaking Alert
+                </button>
+<div class="flex gap-2">
+<button class="flex-1 py-2 text-[11px] uppercase border border-outline-variant dark:border-on-tertiary-fixed-variant flex items-center justify-center gap-1 opacity-70 hover:opacity-100">
+<span class="material-symbols-outlined text-[14px]" data-icon="help">help</span> Support
+                    </button>
+<button class="flex-1 py-2 text-[11px] uppercase border border-outline-variant dark:border-on-tertiary-fixed-variant flex items-center justify-center gap-1 opacity-70 hover:opacity-100">
+<span class="material-symbols-outlined text-[14px]" data-icon="logout">logout</span> Exit
+                    </button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area: Interactive Map Canvas -->
+<main class="flex-1 relative bg-primary overflow-hidden">
+<div class="scanline"></div>
+<!-- Map Background Layer -->
+<div class="absolute inset-0 z-0 bg-[#000516]" data-location="Global" style="">
+<div class="w-full h-full opacity-30 grayscale" data-alt="A high-contrast dark-mode vector world map with subtle glowing grid lines and topographical details. The aesthetic is professional, data-driven, and minimalist, utilizing deep navy blacks and cool slate greys. Red pinpoint glowing hotspots are scattered across major metropolitan hubs, representing real-time news events. The lighting is low-key with a cinematic, surveillance-style atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXio-qV-5xcrdb3wSoj_CaJ1DRSqpWk5pDfGzItQVmQft_Dn1f7788OIQqrEEBpUFi39t2-SFILnyf3sAZvd9kySRKdzmULlFId8kbYRlmuiGIolBMIoOwWu-zfCMNoTu1Ccw9f_evLcGLmt0EJvo9ZTdBeLDDyhcRu7hoLoY-Adw-9uSVxCIbooJ5nwvn2EF1vse8TaivG0rwKyvrykBz2GTrf1SeZfYfaJKUeGVMtq_a8urWUbI')"></div>
+<!-- Interactive Pins Overlay (Simulated) -->
+<div class="absolute top-[30%] left-[25%] group cursor-pointer" onclick="openDetails('Washington D.C.')">
+<div class="absolute -inset-2 bg-secondary/30 rounded-full hotspot-pulse"></div>
+<div class="w-3 h-3 bg-secondary rounded-full relative z-10 border border-white/20"></div>
+<div class="absolute top-6 left-1/2 -translate-x-1/2 hidden group-hover:block bg-tertiary text-white text-[10px] py-1 px-2 whitespace-nowrap z-20 border border-secondary">NA-DC-01: HIGH PRIORITY</div>
+</div>
+<div class="absolute top-[45%] left-[52%] group cursor-pointer" onclick="openDetails('Brussels')">
+<div class="absolute -inset-2 bg-secondary/30 rounded-full hotspot-pulse"></div>
+<div class="w-3 h-3 bg-secondary rounded-full relative z-10 border border-white/20"></div>
+</div>
+<div class="absolute top-[58%] left-[78%] group cursor-pointer" onclick="openDetails('Tokyo')">
+<div class="absolute -inset-2 bg-secondary/30 rounded-full hotspot-pulse"></div>
+<div class="w-3 h-3 bg-secondary rounded-full relative z-10 border border-white/20"></div>
+</div>
+</div>
+<!-- Map HUD Overlays -->
+<div class="absolute bottom-6 left-6 z-20 flex flex-col gap-2">
+<div class="bg-primary-container/80 p-stack-sm border border-on-primary-container flex items-center gap-3 backdrop-blur-md">
+<div class="flex flex-col">
+<span class="text-[10px] text-on-primary-container uppercase font-label-bold">Global Signal Strength</span>
+<span class="text-label-bold text-white">98.4% NOMINAL</span>
+</div>
+<div class="flex gap-0.5 items-end h-6">
+<div class="w-1 bg-secondary h-[40%]"></div>
+<div class="w-1 bg-secondary h-[60%]"></div>
+<div class="w-1 bg-secondary h-[90%]"></div>
+<div class="w-1 bg-on-primary-container h-[30%]"></div>
+</div>
+</div>
+<div class="bg-primary-container/80 p-stack-sm border border-on-primary-container text-[10px] text-on-primary-container uppercase font-label-bold backdrop-blur-md">
+                    LAT: 38.8951 N | LONG: 77.0364 W
+                </div>
+</div>
+<!-- Right Panel: Regional Summaries & Live Dispatch -->
+<div class="absolute right-0 top-0 h-full w-80 glass-sidebar z-20 border-l border-on-primary-container transform transition-transform duration-500 flex flex-col translate-x-0" id="dataPanel">
+<div class="p-stack-md border-b border-on-primary-container flex justify-between items-center bg-primary">
+<h3 class="font-label-bold text-label-bold text-white uppercase tracking-widest">Live Dispatches</h3>
+<span class="material-symbols-outlined text-on-primary-container text-[20px] cursor-pointer hover:text-white" onclick="togglePanel()">chevron_right</span>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Regional Summary Card 1 -->
+<div class="p-stack-md border-b border-on-primary-container hover:bg-white/5 transition-colors group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-label-bold text-secondary-container bg-secondary/20 px-1.5 py-0.5">NORTH AMERICA</span>
+<span class="text-[10px] text-on-primary-container">02m ago</span>
+</div>
+<h4 class="font-headline-md text-[18px] text-white leading-tight mb-2 group-hover:text-secondary-fixed transition-colors">Economic Policy Pivot: White House to Address Trade Deficit</h4>
+<p class="text-body-md text-[13px] text-on-primary-container line-clamp-2">The administration is expected to announce a series of measures targeting industrial subsidies...</p>
+</div>
+<!-- Regional Summary Card 2 -->
+<div class="p-stack-md border-b border-on-primary-container hover:bg-white/5 transition-colors group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-label-bold text-primary-fixed bg-on-primary-fixed-variant px-1.5 py-0.5">EUROPE</span>
+<span class="text-[10px] text-on-primary-container">14m ago</span>
+</div>
+<h4 class="font-headline-md text-[18px] text-white leading-tight mb-2 group-hover:text-secondary-fixed transition-colors">Energy Transition: EU Approves Renewables Expansion Bill</h4>
+<p class="text-body-md text-[13px] text-on-primary-container line-clamp-2">New directives mandate a 25% increase in offshore wind capacity across the North Sea by 2030...</p>
+</div>
+<!-- Live Dispatch Feed Section -->
+<div class="p-stack-md bg-secondary/5">
+<h5 class="text-[10px] font-label-bold text-on-primary-container uppercase tracking-widest mb-stack-md">Live Wire Feed</h5>
+<ul class="space-y-4">
+<li class="flex gap-3 border-l-2 border-on-primary-container pl-3 py-1">
+<div class="flex-1">
+<p class="text-[12px] text-white font-medium">[ALERT] Tokyo Stock Exchange shows unexpected midday surge.</p>
+<span class="text-[10px] text-on-primary-container">11:04 UTC</span>
+</div>
+</li>
+<li class="flex gap-3 border-l-2 border-secondary pl-3 py-1">
+<div class="flex-1">
+<p class="text-[12px] text-white font-medium">Reporting: Border tensions rising in South Caucasus regional zone.</p>
+<span class="text-[10px] text-on-primary-container">10:52 UTC</span>
+</div>
+</li>
+<li class="flex gap-3 border-l-2 border-on-primary-container pl-3 py-1">
+<div class="flex-1">
+<p class="text-[12px] text-white font-medium">Analysis: The impact of new AI regulation on venture capital in SE Asia.</p>
+<span class="text-[10px] text-on-primary-container">10:45 UTC</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="p-stack-md bg-primary border-t border-on-primary-container">
+<button class="w-full py-3 border border-on-primary-container text-white font-label-bold uppercase text-[12px] hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="file_download">file_download</span>
+                        Export Intel Report
+                    </button>
+</div>
+</div>
+<!-- Interaction Tooltips / Floating Search Map -->
+<div class="absolute top-6 left-6 z-20">
+<div class="flex items-center bg-primary border border-on-primary-container overflow-hidden shadow-2xl">
+<div class="px-4 py-3 bg-secondary text-white">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</div>
+<input class="bg-transparent border-none text-white text-sm focus:ring-0 w-64 placeholder:text-on-primary-container" placeholder="Search Region, Topic, or Hotspot..." type="text"/>
+</div>
+</div>
+<!-- Contextual Popup (Hidden by default) -->
+<div class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] bg-primary border border-secondary shadow-2xl z-50 p-stack-lg" id="regionDetail">
+<div class="flex justify-between items-start mb-stack-md">
+<div>
+<span class="text-[11px] text-secondary font-label-bold uppercase">Hotspot Detected</span>
+<h2 class="font-headline-lg text-white" id="regionTitle">Region Name</h2>
+</div>
+<button class="text-on-primary-container hover:text-white" onclick="closeDetails()">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="aspect-video mb-stack-md overflow-hidden bg-primary-container">
+<img class="w-full h-full object-cover opacity-80" data-alt="A professional journalistic photograph showing a modern cityscape at dusk with streaking car lights and high-rise office buildings. The atmosphere is tense and urgent, with cool blue ambient light and warm golden interior office lights. Cinematic photography style, sharp focus, 8k resolution, conveying a sense of breaking global news and economic power." id="regionImg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ3V28ar3TL6Ddl5m6deLFd06FqRHPtUzka15cLIxILYWxNLIt98glrNRqzZKuRV2Y2x3X7opyy_ROYw6gyDZt9NdqdeweBmIf7NIyVY6d1a2j_w9RZvdjrujuF0DxA8YpHxzoJ0yJT_p7ltA3QU9S6QdMBXlrNPxqz-ed1qEgn8mnE7LXSCo_5jmucNMt7P8DCn6tkW6V_YwWRYSigjf9DLSsWKSqUcxUSd4gVtyhVfKxipPuUhY"/>
+</div>
+<p class="text-body-md text-on-primary-container mb-stack-lg">Multiple reports originating from this sector regarding significant legislative shifts and infrastructure developments. Local correspondents are currently on the ground.</p>
+<div class="flex gap-stack-md">
+<button class="flex-1 bg-secondary text-white py-3 font-label-bold uppercase text-sm">Full Dossier</button>
+<button class="flex-1 border border-on-primary-container text-white py-3 font-label-bold uppercase text-sm">Listen Live</button>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer (Branding Mandate) -->
+<footer class="bg-primary dark:bg-tertiary text-on-primary dark:text-tertiary-fixed font-label-sm text-label-sm full-width border-t-4 border-secondary dark:border-on-secondary-fixed-variant z-40 relative">
+<div class="w-full py-stack-lg px-grid-margin mt-0 flex flex-col items-center gap-stack-md max-w-7xl mx-auto">
+<h2 class="font-headline-md text-headline-md font-black text-on-primary dark:text-on-tertiary">MINBAR NEWS</h2>
+<div class="flex flex-wrap justify-center gap-stack-lg">
+<a class="text-surface-variant dark:text-on-tertiary-container hover:text-on-primary transition-colors hover:underline" href="#">Archive</a>
+<a class="text-surface-variant dark:text-on-tertiary-container hover:text-on-primary transition-colors hover:underline" href="#">Privacy Policy</a>
+<a class="text-surface-variant dark:text-on-tertiary-container hover:text-on-primary transition-colors hover:underline" href="#">Terms of Service</a>
+<a class="text-surface-variant dark:text-on-tertiary-container hover:text-on-primary transition-colors hover:underline" href="#">Ethics Code</a>
+<a class="text-surface-variant dark:text-on-tertiary-container hover:text-on-primary transition-colors hover:underline" href="#">Contact Us</a>
+</div>
+<p class="opacity-80 hover:opacity-100 transition-opacity">© 2024 Minbar News Agency. All rights reserved. Global Editorial Standards Applied.</p>
+</div>
+</footer>
+<script>
+        function togglePanel() {
+            const panel = document.getElementById('dataPanel');
+            const isHidden = panel.classList.contains('translate-x-[calc(100%-40px)]');
+            
+            if (isHidden) {
+                panel.classList.remove('translate-x-[calc(100%-40px)]');
+                panel.classList.add('translate-x-0');
+            } else {
+                panel.classList.add('translate-x-[calc(100%-40px)]');
+                panel.classList.remove('translate-x-0');
+            }
+        }
+
+        function openDetails(name) {
+            document.getElementById('regionTitle').innerText = name;
+            document.getElementById('regionDetail').classList.remove('hidden');
+        }
+
+        function closeDetails() {
+            document.getElementById('regionDetail').classList.add('hidden');
+        }
+
+        // Micro-interaction: Randomize signal strength
+        setInterval(() => {
+            const span = document.querySelector('.text-label-bold.text-white');
+            if (span) {
+                const val = (98 + Math.random()).toFixed(1);
+                span.innerText = `${val}% NOMINAL`;
+            }
+        }, 5000);
+    </script>
+</body></html>

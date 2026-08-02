@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Editorial Portal | Minbar News Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:wght@600;700&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#141f30",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e5e9eb",
+                        "secondary-fixed": "#ffdad6",
+                        "on-tertiary-fixed": "#111c2c",
+                        "on-background": "#181c1e",
+                        "on-primary-container": "#7686ab",
+                        "secondary-container": "#ff5a52",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "outline-variant": "#c5c6cf",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eef1f3",
+                        "surface-container-low": "#f1f4f6",
+                        "surface": "#f7fafc",
+                        "surface-bright": "#f7fafc",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#374768",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0c1e3d",
+                        "primary": "#000516",
+                        "on-surface-variant": "#44474e",
+                        "on-primary-fixed": "#081b3a",
+                        "surface-container": "#ebeef0",
+                        "inverse-primary": "#b6c6ee",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-dim": "#d7dadc",
+                        "secondary-fixed-dim": "#ffb4ac",
+                        "primary-fixed": "#d8e2ff",
+                        "tertiary-fixed": "#d8e3fa",
+                        "surface-variant": "#e0e3e5",
+                        "background": "#f7fafc",
+                        "on-secondary-fixed-variant": "#92030f",
+                        "tertiary": "#000613",
+                        "secondary": "#b52424",
+                        "surface-tint": "#4e5e81",
+                        "on-surface": "#181c1e",
+                        "on-secondary-container": "#600006",
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "primary-fixed-dim": "#b6c6ee",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#7c879c",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#bcc7dd",
+                        "outline": "#75777f",
+                        "on-secondary-fixed": "#410003"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "grid-margin": "24px",
+                        "stack-lg": "32px",
+                        "section-gap": "64px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["IBM Plex Sans"],
+                        "label-bold": ["IBM Plex Sans"],
+                        "headline-lg": ["\"Source Serif 4\""],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "display-lg": ["\"Source Serif 4\""],
+                        "body-lg": ["Work Sans"],
+                        "body-md": ["Work Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f4f6;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c5c6cf;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant py-stack-lg z-50">
+<div class="px-6 mb-stack-lg">
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">MINBAR NEWS</h1>
+<div class="mt-2">
+<p class="font-label-bold text-label-bold text-primary">Editorial Portal</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Minbar News CMS</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-bold text-label-bold">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined mr-3">edit_note</span>
+<span class="font-label-bold text-label-bold">Editorial Desk</span>
+</a>
+<a class="flex items-center px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined mr-3">auto_stories</span>
+<span class="font-label-bold text-label-bold">Article Library</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center px-4 py-3 mx-2 bg-primary text-on-primary rounded-lg transition-all shadow-md" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-bold text-label-bold">Analytics</span>
+</a>
+<a class="flex items-center px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined mr-3">group</span>
+<span class="font-label-bold text-label-bold">Staff Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-1">
+<button class="w-full bg-secondary text-on-secondary font-label-bold py-3 rounded-lg flex items-center justify-center gap-2 mb-4 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+                    New Article
+                </button>
+<div class="border-t border-outline-variant pt-4">
+<a class="flex items-center px-4 py-2 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">help</span>
+<span class="font-label-sm text-label-sm">Help Center</span>
+</a>
+<a class="flex items-center px-4 py-2 text-on-surface-variant hover:text-secondary transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">logout</span>
+<span class="font-label-sm text-label-sm">Log Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 min-h-screen flex flex-col">
+<!-- Header / Top Bar -->
+<header class="bg-surface sticky top-0 z-40 px-grid-margin py-4 border-b border-outline-variant flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Performance Analytics</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Real-time engagement and distribution metrics</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all w-64" placeholder="Search analytics..." type="text"/>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional portrait of a middle-aged news editorial manager with a focused expression, set in a bright modern office with glass walls and professional lighting. The aesthetic is clean and corporate, featuring muted tones and high-key illumination typical of a newsroom environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7-domQfNZYalpA3cM_mjK1aCcTcDe-OhpPb2UY766Y-eSPbuZiFIRTtQ75X_f0gnP17fb6jdpWTxCEFdJhERcaCqq2phXOtjjy0-NrAun5M9MTd05EfYS3vl9SaN-wen0FvLldAGzb-Z3luDfqTRfSokD7cLlz3xljdY8QacpSmxXDQ-cNcdQmc0kCQksoTNXBqCAov1P77BnbdrCG8uNhYTk2oBqfaS7vgHbCjEdWF1lWNW9zy0"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-grid-margin space-y-stack-lg max-w-7xl mx-auto w-full">
+<!-- Real-time Ticker / Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-label-bold text-label-bold uppercase">Active Readers</span>
+<span class="flex h-2 w-2 rounded-full bg-secondary chart-pulse"></span>
+</div>
+<div class="text-3xl font-bold text-primary">12,842</div>
+<div class="flex items-center mt-2 text-secondary text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="ml-1">+14% vs last hour</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-label-bold text-label-bold uppercase">Avg. Read Time</span>
+<span class="material-symbols-outlined text-outline">timer</span>
+</div>
+<div class="text-3xl font-bold text-primary">4m 22s</div>
+<div class="flex items-center mt-2 text-on-surface-variant text-xs">
+<span class="material-symbols-outlined text-sm">remove</span>
+<span class="ml-1">Stable (0.2% change)</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-label-bold text-label-bold uppercase">Page Views (24h)</span>
+<span class="material-symbols-outlined text-outline">visibility</span>
+</div>
+<div class="text-3xl font-bold text-primary">1.2M</div>
+<div class="flex items-center mt-2 text-primary-fixed-dim text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="ml-1">+5.4% vs yesterday</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-label-bold text-label-bold uppercase">Conversion Rate</span>
+<span class="material-symbols-outlined text-outline">ads_click</span>
+</div>
+<div class="text-3xl font-bold text-primary">3.18%</div>
+<div class="flex items-center mt-2 text-secondary text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+<span class="ml-1">-0.4% vs last period</span>
+</div>
+</div>
+</div>
+<!-- Main Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Traffic Pulse Chart Area -->
+<div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="p-stack-md border-b border-outline-variant flex justify-between items-center bg-surface">
+<h3 class="font-label-bold text-label-bold text-primary uppercase">Reader Velocity (24h)</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs font-bold bg-primary text-on-primary rounded">LIVE</button>
+<button class="px-3 py-1 text-xs font-bold text-on-surface-variant hover:bg-surface-container transition-colors rounded">History</button>
+</div>
+</div>
+<div class="flex-1 min-h-[350px] relative p-6">
+<!-- Simulated Chart Area -->
+<div class="absolute inset-0 flex items-end justify-between px-10 pb-10 opacity-80">
+<div class="w-8 bg-primary-container h-[40%] rounded-t-sm"></div>
+<div class="w-8 bg-primary-container h-[55%] rounded-t-sm"></div>
+<div class="w-8 bg-primary-container h-[35%] rounded-t-sm"></div>
+<div class="w-8 bg-primary-container h-[70%] rounded-t-sm"></div>
+<div class="w-8 bg-primary-container h-[85%] rounded-t-sm"></div>
+<div class="w-8 bg-secondary h-[95%] rounded-t-sm relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-2 py-1 rounded text-[10px] font-bold">Peak</div>
+</div>
+<div class="w-8 bg-primary-container h-[80%] rounded-t-sm"></div>
+<div class="w-8 bg-primary-container h-[60%] rounded-t-sm"></div>
+<div class="w-8 bg-primary-container h-[45%] rounded-t-sm"></div>
+<div class="w-8 bg-primary-container h-[50%] rounded-t-sm"></div>
+<div class="w-8 bg-primary-container h-[65%] rounded-t-sm"></div>
+<div class="w-8 bg-primary-container h-[40%] rounded-t-sm"></div>
+</div>
+<!-- Grid Lines -->
+<div class="absolute inset-x-6 inset-y-10 border-l border-b border-outline-variant flex flex-col justify-between">
+<div class="w-full border-t border-dashed border-outline-variant opacity-30"></div>
+<div class="w-full border-t border-dashed border-outline-variant opacity-30"></div>
+<div class="w-full border-t border-dashed border-outline-variant opacity-30"></div>
+<div class="w-full border-t border-dashed border-outline-variant opacity-30"></div>
+</div>
+<div class="absolute left-0 top-1/2 -rotate-90 text-[10px] uppercase font-bold text-outline">Pageviews / Min</div>
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] uppercase font-bold text-outline">Time of Day (UTC)</div>
+</div>
+</div>
+<!-- Geographic Distribution -->
+<div class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col">
+<div class="p-stack-md border-b border-outline-variant bg-surface">
+<h3 class="font-label-bold text-label-bold text-primary uppercase">Top Regions</h3>
+</div>
+<div class="p-stack-md flex-1">
+<div class="h-40 bg-surface-container-high rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 grayscale opacity-20 bg-cover bg-center" data-alt="A stylized minimalist world map in a flat editorial style. The continents are rendered in a light slate gray against a soft white background. Strategic regions are highlighted with glowing points of light in navy and crimson to represent reader density. The overall look is professional and analytical." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCgsP0urGmqjAZlWkD_wSySMQoksCUNmH7S_H2o2B5JnqM6EZEk--Hoa2MttgubC8C_c1GW7RiARQofc6ABDsiYjO3CE2ITxvF9E_th0-MV-FWECD0uOq6zXmI-nVbJ5PXHwYAs0DVlkmL5HNR8sDU3Mw8np5qT-mB8hHYZplNi83FXYJ_SPvzs_hnVdYVapQhgzmBv5lqZhwaZVlPVLZpLGOhQ1lVbuP8POzXEhVTLsWnh-Pq9PKE')"></div>
+<span class="material-symbols-outlined text-4xl text-primary opacity-50">public</span>
+</div>
+<ul class="space-y-3">
+<li class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-sm font-medium">United States</span>
+</div>
+<span class="text-sm font-bold">42%</span>
+</li>
+<li class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary opacity-70"></span>
+<span class="text-sm font-medium">United Kingdom</span>
+</div>
+<span class="text-sm font-bold">18%</span>
+</li>
+<li class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary opacity-50"></span>
+<span class="text-sm font-medium">Germany</span>
+</div>
+<span class="text-sm font-bold">12%</span>
+</li>
+<li class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary opacity-30"></span>
+<span class="text-sm font-medium">Canada</span>
+</div>
+<span class="text-sm font-bold">9%</span>
+</li>
+<li class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary opacity-10"></span>
+<span class="text-sm font-medium">Others</span>
+</div>
+<span class="text-sm font-bold">19%</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Bottom Grid: Top Performing & Real-time Live Stream -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Top Articles Table -->
+<div class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-lg">
+<div class="p-stack-md border-b border-outline-variant flex justify-between items-center bg-surface">
+<h3 class="font-label-bold text-label-bold text-primary uppercase">Top Performing Content</h3>
+<button class="text-xs text-primary font-bold flex items-center hover:underline">
+                                Full Report <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-[10px] uppercase font-bold text-on-surface-variant">
+<tr>
+<th class="px-4 py-3">Article Title</th>
+<th class="px-4 py-3">Views</th>
+<th class="px-4 py-3">Retention</th>
+<th class="px-4 py-3">Growth</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-4 py-4">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 bg-surface-container-high shrink-0 rounded overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A cinematic wide shot of a futuristic cityscape at dusk, featuring sleek glass towers reflecting a twilight sky of orange and deep purple. Sharp architectural lines and glowing windows convey a sense of modern urban life and economic vitality. The lighting is crisp and the composition is balanced for a professional editorial look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0aRQXmgLi6vztnxkVu3XJom4JwoKF-lCLP8Jl7g0GSsL8Up8WHN4bXIdrID6N8dNX5NmscADGZJCCy0rbPM9Ul7_qCB097S65tNemCrvY4GXURah4bkklM41g8okY0WUXdYqoTqyImETAoNKfxPWvA3ji-Y-gan7iaMh7zRO_oZWEYriO4LFfx9Kyw3U-zwFpU-qeIo156ehUFMdhxNyp8gUbI4hEI3-U7k_tYGTz1YuTHS5AqRM"/>
+</div>
+<p class="text-sm font-medium line-clamp-1">Economic Shifts: The Decadal Outlook on Global Trade...</p>
+</div>
+</td>
+<td class="px-4 py-4 font-bold text-sm">45.2K</td>
+<td class="px-4 py-4">
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[88%]"></div>
+</div>
+</td>
+<td class="px-4 py-4 text-primary font-bold text-sm">+12%</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-4 py-4">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 bg-surface-container-high shrink-0 rounded overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="High-detail close-up of a renewable energy wind turbine blade against a brilliant blue sky. The sunlight glints off the smooth, modern surface of the turbine, highlighting clean technology and sustainable progress. Professional photography with high contrast and sharp focus, suitable for a lead news analysis piece." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbbkbW5dh51QQaUfxToCK8-tYpVIgeiJS62XwpWgI1ckYlTjvyaGUvS0ZTnL1-tz73BHQRe69g0tAxVPhQhcUp2NU5Vv3O262tYB8POTVMSZAZ7IR-_6QVSsI7ABrjGBNldPc1DVWld4rctvvGuw0Qnif5Tbiv4HfoG-uddVzJwd8HWNwzwksi8Hoe6iXB2mkr9G158WRXdVgYs_yeCa6AqksdyJiovKhg8na62441acqj_2-N7w4"/>
+</div>
+<p class="text-sm font-medium line-clamp-1">Energy Crisis or Evolution? New Policy Analysis...</p>
+</div>
+</td>
+<td class="px-4 py-4 font-bold text-sm">31.8K</td>
+<td class="px-4 py-4">
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+</td>
+<td class="px-4 py-4 text-primary font-bold text-sm">+8%</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-4 py-4">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 bg-surface-container-high shrink-0 rounded overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Dynamic photo of a bustling international airport terminal, with blurred motion of travelers and large departure boards showing global destinations. The lighting is bright and airy, with cool blue tones and vibrant accents of red and yellow from signage. Captures the essence of global connectivity and fast-paced journalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGQBJ2dxT4Rd55OOMy4B8sDpsJVhSWRMtkKoHJr3Gx9ce3aaGDG5Tg43B76aSa-yNF6TSqJoiQlIN1q7l9Ddm_vtxKtS72SsG0tny2ipsVrX9Kb3hbxZoZ5p1MQ8W_dHF1tbO2_xZ6Bs8VPsy28_dIg7JUWScE847o-ryOaHwtKtuSNiIMVESge3xCB9WPXzI9Lw2Q7QBZTgKWxGrHF61SRidlHKa9lCrsuY8gfRIl8KvU61ZzJ8o"/>
+</div>
+<p class="text-sm font-medium line-clamp-1">Travel Restrictions: What You Need to Know for Q4</p>
+</div>
+</td>
+<td class="px-4 py-4 font-bold text-sm">28.1K</td>
+<td class="px-4 py-4">
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[72%]"></div>
+</div>
+</td>
+<td class="px-4 py-4 text-secondary font-bold text-sm">-2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Real-time Pulse Sidebar -->
+<div class="lg:col-span-5 bg-primary-container text-on-primary-container border border-primary-container rounded-lg flex flex-col">
+<div class="p-stack-md border-b border-primary flex justify-between items-center">
+<h3 class="font-label-bold text-label-bold text-on-primary-fixed uppercase">Real-Time Traffic Pulse</h3>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary chart-pulse"></span>
+<span class="text-xs font-bold">Live Activity</span>
+</div>
+</div>
+<div class="flex-1 p-stack-md overflow-y-auto max-h-[350px] custom-scrollbar">
+<div class="space-y-4">
+<div class="flex gap-3 items-start border-l-2 border-secondary pl-3 py-1">
+<div class="text-[10px] font-bold text-on-primary-container opacity-60">14:22:01</div>
+<p class="text-xs">
+<span class="font-bold text-on-primary-fixed">User #8291</span> just started reading 
+                                        <span class="italic">"Global Trade Shifts"</span> from <span class="font-bold">Tokyo, JP</span>.
+                                    </p>
+</div>
+<div class="flex gap-3 items-start border-l-2 border-primary-fixed-dim pl-3 py-1">
+<div class="text-[10px] font-bold text-on-primary-container opacity-60">14:21:55</div>
+<p class="text-xs">
+<span class="font-bold text-on-primary-fixed">Social Referral</span> detected via X/Twitter for 
+                                        <span class="italic">"Energy Evolution"</span>. (142 hits)
+                                    </p>
+</div>
+<div class="flex gap-3 items-start border-l-2 border-secondary pl-3 py-1">
+<div class="text-[10px] font-bold text-on-primary-container opacity-60">14:21:42</div>
+<p class="text-xs">
+<span class="font-bold text-on-primary-fixed">Search Hit</span> from Google (Organic) for keyword: 
+                                        <span class="font-bold">"Minbar News Analysis"</span>.
+                                    </p>
+</div>
+<div class="flex gap-3 items-start border-l-2 border-primary-fixed-dim pl-3 py-1">
+<div class="text-[10px] font-bold text-on-primary-container opacity-60">14:21:30</div>
+<p class="text-xs">
+<span class="font-bold text-on-primary-fixed">Subscription Update:</span> New Premium Account registered by 
+                                        <span class="font-bold">user_77@edu.uk</span>.
+                                    </p>
+</div>
+<div class="flex gap-3 items-start border-l-2 border-secondary pl-3 py-1">
+<div class="text-[10px] font-bold text-on-primary-container opacity-60">14:21:15</div>
+<p class="text-xs">
+<span class="font-bold text-on-primary-fixed">Breaking Alert</span> read by 5,000+ users in the last 60 seconds.
+                                    </p>
+</div>
+</div>
+</div>
+<div class="p-3 bg-tertiary-container mt-auto">
+<div class="flex justify-between items-center">
+<span class="text-[10px] uppercase font-bold tracking-widest opacity-70">Server Latency</span>
+<span class="text-[10px] font-bold text-secondary">22ms</span>
+</div>
+<div class="w-full bg-primary h-1 rounded-full mt-2 overflow-hidden">
+<div class="bg-secondary h-full w-[15%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-auto bg-primary py-stack-lg border-t-4 border-secondary text-on-primary">
+<div class="max-w-7xl mx-auto px-grid-margin flex flex-col items-center gap-stack-md">
+<h2 class="font-headline-md text-headline-md font-bold text-on-primary">MINBAR NEWS</h2>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">About Us</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Editorial Guidelines</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Privacy Policy</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Terms of Service</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Contact</a>
+<a class="text-surface-variant hover:text-on-primary transition-colors font-label-sm text-label-sm" href="#">Archive</a>
+</div>
+<p class="font-body-md text-body-md opacity-60 text-center">© 2024 Minbar News. Truth. Perspective. Impact.</p>
+</div>
+</footer>
+</main>
+</div>
+<script>
+        // Micro-interaction: Update timestamps and simulated live activity
+        setInterval(() => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-GB', { hour12: false });
+            
+            const logs = [
+                { type: 'reading', text: 'New reader session from London, UK' },
+                { type: 'social', text: 'Article share detected on LinkedIn' },
+                { type: 'search', text: 'Top keyword: "Climate Policy Reform"' }
+            ];
+            
+            const randomLog = logs[Math.floor(Math.random() * logs.length)];
+            const container = document.querySelector('.custom-scrollbar .space-y-4');
+            
+            const newLog = document.createElement('div');
+            newLog.className = 'flex gap-3 items-start border-l-2 border-secondary pl-3 py-1 opacity-0 transform translate-x-4 transition-all duration-500';
+            newLog.innerHTML = `
+                <div class="text-[10px] font-bold text-on-primary-container opacity-60">${timeString}</div>
+                <p class="text-xs">${randomLog.text}</p>
+            `;
+            
+            container.prepend(newLog);
+            
+            // Trigger animation
+            requestAnimationFrame(() => {
+                newLog.classList.remove('opacity-0', 'translate-x-4');
+            });
+
+            // Maintain max logs
+            if (container.children.length > 10) {
+                container.removeChild(container.lastChild);
+            }
+        }, 8000);
+    </script>
+</body></html>
