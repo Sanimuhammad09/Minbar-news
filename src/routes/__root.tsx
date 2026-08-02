@@ -20,10 +20,15 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Minbar News | Editorial & Global Reporting',
       },
     ],
     links: [
+      {
+        rel: 'icon',
+        type: 'image/png',
+        href: '/logo.png',
+      },
       {
         rel: 'stylesheet',
         href: appCss,

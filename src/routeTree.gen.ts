@@ -18,6 +18,7 @@ import { Route as OpinionRouteImport } from './routes/opinion'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as VideoRouteImport } from './routes/video'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin/analytics'
 import { Route as AdminArticlesRouteImport } from './routes/admin/articles'
 import { Route as AdminEditorialRouteImport } from './routes/admin/editorial'
@@ -72,6 +73,11 @@ const VideoRoute = VideoRouteImport.update({
   id: '/video',
   path: '/video',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
   id: '/analytics',
@@ -138,11 +144,11 @@ export interface FileRoutesByFullPath {
   '/admin/staff': typeof AdminStaffRoute
   '/article/$articleId': typeof ArticleArticleIdRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRouteWithChildren
   '/live': typeof LiveRoute
   '/newsletters': typeof NewslettersRoute
   '/opinion': typeof OpinionRoute
@@ -158,6 +164,7 @@ export interface FileRoutesByTo {
   '/admin/staff': typeof AdminStaffRoute
   '/article/$articleId': typeof ArticleArticleIdRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -179,6 +186,7 @@ export interface FileRoutesById {
   '/admin/staff': typeof AdminStaffRoute
   '/article/$articleId': typeof ArticleArticleIdRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -201,11 +209,11 @@ export interface FileRouteTypes {
     | '/admin/staff'
     | '/article/$articleId'
     | '/category/$categoryId'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/admin'
     | '/live'
     | '/newsletters'
     | '/opinion'
@@ -221,6 +229,7 @@ export interface FileRouteTypes {
     | '/admin/staff'
     | '/article/$articleId'
     | '/category/$categoryId'
+    | '/admin'
   id:
     | '__root__'
     | '/'
@@ -241,6 +250,7 @@ export interface FileRouteTypes {
     | '/admin/staff'
     | '/article/$articleId'
     | '/category/$categoryId'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -322,6 +332,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/analytics': {
       id: '/admin/analytics'
       path: '/analytics'
@@ -396,6 +413,7 @@ interface AdminRouteChildren {
   AdminNewArticleRoute: typeof AdminNewArticleRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminStaffRoute: typeof AdminStaffRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -406,6 +424,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminNewArticleRoute: AdminNewArticleRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminStaffRoute: AdminStaffRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
