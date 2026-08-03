@@ -10,9 +10,55 @@ function Home() {
 
   return (
     <div className="bg-surface text-on-surface font-body-md overflow-x-hidden min-h-screen flex flex-col">
-      <main className="flex-grow max-w-7xl mx-auto px-grid-margin py-stack-lg w-full">
-        {/* HERO SECTION */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
+      <main className="flex-grow max-w-7xl mx-auto px-grid-margin py-stack-lg w-full flex flex-col lg:flex-row gap-8 lg:gap-10">
+        
+        {/* LEFT SIDEBAR (Trending & Socials) */}
+        <aside className="hidden lg:flex flex-col gap-6 sticky top-24 h-fit w-48 shrink-0">
+          <div>
+            <h3 className="font-label-bold text-label-bold uppercase text-primary border-b border-outline-variant pb-2 mb-4">Trending</h3>
+            <ul className="space-y-4">
+              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#DigitalSovereignty</a></li>
+              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#ClimateDebt</a></li>
+              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Election2024</a></li>
+              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#MarketVolatility</a></li>
+              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#GreenInfrastructure</a></li>
+            </ul>
+          </div>
+          
+          <div className="mt-4">
+            <h3 className="font-label-bold text-label-bold uppercase text-primary border-b border-outline-variant pb-2 mb-4">Follow Minbar</h3>
+            <div className="grid grid-cols-2 gap-4">
+               <button className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+                 <span className="material-symbols-outlined text-[20px]">public</span>
+                 <span className="text-[10px] font-label-bold uppercase">Web</span>
+               </button>
+               <button className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+                 <span className="material-symbols-outlined text-[20px]">alternate_email</span>
+                 <span className="text-[10px] font-label-bold uppercase">Mail</span>
+               </button>
+               <button className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+                 <span className="material-symbols-outlined text-[20px]">play_circle</span>
+                 <span className="text-[10px] font-label-bold uppercase">Video</span>
+               </button>
+               <button className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+                 <span className="material-symbols-outlined text-[20px]">rss_feed</span>
+                 <span className="text-[10px] font-label-bold uppercase">RSS</span>
+               </button>
+            </div>
+          </div>
+          
+          <div className="mt-8 bg-surface-container-lowest border border-outline-variant p-4">
+             <span className="material-symbols-outlined text-secondary text-3xl mb-2">workspace_premium</span>
+             <h4 className="font-label-bold text-label-bold uppercase text-primary mb-1">Minbar Pro</h4>
+             <p className="text-[10px] text-on-surface-variant mb-3">Ad-free reading, exclusive newsletters, and events.</p>
+             <button className="w-full bg-surface text-primary border border-outline hover:bg-surface-container transition-colors py-1 text-[10px] font-label-bold uppercase cursor-pointer">Upgrade</button>
+          </div>
+        </aside>
+
+        {/* CENTER & RIGHT CONTENT */}
+        <div className="flex-1 min-w-0 flex flex-col">
+          {/* HERO SECTION */}
+          <section className="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
           <Link 
             to="/article/$articleId" 
             params={{ articleId: 'summit-for-the-future' }}
@@ -270,6 +316,7 @@ function Home() {
               </div>
             </div>
           </aside>
+        </div>
         </div>
       </main>
     </div>

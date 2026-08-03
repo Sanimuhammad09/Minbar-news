@@ -18,7 +18,6 @@ export default function Header() {
               {isMobileMenuOpen ? 'close' : 'menu'}
             </span>
             <Link to="/" className="flex items-center gap-4 cursor-pointer">
-              <span className="material-symbols-outlined text-primary dark:text-white text-4xl hidden md:block">menu</span>
               <img src="/logo.png" alt="Minbar News Logo" className="h-10 w-auto object-contain rounded" />
               <h1 className="font-headline-lg text-headline-lg font-bold text-primary dark:text-white tracking-tighter uppercase hidden sm:block">
                 MINBAR NEWS

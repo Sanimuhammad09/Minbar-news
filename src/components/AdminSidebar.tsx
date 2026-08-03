@@ -23,7 +23,7 @@ export default function AdminSidebar() {
 
       {/* Sidebar Overlay (Mobile) */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setIsOpen(false)}></div>
+        <div className="fixed inset-0 bg-black/50 z-30 md:hidden" onClick={() => setIsOpen(false)}></div>
       )}
 
       {/* Sidebar */}

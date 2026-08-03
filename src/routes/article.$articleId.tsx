@@ -1,11 +1,40 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
+// Simulated fetch function
+async function fetchArticle(articleId: string) {
+  // In a real app, this would hit an API or database
+  return {
+    id: articleId,
+    title: "The Silent Renaissance: How Digital Sovereignty is Reshaping Global Trust.",
+    excerpt: "In an era increasingly defined by the erosion of traditional institutional trust, a new architecture of sovereignty is emerging from the digital periphery.",
+    author: "Dr. Elias Vance",
+    date: "August 24, 2024",
+    coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMHJm4xd4QUcG4eTE57SuAkfrjZtvoMwoYFqUssU6bC-DUmYqvgwpU3IqBbUg_AtFD8QIbyU4_fjLpjVp0903YuLpmBKAKG2P26wQMY6Cpwb1qI0ihnnOPDSQdsSd12QYX75ACcrRF8c9bh_Gx5Q2HK-O2Pzxp8tU5ZydG5j6bD2cJ6JYvWhZUX50EvkQ8bvPAfGHsGPZEpjSKMCQYul4pSFqB1hD9fGlQl-xCgIv7NxEvOwXQkNw"
+  }
+}
+
 export const Route = createFileRoute('/article/$articleId')({
+  loader: async ({ params }) => fetchArticle(params.articleId),
+  head: ({ loaderData }) => ({
+    meta: [
+      { title: loaderData ? `${loaderData.title} | Minbar News` : 'Article | Minbar News' },
+      { name: 'description', content: loaderData?.excerpt },
+      { property: 'og:title', content: loaderData?.title },
+      { property: 'og:description', content: loaderData?.excerpt },
+      { property: 'og:image', content: loaderData?.coverImage },
+      { property: 'og:type', content: 'article' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: loaderData?.title },
+      { name: 'twitter:description', content: loaderData?.excerpt },
+      { name: 'twitter:image', content: loaderData?.coverImage },
+    ],
+  }),
   component: ArticleView,
 })
 
 function ArticleView() {
+  const article = Route.useLoaderData()
   const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
@@ -63,7 +92,7 @@ function ArticleView() {
           
           {/* Headline */}
           <h1 className="font-headline-lg text-display-lg md:text-5xl lg:text-6xl text-primary leading-tight mb-stack-md">
-            The Silent Renaissance: How Digital Sovereignty is Reshaping Global Trust.
+            {article.title}
           </h1>
           
           {/* Meta & Author Bio */}
@@ -72,11 +101,11 @@ function ArticleView() {
               <img className="w-full h-full object-cover" alt="Author" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFfDfzB9_DNHdxtZ8JEikW4CHi7kke3RKlna0h9L12dMUL_PH1wKrbO5MqmA2WUs0fyG_K-frRD528Suf3nEnHme7Rlr4I4PrOdALeRD4rN-zOK8RrBMBt1gMPEwE_RLTZt_PJd87jTBl9jOctKERB853AL6I6jYukRB4A03ciFvQVfFZGQSdwo27rme9B51bscaCu9yfVXCQUxgaJsP1nLKDpbtIWbijq6DBpllmTV-GacZjMaY4" />
             </div>
             <div className="flex flex-col">
-              <span className="font-label-bold text-label-bold text-primary">Dr. Elias Vance</span>
+              <span className="font-label-bold text-label-bold text-primary">{article.author}</span>
               <div className="flex items-center space-x-2 text-on-surface-variant text-label-sm">
                 <span>Senior Editorial Fellow</span>
                 <span className="text-outline-variant">•</span>
-                <time dateTime="2024-08-24">August 24, 2024</time>
+                <time dateTime="2024-08-24">{article.date}</time>
                 <span className="text-outline-variant">•</span>
                 <span>8 min read</span>
               </div>
@@ -86,7 +115,7 @@ function ArticleView() {
           {/* Hero Image */}
           <figure className="mb-stack-lg">
             <div className="aspect-[16/9] w-full overflow-hidden mb-2">
-              <img className="w-full h-full object-cover" alt="Hero" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMHJm4xd4QUcG4eTE57SuAkfrjZtvoMwoYFqUssU6bC-DUmYqvgwpU3IqBbUg_AtFD8QIbyU4_fjLpjVp0903YuLpmBKAKG2P26wQMY6Cpwb1qI0ihnnOPDSQdsSd12QYX75ACcrRF8c9bh_Gx5Q2HK-O2Pzxp8tU5ZydG5j6bD2cJ6JYvWhZUX50EvkQ8bvPAfGHsGPZEpjSKMCQYul4pSFqB1hD9fGlQl-xCgIv7NxEvOwXQkNw" />
+              <img className="w-full h-full object-cover" alt="Hero" src={article.coverImage} />
             </div>
             <figcaption className="text-label-sm text-on-surface-variant italic">
               The intersection of infrastructure and data sovereignty. Visual by Minbar Global Archive.

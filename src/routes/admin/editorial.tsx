@@ -93,81 +93,83 @@ function EditorialDashboard() {
             </div>
             
             <div className="bg-surface-container-lowest rounded-lg border border-outline-variant overflow-hidden">
-              <table className="w-full text-left">
-                <thead className="bg-surface-container-low border-b border-outline-variant">
-                  <tr>
-                    <th className="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Headline</th>
-                    <th className="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Author</th>
-                    <th className="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Status</th>
-                    <th className="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-outline-variant">
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="font-headline-md text-[16px] text-primary leading-snug">The Geopolitical Shift in the Global Energy Sector</div>
-                      <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">World • Updated 2h ago</div>
-                    </td>
-                    <td className="px-6 py-4 font-body-md text-body-md">Sarah Jenkins</td>
-                    <td className="px-6 py-4">
-                      <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-green-100 text-green-800">Published</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
-                        <span className="material-symbols-outlined text-primary">more_vert</span>
-                      </button>
-                    </td>
-                  </tr>
-                  
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="font-headline-md text-[16px] text-primary leading-snug">Impact Analysis: The New Trade Agreement</div>
-                      <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">Economy • Updated 4h ago</div>
-                    </td>
-                    <td className="px-6 py-4 font-body-md text-body-md">Marcus Thorne</td>
-                    <td className="px-6 py-4">
-                      <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-indigo-100 text-indigo-800">Under Review</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
-                        <span className="material-symbols-outlined text-primary">more_vert</span>
-                      </button>
-                    </td>
-                  </tr>
-                  
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="font-headline-md text-[16px] text-primary leading-snug">Rethinking Urban Infrastructure for 2050</div>
-                      <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">Analysis • Draft saved 10m ago</div>
-                    </td>
-                    <td className="px-6 py-4 font-body-md text-body-md">Elena Rodriguez</td>
-                    <td className="px-6 py-4">
-                      <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-yellow-100 text-yellow-800">Draft</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
-                        <span className="material-symbols-outlined text-primary">more_vert</span>
-                      </button>
-                    </td>
-                  </tr>
-                  
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="font-headline-md text-[16px] text-primary leading-snug">Cultural Perspectives: The Rise of Virtual Museums</div>
-                      <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">Opinion • Published 6h ago</div>
-                    </td>
-                    <td className="px-6 py-4 font-body-md text-body-md">Julian Voss</td>
-                    <td className="px-6 py-4">
-                      <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-green-100 text-green-800">Published</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
-                        <span className="material-symbols-outlined text-primary">more_vert</span>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="overflow-x-auto w-full">
+                <table className="w-full text-left min-w-[600px]">
+                  <thead className="bg-surface-container-low border-b border-outline-variant">
+                    <tr>
+                      <th className="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Headline</th>
+                      <th className="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Author</th>
+                      <th className="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Status</th>
+                      <th className="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-outline-variant">
+                    <tr className="hover:bg-surface-container-low transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="font-headline-md text-[16px] text-primary leading-snug">The Geopolitical Shift in the Global Energy Sector</div>
+                        <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">World • Updated 2h ago</div>
+                      </td>
+                      <td className="px-6 py-4 font-body-md text-body-md whitespace-nowrap">Sarah Jenkins</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">Published</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
+                          <span className="material-symbols-outlined text-primary">more_vert</span>
+                        </button>
+                      </td>
+                    </tr>
+                    
+                    <tr className="hover:bg-surface-container-low transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="font-headline-md text-[16px] text-primary leading-snug">Impact Analysis: The New Trade Agreement</div>
+                        <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">Economy • Updated 4h ago</div>
+                      </td>
+                      <td className="px-6 py-4 font-body-md text-body-md whitespace-nowrap">Marcus Thorne</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300">Under Review</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
+                          <span className="material-symbols-outlined text-primary">more_vert</span>
+                        </button>
+                      </td>
+                    </tr>
+                    
+                    <tr className="hover:bg-surface-container-low transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="font-headline-md text-[16px] text-primary leading-snug">Rethinking Urban Infrastructure for 2050</div>
+                        <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">Analysis • Draft saved 10m ago</div>
+                      </td>
+                      <td className="px-6 py-4 font-body-md text-body-md whitespace-nowrap">Elena Rodriguez</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300">Draft</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
+                          <span className="material-symbols-outlined text-primary">more_vert</span>
+                        </button>
+                      </td>
+                    </tr>
+                    
+                    <tr className="hover:bg-surface-container-low transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="font-headline-md text-[16px] text-primary leading-snug">Cultural Perspectives: The Rise of Virtual Museums</div>
+                        <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">Opinion • Published 6h ago</div>
+                      </td>
+                      <td className="px-6 py-4 font-body-md text-body-md whitespace-nowrap">Julian Voss</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">Published</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
+                          <span className="material-symbols-outlined text-primary">more_vert</span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </section>
 
