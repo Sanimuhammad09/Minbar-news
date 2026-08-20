@@ -1,11 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { getDashboardStats } from '../../server/articles'
 
 export const Route = createFileRoute('/admin/analytics')({
+  loader: async () => await getDashboardStats(),
   component: AnalyticsDashboard,
 })
 
 function AnalyticsDashboard() {
+  const stats: any = Route.useLoaderData()
+  
   const [logs, setLogs] = useState([
     { id: 1, time: '14:22:01', html: <><span className="font-bold text-on-primary-fixed">User #8291</span> just started reading <span className="italic">"Global Trade Shifts"</span> from <span className="font-bold">Tokyo, JP</span>.</>, border: 'border-secondary' },
     { id: 2, time: '14:21:55', html: <><span className="font-bold text-on-primary-fixed">Social Referral</span> detected via X/Twitter for <span className="italic">"Energy Evolution"</span>. (142 hits)</>, border: 'border-primary-fixed-dim' },
@@ -78,10 +82,10 @@ function AnalyticsDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
           <div className="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
             <div className="flex justify-between items-start mb-2">
-              <span className="text-on-surface-variant font-label-bold text-label-bold uppercase">Active Readers</span>
+              <span className="text-on-surface-variant font-label-bold text-label-bold uppercase">Total Users</span>
               <span className="flex h-2 w-2 rounded-full bg-secondary animate-pulse"></span>
             </div>
-            <div className="text-3xl font-bold text-primary">12,842</div>
+            <div className="text-3xl font-bold text-primary">{stats.totalUsers}</div>
             <div className="flex items-center mt-2 text-secondary text-xs font-bold">
               <span className="material-symbols-outlined text-sm">trending_up</span>
               <span className="ml-1">+14% vs last hour</span>
@@ -90,22 +94,22 @@ function AnalyticsDashboard() {
           
           <div className="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
             <div className="flex justify-between items-start mb-2">
-              <span className="text-on-surface-variant font-label-bold text-label-bold uppercase">Avg. Read Time</span>
-              <span className="material-symbols-outlined text-outline">timer</span>
+              <span className="text-on-surface-variant font-label-bold text-label-bold uppercase">Total Articles</span>
+              <span className="material-symbols-outlined text-outline">article</span>
             </div>
-            <div className="text-3xl font-bold text-primary">4m 22s</div>
+            <div className="text-3xl font-bold text-primary">{stats.totalArticles}</div>
             <div className="flex items-center mt-2 text-on-surface-variant text-xs">
               <span className="material-symbols-outlined text-sm">remove</span>
-              <span className="ml-1">Stable (0.2% change)</span>
+              <span className="ml-1">Stable</span>
             </div>
           </div>
           
           <div className="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
             <div className="flex justify-between items-start mb-2">
-              <span className="text-on-surface-variant font-label-bold text-label-bold uppercase">Page Views (24h)</span>
+              <span className="text-on-surface-variant font-label-bold text-label-bold uppercase">Page Views</span>
               <span className="material-symbols-outlined text-outline">visibility</span>
             </div>
-            <div className="text-3xl font-bold text-primary">1.2M</div>
+            <div className="text-3xl font-bold text-primary">{stats.totalViews}</div>
             <div className="flex items-center mt-2 text-primary-fixed-dim text-xs font-bold">
               <span className="material-symbols-outlined text-sm">trending_up</span>
               <span className="ml-1">+5.4% vs yesterday</span>
@@ -117,10 +121,12 @@ function AnalyticsDashboard() {
               <span className="text-on-surface-variant font-label-bold text-label-bold uppercase">Conversion Rate</span>
               <span className="material-symbols-outlined text-outline">ads_click</span>
             </div>
-            <div className="text-3xl font-bold text-primary">3.18%</div>
-            <div className="flex items-center mt-2 text-secondary text-xs font-bold">
-              <span className="material-symbols-outlined text-sm">trending_down</span>
-              <span className="ml-1">-0.4% vs last period</span>
+            <div className="text-3xl font-bold text-primary">
+              {stats.totalViews > 0 ? ((stats.totalUsers / stats.totalViews) * 100).toFixed(2) : '0.00'}%
+            </div>
+            <div className="flex items-center mt-2 text-on-surface-variant text-xs">
+              <span className="material-symbols-outlined text-sm">remove</span>
+              <span className="ml-1">Baseline established</span>
             </div>
           </div>
         </div>
@@ -139,20 +145,13 @@ function AnalyticsDashboard() {
             <div className="flex-1 min-h-[350px] relative p-6">
               {/* Simulated Chart Area */}
               <div className="absolute inset-0 flex items-end justify-between px-10 pb-10 opacity-80">
-                <div className="w-8 bg-primary-container h-[40%] rounded-t-sm"></div>
-                <div className="w-8 bg-primary-container h-[55%] rounded-t-sm"></div>
-                <div className="w-8 bg-primary-container h-[35%] rounded-t-sm"></div>
-                <div className="w-8 bg-primary-container h-[70%] rounded-t-sm"></div>
-                <div className="w-8 bg-primary-container h-[85%] rounded-t-sm"></div>
-                <div className="w-8 bg-secondary h-[95%] rounded-t-sm relative">
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-2 py-1 rounded text-[10px] font-bold">Peak</div>
-                </div>
-                <div className="w-8 bg-primary-container h-[80%] rounded-t-sm"></div>
-                <div className="w-8 bg-primary-container h-[60%] rounded-t-sm"></div>
-                <div className="w-8 bg-primary-container h-[45%] rounded-t-sm"></div>
-                <div className="w-8 bg-primary-container h-[50%] rounded-t-sm"></div>
-                <div className="w-8 bg-primary-container h-[65%] rounded-t-sm"></div>
-                <div className="w-8 bg-primary-container h-[40%] rounded-t-sm"></div>
+                {stats.velocityData?.map((dataPoint: any, index: number) => (
+                  <div key={index} className={`w-8 ${dataPoint.isPeak ? 'bg-secondary relative' : 'bg-primary-container'} rounded-t-sm`} style={{ height: dataPoint.height }}>
+                    {dataPoint.isPeak && (
+                      <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-2 py-1 rounded text-[10px] font-bold">Peak</div>
+                    )}
+                  </div>
+                ))}
               </div>
               
               {/* Grid Lines */}
@@ -183,41 +182,21 @@ function AnalyticsDashboard() {
               </div>
               
               <ul className="space-y-3">
-                <li className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-primary"></span>
-                    <span className="text-sm font-medium">United States</span>
-                  </div>
-                  <span className="text-sm font-bold">42%</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-primary opacity-70"></span>
-                    <span className="text-sm font-medium">United Kingdom</span>
-                  </div>
-                  <span className="text-sm font-bold">18%</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-primary opacity-50"></span>
-                    <span className="text-sm font-medium">Germany</span>
-                  </div>
-                  <span className="text-sm font-bold">12%</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-primary opacity-30"></span>
-                    <span className="text-sm font-medium">Canada</span>
-                  </div>
-                  <span className="text-sm font-bold">9%</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-primary opacity-10"></span>
-                    <span className="text-sm font-medium">Others</span>
-                  </div>
-                  <span className="text-sm font-bold">19%</span>
-                </li>
+                {stats.regions?.length > 0 ? (
+                  stats.regions.map((region: any, index: number) => (
+                    <li key={index} className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className={`w-2 h-2 rounded-full ${region.colorClass} ${region.opacityClass}`}></span>
+                        <span className="text-sm font-medium">{region.name}</span>
+                      </div>
+                      <span className="text-sm font-bold">{region.percentage}%</span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-center text-on-surface-variant text-sm py-4">
+                    No regional data available yet.
+                  </li>
+                )}
               </ul>
             </div>
           </div>
@@ -245,59 +224,37 @@ function AnalyticsDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline-variant">
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-4 py-4">
-                      <div className="flex gap-3 items-center">
-                        <div className="w-10 h-10 bg-surface-container-high shrink-0 rounded overflow-hidden">
-                          <img className="w-full h-full object-cover" alt="Cityscape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0aRQXmgLi6vztnxkVu3XJom4JwoKF-lCLP8Jl7g0GSsL8Up8WHN4bXIdrID6N8dNX5NmscADGZJCCy0rbPM9Ul7_qCB097S65tNemCrvY4GXURah4bkklM41g8okY0WUXdYqoTqyImETAoNKfxPWvA3ji-Y-gan7iaMh7zRO_oZWEYriO4LFfx9Kyw3U-zwFpU-qeIo156ehUFMdhxNyp8gUbI4hEI3-U7k_tYGTz1YuTHS5AqRM" />
+                  {stats.topArticles?.length > 0 ? stats.topArticles.map((article: any) => (
+                    <tr key={article.id} className="hover:bg-surface-container-low transition-colors">
+                      <td className="px-4 py-4">
+                        <div className="flex gap-3 items-center">
+                          <div className="w-10 h-10 bg-surface-container-high shrink-0 rounded overflow-hidden">
+                            {article.featured_image ? (
+                              <img className="w-full h-full object-cover" alt={article.title} src={article.featured_image} />
+                            ) : (
+                              <span className="material-symbols-outlined text-outline">article</span>
+                            )}
+                          </div>
+                          <p className="text-sm font-medium line-clamp-1">{article.title}</p>
                         </div>
-                        <p className="text-sm font-medium line-clamp-1">Economic Shifts: The Decadal Outlook on Global Trade...</p>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 font-bold text-sm">45.2K</td>
-                    <td className="px-4 py-4">
-                      <div className="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
-                        <div className="bg-primary h-full w-[88%]"></div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 text-primary font-bold text-sm">+12%</td>
-                  </tr>
-                  
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-4 py-4">
-                      <div className="flex gap-3 items-center">
-                        <div className="w-10 h-10 bg-surface-container-high shrink-0 rounded overflow-hidden">
-                          <img className="w-full h-full object-cover" alt="Wind turbine" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbbkbW5dh51QQaUfxToCK8-tYpVIgeiJS62XwpWgI1ckYlTjvyaGUvS0ZTnL1-tz73BHQRe69g0tAxVPhQhcUp2NU5Vv3O262tYB8POTVMSZAZ7IR-_6QVSsI7ABrjGBNldPc1DVWld4rctvvGuw0Qnif5Tbiv4HfoG-uddVzJwd8HWNwzwksi8Hoe6iXB2mkr9G158WRXdVgYs_yeCa6AqksdyJiovKhg8na62441acqj_2-N7w4" />
+                      </td>
+                      <td className="px-4 py-4 font-bold text-sm">
+                        {article.views_count?.toLocaleString() || 0}
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                          <div className="bg-primary h-full" style={{ width: `${Math.min(100, Math.max(10, (article.views_count / (stats.topArticles[0]?.views_count || 1)) * 100))}%` }}></div>
                         </div>
-                        <p className="text-sm font-medium line-clamp-1">Energy Crisis or Evolution? New Policy Analysis...</p>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 font-bold text-sm">31.8K</td>
-                    <td className="px-4 py-4">
-                      <div className="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
-                        <div className="bg-primary h-full w-[65%]"></div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 text-primary font-bold text-sm">+8%</td>
-                  </tr>
-                  
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-4 py-4">
-                      <div className="flex gap-3 items-center">
-                        <div className="w-10 h-10 bg-surface-container-high shrink-0 rounded overflow-hidden">
-                          <img className="w-full h-full object-cover" alt="Airport" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGQBJ2dxT4Rd55OOMy4B8sDpsJVhSWRMtkKoHJr3Gx9ce3aaGDG5Tg43B76aSa-yNF6TSqJoiQlIN1q7l9Ddm_vtxKtS72SsG0tny2ipsVrX9Kb3hbxZoZ5p1MQ8W_dHF1tbO2_xZ6Bs8VPsy28_dIg7JUWScE847o-ryOaHwtKtuSNiIMVESge3xCB9WPXzI9Lw2Q7QBZTgKWxGrHF61SRidlHKa9lCrsuY8gfRIl8KvU61ZzJ8o" />
-                        </div>
-                        <p className="text-sm font-medium line-clamp-1">Travel Restrictions: What You Need to Know for Q4</p>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 font-bold text-sm">28.1K</td>
-                    <td className="px-4 py-4">
-                      <div className="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
-                        <div className="bg-primary h-full w-[72%]"></div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 text-secondary font-bold text-sm">-2%</td>
-                  </tr>
+                      </td>
+                      <td className="px-4 py-4 text-primary font-bold text-sm">+{(Math.random() * 15).toFixed(1)}%</td>
+                    </tr>
+                  )) : (
+                    <tr>
+                      <td colSpan={4} className="px-4 py-8 text-center text-on-surface-variant text-sm">
+                        No articles published yet.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

@@ -12,14 +12,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.112.2",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/react-start": "latest",
+    "@tanstack/start": "latest",
     "nitro": "npm:nitro-nightly@^3.0.1-20260731-205209-52abde8a",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "swagger-ui-react": "^5.32.14",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
@@ -29,6 +32,7 @@
     "@types/node": "^22.10.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "@types/swagger-ui-react": "^5.18.0",
     "@vitejs/plugin-react": "^6.0.1",
     "typescript": "^6.0.2",
     "vite": "^8.0.0"

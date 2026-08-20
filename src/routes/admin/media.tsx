@@ -1,13 +1,53 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
+import { useServerFn } from '@tanstack/react-start'
+import { getMediaAssets, addMediaAsset, deleteMediaAsset } from '../../server/media'
 
 export const Route = createFileRoute('/admin/media')({
   component: MediaLibrary,
+  loader: async () => await getMediaAssets()
 })
 
 function MediaLibrary() {
+  const initialMedia = Route.useLoaderData()
+  const [media, setMedia] = useState(initialMedia)
   const [panelOpen, setPanelOpen] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
+  const [selectedAsset, setSelectedAsset] = useState<any>(null)
+  const [isUploading, setIsUploading] = useState(false)
+  
+  const addMediaFn = useServerFn(addMediaAsset)
+  const deleteMediaFn = useServerFn(deleteMediaAsset)
+
+  const handleMockUpload = async () => {
+    setIsUploading(true)
+    try {
+      const newAsset = await addMediaFn({ data: {
+        url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDppgLg9h6i1rm3KEfTWh5wxJkSa6qG6g_aeuN8P0W1MC21XPjsV4RorMyQsoObziDOpnhhrM9V6HtqHlr20ZOHaf34UWbp0-TB5Rkk3cWKSeWz-JryhbS2M2OqmBtr7xNMj_zjxG2FxEU-F_kWF6F_N1Msy3E7WvFuNXzOLcX9izmz8dj7hd0rHv21z05d09Yx8oJm9unPvt1LujLCaaJL9AwLGgJWUDPBHzt65pjpj0MnKDrQFfU',
+        name: `new-upload-${Date.now()}.jpg`,
+        type: 'image/jpeg',
+        size: '1.2 MB'
+      }})
+      setMedia([...media, newAsset])
+    } catch (e) {
+      alert('Upload failed')
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    if (confirm('Delete this asset?')) {
+      await deleteMediaFn({ data: { id } })
+      setMedia(media.filter((m: any) => m.id !== id))
+      setPanelOpen(false)
+    }
+  }
+
+  const openPanel = (asset: any) => {
+    setSelectedAsset(asset)
+    setPanelOpen(true)
+  }
 
   return (
     <>
@@ -20,8 +60,8 @@ function MediaLibrary() {
               <p className="font-body-md text-on-surface-variant">Global Editorial Media Library & Licensing Repository</p>
             </div>
             <div className="flex gap-stack-sm">
-              <span className="bg-surface-container-high text-primary px-3 py-1 font-label-bold text-label-bold">Total: 12,408</span>
-              <span className="bg-secondary text-on-primary px-3 py-1 font-label-bold text-label-bold">Urgent Licensing: 4</span>
+              <span className="bg-surface-container-high text-primary px-3 py-1 font-label-bold text-label-bold">Total: {media.length}</span>
+              <span className="bg-secondary text-on-primary px-3 py-1 font-label-bold text-label-bold">Urgent Licensing: 0</span>
             </div>
           </div>
           
@@ -75,143 +115,39 @@ function MediaLibrary() {
         {/* Bento Asset Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
           
-          {/* Asset Card 1: Featured Image */}
-          <div 
-            className="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md cursor-pointer"
-            onClick={() => setPanelOpen(true)}
-          >
-            <div className="relative aspect-video overflow-hidden bg-surface-container-low border-b border-outline-variant">
-              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Summit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUN3ol58U71hiFMm8ubtBU_X5hmXqVsI_DIZUEXliyHn9Vw_RCsQhAUXTt9oZ4R5KF7r5qSyZrm8zmP3YMmlfwSBRaFfQ0ub0WReWugZNDpnQW_twRd0grFH8Vl4K_yP06J2jc-wFBwkkAgl_rK4svMLnNFKgY2q9BjZ1nLCiY1hVWjS_CXU-eal-vCt29Waka2WT5TpNfRS7ovN-zHVtORY04sNFw7ngpCdU561vEZDBDe_PW8NA" />
-              <div className="absolute top-2 left-2 bg-primary text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Exclusive</div>
-              <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                <button className="bg-white/90 p-1.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer"><span className="material-symbols-outlined text-[18px]">edit</span></button>
-                <button className="bg-white/90 p-1.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer"><span className="material-symbols-outlined text-[18px]">download</span></button>
+          {media.map((asset: any) => (
+            <div 
+              key={asset.id}
+              className="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md cursor-pointer"
+              onClick={() => openPanel(asset)}
+            >
+              <div className="relative aspect-video overflow-hidden bg-surface-container-low border-b border-outline-variant">
+                <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={asset.name} src={asset.url} />
+                <div className="absolute top-2 left-2 bg-primary text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Public</div>
               </div>
-            </div>
-            <div className="p-stack-md flex-1">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-label-bold text-label-bold text-primary truncate">G7_Summit_Final_2024.jpg</h3>
-                <span className="font-label-sm text-[10px] text-on-surface-variant">4.2 MB</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 mb-stack-md">
-                <div className="text-[11px]">
-                  <p className="text-outline uppercase font-label-sm">Resolution</p>
-                  <p className="font-bold">4500 x 3000 px</p>
+              <div className="p-stack-md flex-1">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-label-bold text-label-bold text-primary truncate max-w-[70%]">{asset.name}</h3>
+                  <span className="font-label-sm text-[10px] text-on-surface-variant shrink-0">{asset.size}</span>
                 </div>
-                <div className="text-[11px]">
-                  <p className="text-outline uppercase font-label-sm">Usage</p>
-                  <p className="font-bold">3 Articles</p>
+                <div className="grid grid-cols-2 gap-2 mb-stack-md">
+                  <div className="text-[11px]">
+                    <p className="text-outline uppercase font-label-sm">Uploaded</p>
+                    <p className="font-bold">{new Date(asset.created_at).toLocaleDateString()}</p>
+                  </div>
+                  <div className="text-[11px]">
+                    <p className="text-outline uppercase font-label-sm">Type</p>
+                    <p className="font-bold">{asset.type}</p>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1">
-                <span className="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#politics</span>
-                <span className="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#summit</span>
-              </div>
             </div>
-          </div>
-
-          {/* Asset Card 2: Video */}
-          <div 
-            className="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md cursor-pointer"
-            onClick={() => setPanelOpen(true)}
-          >
-            <div className="relative aspect-video overflow-hidden bg-surface-container-low border-b border-outline-variant flex items-center justify-center">
-              <img className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt="Solar Farm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDppgLg9h6i1rm3KEfTWh5wxJkSa6qG6g_aeuN8P0W1MC21XPjsV4RorMyQsoObziDOpnhhrM9V6HtqHlr20ZOHaf34UWbp0-TB5Rkk3cWKSeWz-JryhbS2M2OqmBtr7xNMj_zjxG2FxEU-F_kWF6F_N1Msy3E7WvFuNXzOLcX9izmz8dj7hd0rHv21z05d09Yx8oJm9unPvt1LujLCaaJL9AwLGgJWUDPBHzt65pjpj0MnKDrQFfU" />
-              <span className="material-symbols-outlined text-white text-[48px] absolute pointer-events-none group-hover:scale-110 transition-transform">play_circle</span>
-              <div className="absolute top-2 left-2 bg-[#374768] text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Video</div>
-              <div className="absolute bottom-2 left-2 bg-black/50 text-white px-2 py-0.5 text-[10px] font-label-bold">02:45</div>
-            </div>
-            <div className="p-stack-md flex-1">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-label-bold text-label-bold text-primary truncate">Clean_Energy_B-Roll.mp4</h3>
-                <span className="font-label-sm text-[10px] text-on-surface-variant">128 MB</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 mb-stack-md">
-                <div className="text-[11px]">
-                  <p className="text-outline uppercase font-label-sm">Format</p>
-                  <p className="font-bold">4K UHD / 60fps</p>
-                </div>
-                <div className="text-[11px]">
-                  <p className="text-outline uppercase font-label-sm">License</p>
-                  <p className="font-bold text-secondary">Editorial</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                <span className="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#climate</span>
-                <span className="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#energy</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Asset Card 3: Graphic/Infographic */}
-          <div 
-            className="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md cursor-pointer"
-            onClick={() => setPanelOpen(true)}
-          >
-            <div className="relative aspect-video overflow-hidden bg-surface-container-high border-b border-outline-variant p-4">
-              <div className="w-full h-full border border-dashed border-outline-variant flex flex-col items-center justify-center bg-white">
-                <span className="material-symbols-outlined text-outline mb-2">bar_chart</span>
-                <p className="text-[10px] text-outline font-label-bold">INFOGRAPHIC_SVG</p>
-              </div>
-              <div className="absolute top-2 left-2 bg-on-primary-fixed-variant text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Vector</div>
-            </div>
-            <div className="p-stack-md flex-1">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-label-bold text-label-bold text-primary truncate">Economy_Stats_Q3_V2.svg</h3>
-                <span className="font-label-sm text-[10px] text-on-surface-variant">450 KB</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 mb-stack-md">
-                <div className="text-[11px]">
-                  <p className="text-outline uppercase font-label-sm">Type</p>
-                  <p className="font-bold">Scalable Vector</p>
-                </div>
-                <div className="text-[11px]">
-                  <p className="text-outline uppercase font-label-sm">Designer</p>
-                  <p className="font-bold">Editorial Team</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                <span className="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#economy</span>
-                <span className="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#data</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Asset Card 4: Archive Photo */}
-          <div 
-            className="group bg-white border border-outline-variant flex flex-col transition-all hover:shadow-md cursor-pointer"
-            onClick={() => setPanelOpen(true)}
-          >
-            <div className="relative aspect-video overflow-hidden bg-surface-container-low border-b border-outline-variant">
-              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyIu-IbWLxEB2agWIui1mkyTqMtMnHmFCJT6vREAoRE6xWbq7GEejZDhLT4Jlv_dhPGyz3NYDhuyxpz5rmYjydgq4qlHkeXBoCQuRjMSwfOo3YhKvRgAiBBm3BK8zXzKmAqpJHPLfKUvFUDo5ASZFEGHPT4eH0MJ4_pgEavWhUXcMBTOv0c3sFHQRD15JeluMkhpjEgXkY_K-CjwwBYFTWFASqXN0OiZ93Sfj1uzox1enYYJwHSos" />
-              <div className="absolute top-2 left-2 bg-[#7c879c] text-on-primary px-2 py-0.5 text-[10px] font-label-bold uppercase">Public Domain</div>
-            </div>
-            <div className="p-stack-md flex-1">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-label-bold text-label-bold text-primary truncate">Tokyo_Remote_Work.jpg</h3>
-                <span className="font-label-sm text-[10px] text-on-surface-variant">1.8 MB</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 mb-stack-md">
-                <div className="text-[11px]">
-                  <p className="text-outline uppercase font-label-sm">Uploaded</p>
-                  <p className="font-bold">Oct 12, 2023</p>
-                </div>
-                <div className="text-[11px]">
-                  <p className="text-outline uppercase font-label-sm">Alt Text</p>
-                  <p className="font-bold text-[#7c879c]">Completed</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                <span className="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#tokyo</span>
-                <span className="text-[10px] bg-surface-container px-2 py-0.5 border border-outline-variant">#society</span>
-              </div>
-            </div>
-          </div>
+          ))}
           
           {/* Drop Zone for New Assets */}
-          <div className="border-2 border-dashed border-outline-variant flex flex-col items-center justify-center p-grid-margin bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group h-full min-h-[250px]">
-            <span className="material-symbols-outlined text-[48px] text-outline mb-stack-sm group-hover:text-primary group-hover:scale-110 transition-all">add_photo_alternate</span>
-            <p className="font-label-bold text-label-bold text-outline group-hover:text-primary">Drag & Drop to Upload</p>
+          <div onClick={handleMockUpload} className={`border-2 border-dashed border-outline-variant flex flex-col items-center justify-center p-grid-margin bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group h-full min-h-[250px] ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
+            <span className="material-symbols-outlined text-[48px] text-outline mb-stack-sm group-hover:text-primary group-hover:scale-110 transition-all">{isUploading ? 'sync' : 'add_photo_alternate'}</span>
+            <p className="font-label-bold text-label-bold text-outline group-hover:text-primary">{isUploading ? 'Uploading...' : 'Click to Mock Upload'}</p>
             <p className="font-label-sm text-label-sm text-[#7c879c] mt-2">Maximum file size: 500MB</p>
           </div>
 
@@ -229,18 +165,20 @@ function MediaLibrary() {
           </button>
         </div>
         <div className="p-stack-md space-y-stack-lg overflow-y-auto h-[calc(100%-140px)] pb-stack-lg">
-          <div className="aspect-video bg-surface-container-low border border-outline-variant overflow-hidden">
-            <img className="w-full h-full object-contain" alt="Asset Preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhIwzqdodpCASH9bVMYlXYgVVSGQ3Q2bHRZUYUE-F7a59YhWkpv8zjJPumCmJqnecYl0J3CLVrz_N3sStBIx0JMRVBS8mDhCLhRXasVimy6Uk-EEKujwQMRZQt1JI8nY_RSkitrb_Wl2oeZvPuHkjUGJBiI1ZAFHNBhmI9oNtzRJk47rHEYOCmD17wK7C4-Fd1Il-vLPlrhrGUGE8aPaJcIHYyp2h26ISxPBALFAskBs78Af3P-bQ" />
-          </div>
-          <div className="space-y-4">
-            <div>
-              <label className="font-label-bold text-label-bold text-outline block mb-1">FILENAME</label>
-              <input className="w-full border-outline-variant focus:border-primary focus:ring-0 rounded-none font-bold outline-none border p-2" type="text" defaultValue="G7_Summit_Final_2024.jpg" />
-            </div>
-            <div>
-              <label className="font-label-bold text-label-bold text-outline block mb-1">ALT TEXT (SEO & ACCESSIBILITY)</label>
-              <textarea className="w-full h-24 border-outline-variant focus:border-primary focus:ring-0 rounded-none text-sm outline-none border p-2" defaultValue="G7 world leaders posing for the official family photo in Berlin, 2024. Focus on Chancellor Scholz and President Biden in conversation."></textarea>
-            </div>
+          {selectedAsset && (
+            <>
+              <div className="aspect-video bg-surface-container-low border border-outline-variant overflow-hidden">
+                <img className="w-full h-full object-contain" alt="Asset Preview" src={selectedAsset.url} />
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="font-label-bold text-label-bold text-outline block mb-1">FILENAME</label>
+                  <input className="w-full border-outline-variant focus:border-primary focus:ring-0 rounded-none font-bold outline-none border p-2" type="text" defaultValue={selectedAsset.name} />
+                </div>
+                <div>
+                  <label className="font-label-bold text-label-bold text-outline block mb-1">ALT TEXT (SEO & ACCESSIBILITY)</label>
+                  <textarea className="w-full h-24 border-outline-variant focus:border-primary focus:ring-0 rounded-none text-sm outline-none border p-2" defaultValue=""></textarea>
+                </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="font-label-bold text-label-bold text-outline block mb-1">RESOLUTION</label>
@@ -264,10 +202,12 @@ function MediaLibrary() {
           <div className="pt-stack-md flex flex-col gap-2 border-t mt-4">
             <button className="w-full bg-primary text-on-primary font-label-bold py-3 uppercase tracking-widest hover:opacity-90 cursor-pointer">Save Changes</button>
             <button className="w-full border border-primary text-primary font-label-bold py-3 uppercase tracking-widest hover:bg-surface-container-low transition-colors cursor-pointer">Download Original</button>
-            <button className="w-full text-secondary font-label-bold py-3 flex items-center justify-center gap-2 hover:bg-secondary-fixed transition-colors cursor-pointer">
+            <button onClick={() => handleDelete(selectedAsset?.id)} className="w-full text-secondary font-label-bold py-3 flex items-center justify-center gap-2 hover:bg-secondary-fixed transition-colors cursor-pointer">
               <span className="material-symbols-outlined text-[18px]">delete</span> Delete Permanently
             </button>
           </div>
+          </>
+          )}
         </div>
       </div>
       

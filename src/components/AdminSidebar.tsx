@@ -1,9 +1,18 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import ThemeToggle from './ThemeToggle'
+import { useServerFn } from '@tanstack/react-start'
+import { logout } from '../server/auth'
 
 export default function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate()
+  const logoutFn = useServerFn(logout)
+
+  const handleLogout = async () => {
+    await logoutFn()
+    navigate({ to: '/login' })
+  }
 
   return (
     <>
@@ -88,6 +97,14 @@ export default function AdminSidebar() {
             <span className="material-symbols-outlined mr-3">settings</span>
             <span className="font-label-bold text-label-bold">Site Settings</span>
           </Link>
+          <Link 
+            onClick={() => setIsOpen(false)}
+            to="/admin/docs"
+            className="flex items-center px-4 py-3 mx-2 rounded-lg transition-all group [&.active]:bg-primary dark:[&.active]:bg-slate-800 [&.active]:text-on-primary dark:[&.active]:text-white [&.active]:shadow-md text-on-surface-variant dark:text-slate-400 hover:bg-surface-container-high dark:hover:bg-slate-800"
+          >
+            <span className="material-symbols-outlined mr-3">api</span>
+            <span className="font-label-bold text-label-bold">API Docs</span>
+          </Link>
         </nav>
         
         <div className="px-4 mt-auto space-y-1 pt-4">
@@ -105,7 +122,7 @@ export default function AdminSidebar() {
               <span className="material-symbols-outlined mr-3">help</span>
               <span className="font-label-sm text-label-sm">Help Center</span>
             </button>
-            <button className="flex w-full items-center px-4 py-2 text-on-surface-variant dark:text-slate-400 hover:text-secondary transition-colors cursor-pointer">
+            <button onClick={handleLogout} className="flex w-full items-center px-4 py-2 text-on-surface-variant dark:text-slate-400 hover:text-secondary transition-colors cursor-pointer">
               <span className="material-symbols-outlined mr-3">logout</span>
               <span className="font-label-sm text-label-sm">Log Out</span>
             </button>

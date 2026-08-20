@@ -1,40 +1,28 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-
-// Simulated fetch function
-async function fetchArticle(articleId: string) {
-  // In a real app, this would hit an API or database
-  return {
-    id: articleId,
-    title: "The Silent Renaissance: How Digital Sovereignty is Reshaping Global Trust.",
-    excerpt: "In an era increasingly defined by the erosion of traditional institutional trust, a new architecture of sovereignty is emerging from the digital periphery.",
-    author: "Dr. Elias Vance",
-    date: "August 24, 2024",
-    coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMHJm4xd4QUcG4eTE57SuAkfrjZtvoMwoYFqUssU6bC-DUmYqvgwpU3IqBbUg_AtFD8QIbyU4_fjLpjVp0903YuLpmBKAKG2P26wQMY6Cpwb1qI0ihnnOPDSQdsSd12QYX75ACcrRF8c9bh_Gx5Q2HK-O2Pzxp8tU5ZydG5j6bD2cJ6JYvWhZUX50EvkQ8bvPAfGHsGPZEpjSKMCQYul4pSFqB1hD9fGlQl-xCgIv7NxEvOwXQkNw"
-  }
-}
+import { getArticleBySlug } from '../server/articles'
 
 export const Route = createFileRoute('/article/$articleId')({
-  loader: async ({ params }) => fetchArticle(params.articleId),
+  loader: async ({ params }) => await getArticleBySlug({ data: params.articleId }),
   head: ({ loaderData }) => ({
     meta: [
       { title: loaderData ? `${loaderData.title} | Minbar News` : 'Article | Minbar News' },
       { name: 'description', content: loaderData?.excerpt },
       { property: 'og:title', content: loaderData?.title },
       { property: 'og:description', content: loaderData?.excerpt },
-      { property: 'og:image', content: loaderData?.coverImage },
+      { property: 'og:image', content: loaderData?.featured_image },
       { property: 'og:type', content: 'article' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: loaderData?.title },
       { name: 'twitter:description', content: loaderData?.excerpt },
-      { name: 'twitter:image', content: loaderData?.coverImage },
+      { name: 'twitter:image', content: loaderData?.featured_image },
     ],
   }),
   component: ArticleView,
 })
 
 function ArticleView() {
-  const article = Route.useLoaderData()
+  const article: any = Route.useLoaderData()
   const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
@@ -87,78 +75,49 @@ function ArticleView() {
           
           {/* Category Tag */}
           <div className="mb-stack-md">
-            <span className="font-label-sm text-label-bold uppercase text-secondary tracking-widest border-b border-secondary pb-1">Geopolitics & Ethics</span>
+            <span className="font-label-sm text-label-bold uppercase text-secondary tracking-widest border-b border-secondary pb-1">{article?.categories?.name || 'Uncategorized'}</span>
           </div>
           
           {/* Headline */}
           <h1 className="font-headline-lg text-display-lg md:text-5xl lg:text-6xl text-primary leading-tight mb-stack-md">
-            {article.title}
+            {article?.title}
           </h1>
           
           {/* Meta & Author Bio */}
           <div className="flex items-center space-x-4 mb-stack-lg pb-stack-lg border-b border-outline-variant">
-            <div className="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
-              <img className="w-full h-full object-cover" alt="Author" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFfDfzB9_DNHdxtZ8JEikW4CHi7kke3RKlna0h9L12dMUL_PH1wKrbO5MqmA2WUs0fyG_K-frRD528Suf3nEnHme7Rlr4I4PrOdALeRD4rN-zOK8RrBMBt1gMPEwE_RLTZt_PJd87jTBl9jOctKERB853AL6I6jYukRB4A03ciFvQVfFZGQSdwo27rme9B51bscaCu9yfVXCQUxgaJsP1nLKDpbtIWbijq6DBpllmTV-GacZjMaY4" />
+            <div className="w-12 h-12 rounded-full overflow-hidden bg-surface-container flex items-center justify-center font-bold text-lg">
+              {article?.users?.avatar_url ? (
+                <img className="w-full h-full object-cover" alt="Author" src={article.users.avatar_url} />
+              ) : (
+                <span>{article?.users?.full_name?.substring(0, 1).toUpperCase() || '?'}</span>
+              )}
             </div>
             <div className="flex flex-col">
-              <span className="font-label-bold text-label-bold text-primary">{article.author}</span>
+              <span className="font-label-bold text-label-bold text-primary">{article?.users?.full_name || 'Staff Writer'}</span>
               <div className="flex items-center space-x-2 text-on-surface-variant text-label-sm">
-                <span>Senior Editorial Fellow</span>
+                <span>Minbar Contributor</span>
                 <span className="text-outline-variant">•</span>
-                <time dateTime="2024-08-24">{article.date}</time>
+                <time dateTime={article?.created_at}>{article?.created_at ? new Date(article.created_at).toLocaleDateString() : 'Today'}</time>
                 <span className="text-outline-variant">•</span>
-                <span>8 min read</span>
+                <span>{Math.max(1, Math.ceil((article?.content?.length || 0) / 1000))} min read</span>
               </div>
             </div>
           </div>
           
           {/* Hero Image */}
-          <figure className="mb-stack-lg">
-            <div className="aspect-[16/9] w-full overflow-hidden mb-2">
-              <img className="w-full h-full object-cover" alt="Hero" src={article.coverImage} />
-            </div>
-            <figcaption className="text-label-sm text-on-surface-variant italic">
-              The intersection of infrastructure and data sovereignty. Visual by Minbar Global Archive.
-            </figcaption>
-          </figure>
+          {article?.featured_image && (
+            <figure className="mb-stack-lg">
+              <div className="aspect-[16/9] w-full overflow-hidden mb-2">
+                <img className="w-full h-full object-cover" alt="Hero" src={article.featured_image} />
+              </div>
+            </figure>
+          )}
           
           {/* Article Body Content */}
-          <div className="font-body-md text-body-lg leading-relaxed text-on-surface space-y-stack-lg max-w-none">
-            <p>
-              <span className="text-5xl float-left mr-3 mt-1 font-headline-lg font-bold text-primary leading-[0.8]">I</span>n an era increasingly defined by the erosion of traditional institutional trust, a new architecture of sovereignty is emerging from the digital periphery. No longer content with mere participation, nations and individuals alike are seeking a fundamental recalibration of their relationship with the structures that govern their lives.
-            </p>
-            <p>
-              This is not merely a technical shift. It is a profound philosophical realignment. For decades, the global order has relied on centralized nodes of power—financial, communicative, and jurisdictional. Today, those nodes are being challenged by decentralized protocols that prioritize transparency and mathematical certainty over bureaucratic discretion.
-            </p>
-            
-            {/* Pull Quote */}
-            <blockquote className="my-stack-lg py-stack-md border-y-2 border-secondary relative">
-              <span className="material-symbols-outlined absolute -top-4 left-4 bg-background px-2 text-secondary text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>format_quote</span>
-              <p className="font-headline-md text-headline-md italic text-primary px-4 md:px-12 text-center leading-relaxed">
-                "The pursuit of truth is no longer a passive observation of the status quo, but an active engagement with the protocols that define our reality."
-              </p>
-            </blockquote>
-            
-            <h2 className="font-headline-lg text-headline-lg text-primary pt-stack-md">The Ethics of Transparency</h2>
-            <p>
-              As we navigate the complexities of this transition, the primary challenge remains one of ethics. How do we ensure that the democratization of data leads to genuine empowerment rather than sophisticated new forms of enclosure? The answer lies in our commitment to "Truth, Perspective, and Impact"—the core pillars that must ground our collective advancement.
-            </p>
-            <p>
-              Recent case studies in the Global South suggest that digital sovereignty is providing a lifeline for economies previously marginalized by the traditional banking system. By bypassing intermediary hurdles, these regions are leapfrogging entire generations of industrial development.
-            </p>
-            
-            {/* Embedded Micro-card */}
-            <div className="bg-surface-container-low p-stack-md border-l-4 border-primary my-stack-lg">
-              <h4 className="font-label-bold text-label-bold uppercase text-primary mb-2">Editor's Note: Tracking the Impact</h4>
-              <p className="font-body-md text-body-md text-on-surface-variant">
-                Our research team has compiled a detailed report on regional data laws across 45 countries. Subscribers can access the full dashboard via the <a className="text-secondary underline decoration-2 underline-offset-4 hover:opacity-80 transition-opacity cursor-pointer">Editorial Desk</a> portal.
-              </p>
-            </div>
-            
-            <p>
-              Ultimately, the renaissance of trust will not be built on promises, but on code. It will be built on the verifiable, the immutable, and the inclusive. As we continue to document these shifts at Minbar News, our role remains unchanged: to provide the clarity required to turn perspective into meaningful impact.
-            </p>
-          </div>
+          <div 
+            className="font-body-md text-body-lg leading-relaxed text-on-surface space-y-stack-lg max-w-none prose prose-primary"
+            dangerouslySetInnerHTML={{ __html: article?.content || '' }} 
+          />
           
           {/* Tags & Sharing Footer */}
           <div className="mt-section-gap pt-stack-lg border-t border-outline-variant flex flex-wrap gap-2">

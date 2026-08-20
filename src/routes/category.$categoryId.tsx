@@ -1,14 +1,21 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
+import { getCategoryBySlug } from '../server/categories'
 
 export const Route = createFileRoute('/category/$categoryId')({
+  loader: async ({ params }) => await getCategoryBySlug({ data: params.categoryId }),
   component: CategoryView,
 })
 
 function CategoryView() {
   const { categoryId } = Route.useParams()
-  // Capitalize categoryId
-  const categoryName = categoryId.charAt(0).toUpperCase() + categoryId.slice(1)
+  const category: any = Route.useLoaderData()
+  const articles = category?.articles || []
+  const leadArticle = articles.length > 0 ? articles[0] : null
+  const gridArticles = articles.slice(1, 3)
+  const listArticles = articles.slice(3)
+  
+  const categoryName = category?.name || categoryId.charAt(0).toUpperCase() + categoryId.slice(1)
 
   return (
     <div className="bg-background text-on-background font-body-md min-h-screen">
@@ -43,27 +50,35 @@ function CategoryView() {
           <div className="col-span-12 lg:col-span-8 space-y-section-gap">
             
             {/* Lead Story Card */}
-            <section className="relative pt-stack-md before:content-[''] before:absolute before:top-0 before:left-0 before:w-10 before:h-[3px] before:bg-secondary">
-              <div className="grid md:grid-cols-2 gap-stack-lg items-center">
-                <div className="order-2 md:order-1 space-y-4">
-                  <div className="flex items-center space-x-2 text-secondary font-label-bold uppercase tracking-widest text-xs">
-                    <span className="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
-                    <span>Developing Story</span>
+            {leadArticle && (
+              <section className="relative pt-stack-md before:content-[''] before:absolute before:top-0 before:left-0 before:w-10 before:h-[3px] before:bg-secondary">
+                <div className="grid md:grid-cols-2 gap-stack-lg items-center">
+                  <div className="order-2 md:order-1 space-y-4">
+                    <div className="flex items-center space-x-2 text-secondary font-label-bold uppercase tracking-widest text-xs">
+                      <span className="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+                      <span>Latest Story</span>
+                    </div>
+                    <Link to="/article/$articleId" params={{ articleId: leadArticle.slug }} className="hover:opacity-80 block">
+                      <h2 className="font-display-lg text-display-lg text-primary leading-tight hover:underline underline-offset-4">{leadArticle.title}</h2>
+                    </Link>
+                    <p className="font-body-lg text-body-lg text-on-surface-variant line-clamp-3">{leadArticle.excerpt || leadArticle.content?.substring(0, 150) + '...'}</p>
+                    <div className="flex items-center space-x-4 pt-4">
+                      <Link to="/article/$articleId" params={{ articleId: leadArticle.slug }} className="bg-primary text-on-primary px-8 py-3 font-label-bold uppercase tracking-tighter hover:opacity-90 transition-opacity cursor-pointer">Full Analysis</Link>
+                      <span className="text-on-surface-variant font-label-sm uppercase">{Math.max(1, Math.ceil((leadArticle.content?.length || 0)/1000))} Min Read • By {leadArticle.users?.full_name || 'Staff'}</span>
+                    </div>
                   </div>
-                  <h2 className="font-display-lg text-display-lg text-primary leading-tight">Navigating the New Silk Road: Geopolitics in the 21st Century</h2>
-                  <p className="font-body-lg text-body-lg text-on-surface-variant">As infrastructure projects span across three continents, the shifting balance of power creates new economic realities for emerging markets and established superpowers alike. Our investigative team reports from the ground.</p>
-                  <div className="flex items-center space-x-4 pt-4">
-                    <button className="bg-primary text-on-primary px-8 py-3 font-label-bold uppercase tracking-tighter hover:opacity-90 transition-opacity cursor-pointer">Full Analysis</button>
-                    <span className="text-on-surface-variant font-label-sm uppercase">12 Min Read • By Sarah Jenkins</span>
+                  <div className="order-1 md:order-2">
+                    <div className="aspect-video w-full overflow-hidden border border-outline-variant flex items-center justify-center bg-surface-container-high">
+                      {leadArticle.featured_image ? (
+                        <img className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" alt="Hero" src={leadArticle.featured_image} />
+                      ) : (
+                        <span className="material-symbols-outlined text-outline text-6xl">newspaper</span>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className="order-1 md:order-2">
-                  <div className="aspect-video w-full overflow-hidden border border-outline-variant">
-                    <img className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" alt="Hero" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKYuN-EnYBVuToS89Ioy3m3phfIDi3igKbW_lyDWNHRUg0ow1IvqFessSLQkWri2hyzO7np11y4q2RKJXiNupvvScsYLdQ1BNJ_TuGo_fjHa7zLba9HM-DqiqmjzVlbUKjRTIOjqCpCp_Nz2ifiOmgVqooPwbiY8Beu6zsChnyvjLzEwuyi2rJL855ngjqqmnjFJ1zZEtxFu7VMqqEqioyTGh1Q0UGQEvpc-kdZIwrnXE5mbEL61U" />
-                  </div>
-                </div>
-              </div>
-            </section>
+              </section>
+            )}
 
             {/* News Grid Section */}
             <section className="space-y-stack-lg">
@@ -72,31 +87,23 @@ function CategoryView() {
                 <a className="text-secondary font-label-bold hover:underline cursor-pointer">View All</a>
               </div>
               <div className="grid md:grid-cols-2 gap-gutter">
-                {/* Card 1 */}
-                <div className="group cursor-pointer space-y-4 border-b border-outline-variant pb-6">
-                  <div className="aspect-[3/2] w-full overflow-hidden bg-surface-container border border-outline-variant">
-                    <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Europe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0PunIm37qYif-uMWbwLXjyt5SxAcvfLOLFa-f0RBgZ7u093G1xXddn4TrH1tfKf4YR5JJclZMLTtfxv8eBcpT5V8chndKBiXX0kMO2O2_KlaNTEIJRvJzXNxeNQ58mt1gwq0mR1LQwaWYl7lBP5zXx5joDgGZZqGlCqwTfLSmXtbU-RQNhhzcTanV10qUP1_srB8EA7Vi_iKPP4gj2zu8JqM5lltBqxKaUHqYt-C48v2a4L749uM" />
-                  </div>
-                  <div className="space-y-2">
-                    <span className="font-label-bold text-label-bold text-secondary uppercase text-xs">Europe</span>
-                    <h4 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Stockholm Summit Focuses on Digital Privacy Legislation</h4>
-                    <p className="text-on-surface-variant font-body-md line-clamp-2">European leaders gather to discuss the implications of AI on individual data rights and cross-border security protocols.</p>
-                    <div className="font-label-sm text-label-sm text-outline pt-2">4 Hours Ago • 6 Min Read</div>
-                  </div>
-                </div>
-
-                {/* Card 2 */}
-                <div className="group cursor-pointer space-y-4 border-b border-outline-variant pb-6">
-                  <div className="aspect-[3/2] w-full overflow-hidden bg-surface-container border border-outline-variant">
-                    <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Americas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUV5PA1f6gZod2lgblyUALrXHL-_94UrIAHY_ePI6bzwdNYg_eFk-7tV-v2U5jyYOs3f98oVhbakLs8JipC6DMDqQKb-kSQc68LvxK7pIomP4Vcrweb1yPRdY7gvQBETPXYQxUDaJQkWuQnjWdN2nOOGhAdXJduMeR7W6u3sf-BDuw1Lab8om9gE1iWB-jXHUHgZh46Ui4YPc6QNhQ0cgaBDJhwkCnmoO3UHOakduNZKy6XkFqop8" />
-                  </div>
-                  <div className="space-y-2">
-                    <span className="font-label-bold text-label-bold text-secondary uppercase text-xs">Americas</span>
-                    <h4 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Rainforest Protection Pact Receives Multilateral Funding</h4>
-                    <p className="text-on-surface-variant font-body-md line-clamp-2">A coalition of twelve nations has pledged $4 billion towards the preservation of critical biodiversity hotspots in the Amazon basin.</p>
-                    <div className="font-label-sm text-label-sm text-outline pt-2">7 Hours Ago • 8 Min Read</div>
-                  </div>
-                </div>
+                {gridArticles.map((article: any) => (
+                  <Link key={article.id} to="/article/$articleId" params={{ articleId: article.slug }} className="group cursor-pointer space-y-4 border-b border-outline-variant pb-6 block">
+                    <div className="aspect-[3/2] w-full overflow-hidden bg-surface-container border border-outline-variant flex items-center justify-center">
+                      {article.featured_image ? (
+                        <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={article.title} src={article.featured_image} />
+                      ) : (
+                        <span className="material-symbols-outlined text-outline text-4xl">public</span>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <span className="font-label-bold text-label-bold text-secondary uppercase text-xs">{categoryName}</span>
+                      <h4 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">{article.title}</h4>
+                      <p className="text-on-surface-variant font-body-md line-clamp-2">{article.excerpt || article.content?.substring(0, 100) + '...'}</p>
+                      <div className="font-label-sm text-label-sm text-outline pt-2">{new Date(article.created_at).toLocaleDateString()}</div>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </section>
 
@@ -106,28 +113,23 @@ function CategoryView() {
                 <h3 className="font-headline-md text-headline-md text-primary">Quick Reads</h3>
               </div>
               <div className="divide-y divide-outline-variant">
-                <div className="py-6 flex gap-stack-md group cursor-pointer">
-                  <div className="flex-1 space-y-2">
-                    <span className="font-label-bold text-label-bold text-on-surface-variant uppercase text-xs">Asia • Economy</span>
-                    <h4 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Tokyo Markets Rally on News of Tech Merger</h4>
-                    <p className="text-on-surface-variant font-body-md hidden md:block">Leading semiconductor manufacturers announce a strategic partnership aimed at revolutionizing local supply chains.</p>
-                    <div className="font-label-sm text-label-sm text-outline">2 Hours Ago</div>
-                  </div>
-                  <div className="w-32 h-20 bg-surface-container border border-outline-variant shrink-0">
-                    <img className="w-full h-full object-cover" alt="Asia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeKTczFg6mzu1FxzrLBPRWDHuFTzGae-KjisjGwzwWPn0anj1ignGpTQt2dRT-4mQcJVbWSm1V39qvQGZL6eWKfkcFo1D2pT9GEHwGPBgXTrtYYtCaxO6tAnuXC3tgqlSP-k77dQ2qV2LFRBfGn7CAmQE3Ox0ytP_wTTFj5d6zRwgLKTjeB_k1CYLp6mUAXtipsHCp-GuicjqVjZ9X9igcu6KgcQ2pF1Dgwzu_C8-0rzZlvGf_yrk" />
-                  </div>
-                </div>
-                <div className="py-6 flex gap-stack-md group cursor-pointer">
-                  <div className="flex-1 space-y-2">
-                    <span className="font-label-bold text-label-bold text-on-surface-variant uppercase text-xs">Africa • Culture</span>
-                    <h4 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Nairobi Hosts Largest Pan-African Arts Festival in a Decade</h4>
-                    <p className="text-on-surface-variant font-body-md hidden md:block">Thousands of artists and curators converge to celebrate a new era of African creative influence on the global stage.</p>
-                    <div className="font-label-sm text-label-sm text-outline">9 Hours Ago</div>
-                  </div>
-                  <div className="w-32 h-20 bg-surface-container border border-outline-variant shrink-0">
-                    <img className="w-full h-full object-cover" alt="Africa" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9YV3H9pmd3YcUJyjK46JcR3LxfzM0V1Gd89fvUcWLSdp3BWL4Ewm3Ky44YHFqanh_8a7JPQUmjyN0HmnGV4SVqw22jugQoGUYRvorJ0WuYUdXGYkLPv7g-2QhTKYA14Dc_ljx-eTjXYkz-lmzJWCN7UD3Emf_VrFEgqng1mmMSzV-K03hgnrl79S0PG3MB0lpziDAPmjs4FhFHjhW5TItOwVxAOiJ7AVcibusjTjk0ZyQ9WtH1wY" />
-                  </div>
-                </div>
+                {listArticles.map((article: any) => (
+                  <Link key={article.id} to="/article/$articleId" params={{ articleId: article.slug }} className="py-6 flex gap-stack-md group cursor-pointer block">
+                    <div className="flex-1 space-y-2">
+                      <span className="font-label-bold text-label-bold text-on-surface-variant uppercase text-xs">{categoryName} • News</span>
+                      <h4 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">{article.title}</h4>
+                      <p className="text-on-surface-variant font-body-md hidden md:block line-clamp-2">{article.excerpt || article.content?.substring(0, 100) + '...'}</p>
+                      <div className="font-label-sm text-label-sm text-outline">{new Date(article.created_at).toLocaleDateString()}</div>
+                    </div>
+                    <div className="w-32 h-20 bg-surface-container border border-outline-variant shrink-0 flex items-center justify-center">
+                      {article.featured_image ? (
+                        <img className="w-full h-full object-cover" alt={article.title} src={article.featured_image} />
+                      ) : (
+                        <span className="material-symbols-outlined text-outline">article</span>
+                      )}
+                    </div>
+                  </Link>
+                ))}
               </div>
             </section>
           </div>
@@ -139,27 +141,15 @@ function CategoryView() {
             <div className="bg-surface-container-low p-stack-md border border-outline-variant">
               <h3 className="font-label-bold text-label-bold uppercase tracking-widest border-b-2 border-primary pb-2 mb-4">Most Read in {categoryName}</h3>
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <span className="font-display-lg text-display-lg text-outline-variant leading-none">01</span>
-                  <div className="space-y-1">
-                    <a className="font-label-bold text-label-bold hover:text-secondary leading-tight block cursor-pointer">The Hidden Costs of Global Energy Transitions</a>
-                    <span className="font-label-sm text-label-sm text-outline">Analysis • 15k views</span>
+                {articles.slice(0, 3).map((article: any, index: number) => (
+                  <div key={article.id} className="flex items-start gap-4">
+                    <span className="font-display-lg text-display-lg text-outline-variant leading-none">0{index + 1}</span>
+                    <div className="space-y-1">
+                      <Link to="/article/$articleId" params={{ articleId: article.slug }} className="font-label-bold text-label-bold hover:text-secondary leading-tight block cursor-pointer">{article.title}</Link>
+                      <span className="font-label-sm text-label-sm text-outline">{categoryName} • {article.views_count || 0} views</span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <span className="font-display-lg text-display-lg text-outline-variant leading-none">02</span>
-                  <div className="space-y-1">
-                    <a className="font-label-bold text-label-bold hover:text-secondary leading-tight block cursor-pointer">Tensions Rise at the Nordic Border Post-Accord</a>
-                    <span className="font-label-sm text-label-sm text-outline">Live Update • 12k views</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <span className="font-display-lg text-display-lg text-outline-variant leading-none">03</span>
-                  <div className="space-y-1">
-                    <a className="font-label-bold text-label-bold hover:text-secondary leading-tight block cursor-pointer">The Future of Remote Work in Emerging Markets</a>
-                    <span className="font-label-sm text-label-sm text-outline">Economy • 10k views</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 

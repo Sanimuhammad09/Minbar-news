@@ -13,14 +13,17 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as LiveRouteImport } from './routes/live'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as NewslettersRouteImport } from './routes/newsletters'
 import { Route as OpinionRouteImport } from './routes/opinion'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as VideoRouteImport } from './routes/video'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin/analytics'
 import { Route as AdminArticlesRouteImport } from './routes/admin/articles'
+import { Route as AdminDocsRouteImport } from './routes/admin/docs'
 import { Route as AdminEditorialRouteImport } from './routes/admin/editorial'
 import { Route as AdminMediaRouteImport } from './routes/admin/media'
 import { Route as AdminNewArticleRouteImport } from './routes/admin/new-article'
@@ -49,6 +52,11 @@ const LiveRoute = LiveRouteImport.update({
   path: '/live',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewslettersRoute = NewslettersRouteImport.update({
   id: '/newsletters',
   path: '/newsletters',
@@ -69,6 +77,11 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SignUpRoute = SignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VideoRoute = VideoRouteImport.update({
   id: '/video',
   path: '/video',
@@ -87,6 +100,11 @@ const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
 const AdminArticlesRoute = AdminArticlesRouteImport.update({
   id: '/articles',
   path: '/articles',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDocsRoute = AdminDocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminEditorialRoute = AdminEditorialRouteImport.update({
@@ -130,13 +148,16 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/live': typeof LiveRoute
+  '/login': typeof LoginRoute
   '/newsletters': typeof NewslettersRoute
   '/opinion': typeof OpinionRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
+  '/sign-up': typeof SignUpRoute
   '/video': typeof VideoRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/articles': typeof AdminArticlesRoute
+  '/admin/docs': typeof AdminDocsRoute
   '/admin/editorial': typeof AdminEditorialRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/new-article': typeof AdminNewArticleRoute
@@ -150,13 +171,16 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/live': typeof LiveRoute
+  '/login': typeof LoginRoute
   '/newsletters': typeof NewslettersRoute
   '/opinion': typeof OpinionRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
+  '/sign-up': typeof SignUpRoute
   '/video': typeof VideoRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/articles': typeof AdminArticlesRoute
+  '/admin/docs': typeof AdminDocsRoute
   '/admin/editorial': typeof AdminEditorialRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/new-article': typeof AdminNewArticleRoute
@@ -172,13 +196,16 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/live': typeof LiveRoute
+  '/login': typeof LoginRoute
   '/newsletters': typeof NewslettersRoute
   '/opinion': typeof OpinionRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
+  '/sign-up': typeof SignUpRoute
   '/video': typeof VideoRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/articles': typeof AdminArticlesRoute
+  '/admin/docs': typeof AdminDocsRoute
   '/admin/editorial': typeof AdminEditorialRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/new-article': typeof AdminNewArticleRoute
@@ -195,13 +222,16 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/live'
+    | '/login'
     | '/newsletters'
     | '/opinion'
     | '/profile'
     | '/search'
+    | '/sign-up'
     | '/video'
     | '/admin/analytics'
     | '/admin/articles'
+    | '/admin/docs'
     | '/admin/editorial'
     | '/admin/media'
     | '/admin/new-article'
@@ -215,13 +245,16 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/live'
+    | '/login'
     | '/newsletters'
     | '/opinion'
     | '/profile'
     | '/search'
+    | '/sign-up'
     | '/video'
     | '/admin/analytics'
     | '/admin/articles'
+    | '/admin/docs'
     | '/admin/editorial'
     | '/admin/media'
     | '/admin/new-article'
@@ -236,13 +269,16 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/live'
+    | '/login'
     | '/newsletters'
     | '/opinion'
     | '/profile'
     | '/search'
+    | '/sign-up'
     | '/video'
     | '/admin/analytics'
     | '/admin/articles'
+    | '/admin/docs'
     | '/admin/editorial'
     | '/admin/media'
     | '/admin/new-article'
@@ -258,10 +294,12 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRouteWithChildren
   LiveRoute: typeof LiveRoute
+  LoginRoute: typeof LoginRoute
   NewslettersRoute: typeof NewslettersRoute
   OpinionRoute: typeof OpinionRoute
   ProfileRoute: typeof ProfileRoute
   SearchRoute: typeof SearchRoute
+  SignUpRoute: typeof SignUpRoute
   VideoRoute: typeof VideoRoute
   ArticleArticleIdRoute: typeof ArticleArticleIdRoute
   CategoryCategoryIdRoute: typeof CategoryCategoryIdRoute
@@ -297,6 +335,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LiveRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/newsletters': {
       id: '/newsletters'
       path: '/newsletters'
@@ -325,6 +370,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/video': {
       id: '/video'
       path: '/video'
@@ -351,6 +403,13 @@ declare module '@tanstack/react-router' {
       path: '/articles'
       fullPath: '/admin/articles'
       preLoaderRoute: typeof AdminArticlesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/docs': {
+      id: '/admin/docs'
+      path: '/docs'
+      fullPath: '/admin/docs'
+      preLoaderRoute: typeof AdminDocsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/editorial': {
@@ -408,6 +467,7 @@ declare module '@tanstack/react-router' {
 interface AdminRouteChildren {
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminArticlesRoute: typeof AdminArticlesRoute
+  AdminDocsRoute: typeof AdminDocsRoute
   AdminEditorialRoute: typeof AdminEditorialRoute
   AdminMediaRoute: typeof AdminMediaRoute
   AdminNewArticleRoute: typeof AdminNewArticleRoute
@@ -419,6 +479,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminArticlesRoute: AdminArticlesRoute,
+  AdminDocsRoute: AdminDocsRoute,
   AdminEditorialRoute: AdminEditorialRoute,
   AdminMediaRoute: AdminMediaRoute,
   AdminNewArticleRoute: AdminNewArticleRoute,
@@ -434,10 +495,12 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdminRoute: AdminRouteWithChildren,
   LiveRoute: LiveRoute,
+  LoginRoute: LoginRoute,
   NewslettersRoute: NewslettersRoute,
   OpinionRoute: OpinionRoute,
   ProfileRoute: ProfileRoute,
   SearchRoute: SearchRoute,
+  SignUpRoute: SignUpRoute,
   VideoRoute: VideoRoute,
   ArticleArticleIdRoute: ArticleArticleIdRoute,
   CategoryCategoryIdRoute: CategoryCategoryIdRoute,

@@ -1,12 +1,23 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useState } from 'react'
+import { getAuthSession } from '../server/auth'
 
 export const Route = createFileRoute('/profile')({
+  beforeLoad: async () => {
+    const session = await getAuthSession()
+    if (!session) {
+      throw redirect({ to: '/login' })
+    }
+    return { session }
+  },
   component: UserProfile,
 })
 
 function UserProfile() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
+  const { session: user } = Route.useRouteContext()
+
+
 
   return (
     <div className="bg-background text-on-background min-h-screen">
@@ -16,11 +27,11 @@ function UserProfile() {
         <section className="mb-section-gap flex flex-col md:flex-row justify-between items-start md:items-end gap-stack-md">
           <div className="flex items-center gap-stack-md">
             <div className="w-24 h-24 bg-primary-container rounded-none relative overflow-hidden flex items-center justify-center">
-              <img className="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-500" alt="Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1nXn1MEXAhffrjGfaGtM4Wsme6ms2Tgr1h9TlbZnjyB-PT4qASY_VPsHUu3wmriDkjnaY_WKQYL037eF6PVshwl-jJLrS3r1S84AD8N2uH26gEZ15jgxYibguj3TDHB2Po3OrmM72IG1-jic2GOoRn6aFPZ6RIelIm-gSE0W6ncYGLgIKVoQD1ePdL27CVMiyJF911TfvD3SFtbZCpnDaMBauyxs1pxD0eIMLTBsy5xaGo4ruEW4" />
+              <img className="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-500" alt="Profile" src={user.avatar_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuA1nXn1MEXAhffrjGfaGtM4Wsme6ms2Tgr1h9TlbZnjyB-PT4qASY_VPsHUu3wmriDkjnaY_WKQYL037eF6PVshwl-jJLrS3r1S84AD8N2uH26gEZ15jgxYibguj3TDHB2Po3OrmM72IG1-jic2GOoRn6aFPZ6RIelIm-gSE0W6ncYGLgIKVoQD1ePdL27CVMiyJF911TfvD3SFtbZCpnDaMBauyxs1pxD0eIMLTBsy5xaGo4ruEW4"} />
             </div>
             <div>
-              <h1 className="font-headline-lg text-headline-lg text-primary font-serif">Welcome back, Marcus Thorne</h1>
-              <p className="font-body-md text-body-md text-on-surface-variant">Member since October 2023 • <span className="text-secondary font-bold">Premium Subscriber</span></p>
+              <h1 className="font-headline-lg text-headline-lg text-primary font-serif">Welcome back, {user.full_name}</h1>
+              <p className="font-body-md text-body-md text-on-surface-variant">Role: {user.role} • <span className="text-secondary font-bold">Premium Subscriber</span></p>
             </div>
           </div>
           <div className="flex gap-stack-sm">

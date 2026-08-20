@@ -1,13 +1,72 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
+import { useServerFn } from '@tanstack/react-start'
+import { getCategories, createArticle } from '../../server/articles'
 
 export const Route = createFileRoute('/admin/new-article')({
   component: NewArticleEditor,
+  loader: async () => await getCategories()
 })
 
 function NewArticleEditor() {
+  const categories = Route.useLoaderData()
   const [showModal, setShowModal] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const navigate = useNavigate()
+  const createFn = useServerFn(createArticle)
+
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [slug, setSlug] = useState('')
+  const [categoryId, setCategoryId] = useState(categories?.[0]?.id || '')
+  const [excerpt, setExcerpt] = useState('')
+  const [featuredImage, setFeaturedImage] = useState('')
+  const [imagePrompt, setImagePrompt] = useState({ isOpen: false, url: '' })
+  const [isPublishing, setIsPublishing] = useState(false)
+
+  const handlePublish = async () => {
+    if (!title || !slug) return alert("Title and Slug are required")
+    setIsPublishing(true)
+    try {
+      await createFn({
+        title,
+        content,
+        slug,
+        status: 'published',
+        category_id: categoryId,
+        excerpt,
+        featured_image: featuredImage
+      })
+      setShowModal(true)
+    } catch (e: any) {
+      alert("Error: " + e.message)
+    } finally {
+      setIsPublishing(false)
+    }
+  }
+
+  const handleSaveDraft = async () => {
+    if (!title) return alert("Title is required to save a draft")
+    try {
+      await createFn({
+        title,
+        content,
+        slug: slug || `draft-${Date.now()}`,
+        status: 'draft',
+        category_id: categoryId,
+        excerpt,
+        featured_image: featuredImage
+      })
+      navigate({ to: '/admin/articles' })
+    } catch (e: any) {
+      alert("Error: " + e.message)
+    }
+  }
+
+  const handleSaveImagePrompt = () => {
+    setFeaturedImage(imagePrompt.url)
+    setImagePrompt({ isOpen: false, url: '' })
+  }
 
   return (
     <div className="flex-1 flex flex-col h-screen overflow-hidden bg-surface-bright">
@@ -52,15 +111,15 @@ function NewArticleEditor() {
               <span className="font-label-bold text-label-bold text-secondary">Editorial Portal</span>
             </div>
             <div className="flex items-center space-x-4">
-              <button className="px-6 py-2 border border-primary text-primary font-label-bold text-label-bold rounded hover:bg-primary hover:text-white transition-all cursor-pointer">Save Draft</button>
-              <button onClick={() => setShowModal(true)} className="px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded shadow-md hover:bg-primary-container transition-all cursor-pointer">Publish Now</button>
+              <button onClick={handleSaveDraft} className="px-6 py-2 border border-primary text-primary font-label-bold text-label-bold rounded hover:bg-primary hover:text-white transition-all cursor-pointer">Save Draft</button>
+              <button disabled={isPublishing} onClick={handlePublish} className="px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded shadow-md hover:bg-primary-container transition-all cursor-pointer">{isPublishing ? 'Publishing...' : 'Publish Now'}</button>
             </div>
           </div>
 
           {/* Left Column: Writing Area */}
           <div className="col-span-12 lg:col-span-8 bg-white border border-outline-variant p-stack-lg shadow-sm">
             {/* Headline */}
-            <textarea className="w-full font-display-lg text-display-lg border-none resize-none placeholder-outline-variant text-primary mb-stack-md focus:ring-0 leading-tight outline-none" placeholder="Enter headline..." rows={2}></textarea>
+            <textarea value={title} onChange={e => setTitle(e.target.value)} className="w-full font-display-lg text-display-lg border-none resize-none placeholder-outline-variant text-primary mb-stack-md focus:ring-0 leading-tight outline-none" placeholder="Enter headline..." rows={2}></textarea>
             
             <div className="h-px bg-outline-variant/30 w-full mb-stack-lg"></div>
             
@@ -82,9 +141,7 @@ function NewArticleEditor() {
             </div>
             
             {/* Content Area */}
-            <div className="min-h-[600px] font-body-lg text-body-lg text-on-surface-variant leading-relaxed outline-none" contentEditable={true} suppressContentEditableWarning={true}>
-              Start writing your analysis here...
-            </div>
+            <textarea value={content} onChange={e => setContent(e.target.value)} className="w-full min-h-[600px] font-body-lg text-body-lg text-on-surface-variant leading-relaxed outline-none border-none resize-y" placeholder="Start writing your analysis here..."></textarea>
           </div>
 
           {/* Right Column: Sidebar Metadata */}
@@ -95,12 +152,14 @@ function NewArticleEditor() {
               <div className="space-y-4">
                 <div>
                   <label className="block font-label-bold text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Primary Category</label>
-                  <select className="w-full border-outline-variant text-label-bold text-on-surface focus:border-primary focus:ring-0 rounded-none cursor-pointer">
-                    <option>World News</option>
-                    <option>Politics</option>
-                    <option>Economy</option>
-                    <option>Science &amp; Tech</option>
-                    <option>Culture</option>
+                  <select 
+                    value={categoryId}
+                    onChange={(e) => setCategoryId(e.target.value)}
+                    className="w-full border-outline-variant text-label-bold text-on-surface focus:border-primary focus:ring-0 rounded-none cursor-pointer"
+                  >
+                    {categories.map((cat: any) => (
+                      <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-secondary/5 border border-secondary/20 rounded">
@@ -119,15 +178,18 @@ function NewArticleEditor() {
             {/* Featured Image */}
             <section className="bg-white border border-outline-variant p-stack-md shadow-sm">
               <h3 className="font-label-bold text-label-bold text-primary mb-4 border-b border-secondary pb-1 inline-block">Featured Image</h3>
-              <div className="aspect-video w-full border-2 border-dashed border-outline-variant bg-surface-container-low flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container-high transition-colors group">
-                <div className="w-full h-full relative hidden group-[.has-image]:block">
-                  {/* Image container placeholder */}
-                </div>
-                <div className="flex flex-col items-center p-6 text-center">
-                  <span className="material-symbols-outlined text-4xl text-outline mb-2">add_photo_alternate</span>
-                  <span className="font-label-bold text-label-bold text-on-surface-variant">Click to upload hero image</span>
-                  <span className="text-xs text-outline mt-1">Recommended: 1600x900px (16:9)</span>
-                </div>
+              <div onClick={() => setImagePrompt({ isOpen: true, url: featuredImage })} className={`aspect-video w-full border-2 border-dashed border-outline-variant bg-surface-container-low flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container-high transition-colors group ${featuredImage ? 'has-image' : ''}`}>
+                {featuredImage ? (
+                  <div className="w-full h-full relative group-[.has-image]:block overflow-hidden">
+                    <img src={featuredImage} alt="Featured" className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center p-6 text-center">
+                    <span className="material-symbols-outlined text-4xl text-outline mb-2">add_photo_alternate</span>
+                    <span className="font-label-bold text-label-bold text-on-surface-variant">Click to upload hero image</span>
+                    <span className="text-xs text-outline mt-1">Recommended: 1600x900px (16:9)</span>
+                  </div>
+                )}
               </div>
               <div className="mt-4">
                 <input className="w-full text-label-sm font-label-sm border-none bg-surface-container-lowest focus:ring-1 focus:ring-primary rounded p-2 outline-none" placeholder="Image credit / caption..." type="text"/>
@@ -142,12 +204,12 @@ function NewArticleEditor() {
                   <label className="block font-label-bold text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">URL Slug</label>
                   <div className="flex border border-outline-variant focus-within:border-primary">
                     <span className="bg-surface-container px-2 py-2 text-xs text-outline border-r border-outline-variant">minbarnews.com/</span>
-                    <input className="w-full border-none text-label-sm focus:ring-0 p-2 outline-none" placeholder="article-title-here" type="text"/>
+                    <input value={slug} onChange={e => setSlug(e.target.value)} className="w-full border-none text-label-sm focus:ring-0 p-2 outline-none" placeholder="article-title-here" type="text"/>
                   </div>
                 </div>
                 <div>
                   <label className="block font-label-bold text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Meta Description</label>
-                  <textarea className="w-full border-outline-variant text-label-sm focus:border-primary focus:ring-0 rounded-none p-2 resize-none outline-none" placeholder="Brief summary for search results..." rows={3}></textarea>
+                  <textarea value={excerpt} onChange={(e) => setExcerpt(e.target.value)} className="w-full border-outline-variant text-label-sm focus:border-primary focus:ring-0 rounded-none p-2 resize-none outline-none" placeholder="Brief summary for search results..." rows={3}></textarea>
                 </div>
                 <div>
                   <label className="block font-label-bold text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Tags</label>
@@ -188,10 +250,47 @@ function NewArticleEditor() {
           <div className="bg-white p-stack-lg max-w-md w-full text-center shadow-2xl transition-transform duration-300 scale-100">
             <span className="material-symbols-outlined text-secondary text-6xl mb-4">check_circle</span>
             <h2 className="font-headline-lg text-headline-lg text-primary mb-2">Article Published</h2>
-            <p className="text-on-surface-variant font-body-md mb-stack-lg">"The shifting landscape of global trade routes" has been successfully published to Minbar News.</p>
+            <p className="text-on-surface-variant font-body-md mb-stack-lg">"{title}" has been successfully published to Minbar News.</p>
             <div className="flex space-x-4">
-              <button className="flex-grow py-3 border border-primary text-primary font-label-bold text-label-bold hover:bg-surface-container transition-colors cursor-pointer" onClick={() => setShowModal(false)}>Go to Library</button>
+              <button className="flex-grow py-3 border border-primary text-primary font-label-bold text-label-bold hover:bg-surface-container transition-colors cursor-pointer" onClick={() => { setShowModal(false); navigate({ to: '/admin/articles' }) }}>Go to Library</button>
               <button className="flex-grow py-3 bg-primary text-on-primary font-label-bold text-label-bold hover:bg-primary-container transition-colors shadow-lg cursor-pointer" onClick={() => setShowModal(false)}>View Live</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Custom Image Prompt Modal (Reused from Settings) */}
+      {imagePrompt.isOpen && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-surface w-full max-w-md border border-outline-variant rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-6 py-4 border-b border-outline-variant bg-surface-container-lowest">
+              <h3 className="font-headline-md text-headline-md text-primary">Update Featured Image</h3>
+              <p className="text-label-sm text-on-surface-variant mt-1">Paste a direct link to your media asset.</p>
+            </div>
+            <div className="p-6">
+              <label className="block font-label-bold text-label-bold text-primary mb-2">Image URL</label>
+              <input 
+                autoFocus
+                className="w-full border border-outline-variant p-3 font-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none rounded bg-surface-container-lowest" 
+                type="url" 
+                placeholder="https://example.com/image.png"
+                value={imagePrompt.url}
+                onChange={(e) => setImagePrompt({ ...imagePrompt, url: e.target.value })}
+                onKeyDown={(e) => { if (e.key === 'Enter') handleSaveImagePrompt() }}
+              />
+              {imagePrompt.url && (
+                <div className="mt-4 border border-outline-variant rounded p-2 bg-surface-container-lowest flex justify-center">
+                  <img src={imagePrompt.url} alt="Preview" className="max-h-32 object-contain" onError={(e) => (e.currentTarget.style.display = 'none')} onLoad={(e) => (e.currentTarget.style.display = 'block')} />
+                </div>
+              )}
+            </div>
+            <div className="px-6 py-4 bg-surface-container-low flex justify-end gap-3 border-t border-outline-variant">
+              <button onClick={() => setImagePrompt({ isOpen: false, url: '' })} className="px-4 py-2 text-on-surface-variant font-label-bold text-label-bold hover:bg-surface-container-high rounded transition-colors cursor-pointer">
+                Cancel
+              </button>
+              <button onClick={handleSaveImagePrompt} className="px-4 py-2 bg-primary text-on-primary font-label-bold text-label-bold hover:brightness-110 rounded transition-all cursor-pointer">
+                Apply Image
+              </button>
             </div>
           </div>
         </div>

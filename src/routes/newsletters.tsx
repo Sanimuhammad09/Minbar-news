@@ -1,12 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
+import { getArticlesByCategory } from '../server/articles'
 
 export const Route = createFileRoute('/newsletters')({
+  loader: async () => await getArticlesByCategory({ data: 'newsletters' }),
   component: NewsletterArchive,
 })
 
 function NewsletterArchive() {
   const [activeTab, setActiveTab] = useState('All Archives')
+  const articles: any = Route.useLoaderData()
 
   const tabs = [
     'All Archives',
@@ -70,117 +73,34 @@ function NewsletterArchive() {
 
         {/* Archive Grid */}
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-section-gap">
-          {/* Newsletter Card 1: Featured */}
-          <article className="flex flex-col gap-stack-md group cursor-pointer">
-            <div className="h-[1px] bg-gradient-to-r from-secondary to-transparent w-full mb-1"></div>
-            <div className="flex justify-between items-center font-label-sm text-label-sm text-outline uppercase tracking-wider">
-              <span>Daily Brief</span>
-              <span>October 24, 2024</span>
+          {articles.length === 0 ? (
+            <div className="col-span-full py-12 text-center text-on-surface-variant">
+              No newsletters found in the archive.
             </div>
-            <div className="overflow-hidden aspect-video relative">
-              <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="News 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqJtOet8amCceEAR9gcw7OrMcdnyH4rVzlH6tlww-Lf4iy1FOkOEPOpX9IhVf6rxdj5MdEe6rkjEPRme8Ybj1TZV1DejncnHoJlOYL6eI4fFgiLB78Fmjw-KjAngzkDXp115gk6t3Zfnk-j8yrrC1jV-InotLBELEX1eylh-qMta73PifjHg-gEbue_hsxnm0ekOs8h6O3VlXZ3UdZ3SLPKyCjtfi7pBTpKiVdBqwWqUuPCv4fjdU" />
-              <div className="absolute top-4 left-4 bg-secondary text-on-primary px-3 py-1 font-label-sm text-label-sm font-bold uppercase">Must Read</div>
-            </div>
-            <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">The Pivot Point: Global Markets and the Energy Transition</h2>
-            <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
-              As major economies re-evaluate their reliance on traditional fuel sources, a new geopolitical map is emerging. We explore the winners, the losers, and the hidden costs of the 2025 energy mandate.
-            </p>
-            <a className="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link cursor-pointer">
-              Read Full Brief
-              <span className="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-            </a>
-          </article>
-
-          {/* Newsletter Card 2 */}
-          <article className="flex flex-col gap-stack-md group cursor-pointer">
-            <div className="h-[1px] bg-gradient-to-r from-secondary to-transparent w-full mb-1"></div>
-            <div className="flex justify-between items-center font-label-sm text-label-sm text-outline uppercase tracking-wider">
-              <span>Weekly Digest</span>
-              <span>October 20, 2024</span>
-            </div>
-            <div className="overflow-hidden aspect-video">
-              <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="News 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtLIcLquq2Tl5s99fShXG3KxcszCfh7FZmFi_sDZoh3u6rFShFVJlMlyTqoNX9SunVw-zUAFx5bFg5e99alzqpN1Vwp1Lvm72QR1wzHf6dyrPAjirMPWr1unTx3Nir2pYXn6RLyea578V9p-wWAxK2hBvacMC7eDOXruyhNLTNJYZevgEO5P_SpEqQKZ3lRLPnygzIAuQDokhM7t0pedGLmro3NHgHP4kBr5-li1yDMTRlI2R9b7E" />
-            </div>
-            <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Weekly Digest: The Architecture of Intelligence</h2>
-            <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
-              A deep dive into how silicon valley is rethinking urban planning through the lens of artificial intelligence and community-driven data.
-            </p>
-            <a className="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link cursor-pointer">
-              Read Full Brief
-              <span className="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-            </a>
-          </article>
-
-          {/* Newsletter Card 3 */}
-          <article className="flex flex-col gap-stack-md group cursor-pointer">
-            <div className="h-[1px] bg-gradient-to-r from-secondary to-transparent w-full mb-1"></div>
-            <div className="flex justify-between items-center font-label-sm text-label-sm text-outline uppercase tracking-wider">
-              <span>Breaking Alerts</span>
-              <span>October 19, 2024</span>
-            </div>
-            <div className="overflow-hidden aspect-video">
-              <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="News 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3ssSGZzxO-X462Oe8q0p2RfQwNGB7Jt9-NLM1qZL8QqrjKYmo3PJXY7R-NplqQX6pjgYrTuWXIGiCDDqPsbaB2WgfYpeOdkrde942uaLSmk7-CF4dNhxq-t1w7SXwSxFe_CkOplpofXjuz722EQjEZCSGG30Ah9LTdOZBnm6g8RNxLOF4S9d44maN-VItmq4hgLD8Bl2nx_wqy-sXwqYrXsv-ky9PgATrZ-24XFr2PUUlE8FVccI" />
-            </div>
-            <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Alert: Global Supply Chain Disruptions Intensify</h2>
-            <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
-              Instant analysis on the port closures across three continents and the projected impact on holiday retail pricing. 
-            </p>
-            <a className="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link cursor-pointer">
-              Read Full Brief
-              <span className="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-            </a>
-          </article>
-
-          {/* Newsletter Card 4 */}
-          <article className="flex flex-col gap-stack-md group cursor-pointer">
-            <div className="h-[1px] bg-gradient-to-r from-secondary to-transparent w-full mb-1"></div>
-            <div className="flex justify-between items-center font-label-sm text-label-sm text-outline uppercase tracking-wider">
-              <span>Daily Brief</span>
-              <span>October 18, 2024</span>
-            </div>
-            <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Diplomatic Shifts in the Indo-Pacific</h2>
-            <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
-              The latest treaty signatures could redefine regional security for the next decade. Our experts weigh in on the strategic implications.
-            </p>
-            <a className="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link cursor-pointer">
-              Read Full Brief
-              <span className="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-            </a>
-          </article>
-
-          {/* Newsletter Card 5 */}
-          <article className="flex flex-col gap-stack-md group cursor-pointer">
-            <div className="h-[1px] bg-gradient-to-r from-secondary to-transparent w-full mb-1"></div>
-            <div className="flex justify-between items-center font-label-sm text-label-sm text-outline uppercase tracking-wider">
-              <span>Daily Brief</span>
-              <span>October 17, 2024</span>
-            </div>
-            <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Fintech: The Death of the Physical Card?</h2>
-            <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
-              Consumer behavior is shifting faster than the banking infrastructure. Why 2024 is the tipping point for biometric payments.
-            </p>
-            <a className="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link cursor-pointer">
-              Read Full Brief
-              <span className="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-            </a>
-          </article>
-
-          {/* Newsletter Card 6 */}
-          <article className="flex flex-col gap-stack-md group cursor-pointer">
-            <div className="h-[1px] bg-gradient-to-r from-secondary to-transparent w-full mb-1"></div>
-            <div className="flex justify-between items-center font-label-sm text-label-sm text-outline uppercase tracking-wider">
-              <span>Daily Brief</span>
-              <span>October 16, 2024</span>
-            </div>
-            <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">Climate: The Rise of Regenerative Urbanism</h2>
-            <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
-              How cities in arid regions are using centuries-old techniques combined with modern sensors to solve water scarcity.
-            </p>
-            <a className="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link cursor-pointer">
-              Read Full Brief
-              <span className="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-            </a>
-          </article>
+          ) : (
+            articles.map((article: any) => (
+              <article key={article.id} className="flex flex-col gap-stack-md group cursor-pointer">
+                <div className="h-[1px] bg-gradient-to-r from-secondary to-transparent w-full mb-1"></div>
+                <div className="flex justify-between items-center font-label-sm text-label-sm text-outline uppercase tracking-wider">
+                  <span>{article.categories?.name || 'Newsletter'}</span>
+                  <span>{new Date(article.published_at || article.created_at).toLocaleDateString()}</span>
+                </div>
+                {article.featured_image && (
+                  <div className="overflow-hidden aspect-video relative">
+                    <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={article.title} src={article.featured_image} />
+                  </div>
+                )}
+                <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors">{article.title}</h2>
+                <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                  {article.excerpt}
+                </p>
+                <Link to={`/article/${article.slug}`} className="font-label-bold text-label-bold text-secondary flex items-center gap-2 group/link cursor-pointer mt-auto">
+                  Read Full Brief
+                  <span className="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                </Link>
+              </article>
+            ))
+          )}
         </section>
 
         {/* Pagination */}

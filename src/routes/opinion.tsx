@@ -1,58 +1,67 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
+import { getArticlesByCategory } from '../server/articles'
 
 export const Route = createFileRoute('/opinion')({
+  loader: async () => await getArticlesByCategory({ data: 'opinion' }),
   component: OpinionAnalysis,
 })
 
 function OpinionAnalysis() {
+  const articles: any = Route.useLoaderData()
+  const featured = articles[0]
+  const list = articles.slice(1, 4)
+
   return (
     <div className="bg-background text-on-surface font-body-md min-h-screen selection:bg-secondary-fixed selection:text-on-secondary-fixed">
       <main className="max-w-7xl mx-auto px-grid-margin pt-stack-lg">
         
         {/* Hero Section: Featured Editorial */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-gutter border-b border-outline-variant pb-section-gap">
-          <div className="lg:col-span-8 group cursor-pointer">
-            <div className="mb-stack-md">
-              <span className="text-secondary font-label-bold text-label-bold uppercase tracking-widest border-b border-secondary pb-1">Weekly Editorial</span>
-            </div>
-            <h1 className="font-display-lg text-display-lg md:text-5xl lg:text-6xl mb-stack-md leading-tight group-hover:text-secondary transition-colors">
-              The Silent Erosion of Digital Privacy: A Manifesto for the Modern Citizen.
-            </h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg first-letter:float-left first-letter:font-headline-lg first-letter:text-[5rem] first-letter:leading-[4rem] first-letter:pt-1 first-letter:pr-2 first-letter:pl-1 first-letter:font-black first-letter:text-primary">
-              As algorithmic governance takes hold of our daily interactions, the boundaries between public service and private extraction have blurred beyond recognition. This week, we examine the systemic failures of current data protection laws and propose a radical new framework for digital sovereignty that prioritizes the individual over the platform.
-            </p>
-            <div className="flex items-center gap-stack-md">
-              <div className="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
-                <img className="w-full h-full object-cover" alt="Author" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYi0qpaS9HZdxZomwRGBXXw7LoWQQIjQ5mPiMhYcEY8m3NI8aE-KVF633oy1nISfcSzzZ12lKQOg2xLvdq40Wa-Dn7ZGsPqbvDfL_-BbPThiqaBVZnAgwqiWZsv5-GExzlpEGmb_ijIgPil88ro_ClN63cfEk9M6WiG5OOFXpGMrDsCJmXHfVSjSbgMMEQR6vX1cBVOeTAgSHAi_yzPQLwMyRFPuQPWjVZTVfbLVzvOFJXHuoc1u0" />
+        {featured ? (
+          <section className="grid grid-cols-1 lg:grid-cols-12 gap-gutter border-b border-outline-variant pb-section-gap">
+            <Link to={`/article/${featured.slug}`} className="lg:col-span-8 group cursor-pointer block">
+              <div className="mb-stack-md">
+                <span className="text-secondary font-label-bold text-label-bold uppercase tracking-widest border-b border-secondary pb-1">Weekly Editorial</span>
               </div>
-              <div>
-                <p className="font-label-bold text-label-bold">Marcus Thorne</p>
-                <p className="font-label-sm text-label-sm text-on-tertiary-container">Chief Editorialist • 12 Min Read</p>
+              <h1 className="font-display-lg text-display-lg md:text-5xl lg:text-6xl mb-stack-md leading-tight group-hover:text-secondary transition-colors">
+                {featured.title}
+              </h1>
+              <p className="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg first-letter:float-left first-letter:font-headline-lg first-letter:text-[5rem] first-letter:leading-[4rem] first-letter:pt-1 first-letter:pr-2 first-letter:pl-1 first-letter:font-black first-letter:text-primary line-clamp-4">
+                {featured.excerpt}
+              </p>
+              <div className="flex items-center gap-stack-md">
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+                  <img className="w-full h-full object-cover" alt={featured.users?.full_name} src={featured.users?.avatar_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuCYi0qpaS9HZdxZomwRGBXXw7LoWQQIjQ5mPiMhYcEY8m3NI8aE-KVF633oy1nISfcSzzZ12lKQOg2xLvdq40Wa-Dn7ZGsPqbvDfL_-BbPThiqaBVZnAgwqiWZsv5-GExzlpEGmb_ijIgPil88ro_ClN63cfEk9M6WiG5OOFXpGMrDsCJmXHfVSjSbgMMEQR6vX1cBVOeTAgSHAi_yzPQLwMyRFPuQPWjVZTVfbLVzvOFJXHuoc1u0"} />
+                </div>
+                <div>
+                  <p className="font-label-bold text-label-bold">{featured.users?.full_name}</p>
+                  <p className="font-label-sm text-label-sm text-on-tertiary-container">Chief Editorialist • {new Date(featured.published_at || featured.created_at).toLocaleDateString()}</p>
+                </div>
+              </div>
+            </Link>
+            
+            <div className="lg:col-span-4 border-l border-outline-variant pl-gutter hidden lg:block">
+              <div className="mb-stack-lg">
+                <h3 className="font-label-bold text-label-bold uppercase tracking-tighter mb-stack-md border-b-2 border-primary inline-block">Impactful Analysis</h3>
+                <div className="space-y-stack-lg">
+                  {list.map((article: any) => (
+                    <Link to={`/article/${article.slug}`} key={article.id} className="group cursor-pointer block">
+                      <h4 className="font-headline-md text-headline-md leading-snug group-hover:text-secondary transition-colors">{article.title}</h4>
+                      <p className="font-label-sm text-label-sm text-on-surface-variant mt-2">{article.users?.full_name} • Opinion</p>
+                    </Link>
+                  ))}
+                  {list.length === 0 && (
+                    <p className="text-on-surface-variant text-sm">More opinions coming soon.</p>
+                  )}
+                </div>
               </div>
             </div>
+          </section>
+        ) : (
+          <div className="py-12 text-center text-on-surface-variant">
+            No opinion articles available at the moment.
           </div>
-          
-          <div className="lg:col-span-4 border-l border-outline-variant pl-gutter hidden lg:block">
-            <div className="mb-stack-lg">
-              <h3 className="font-label-bold text-label-bold uppercase tracking-tighter mb-stack-md border-b-2 border-primary inline-block">Impactful Analysis</h3>
-              <div className="space-y-stack-lg">
-                <div className="group cursor-pointer">
-                  <h4 className="font-headline-md text-headline-md leading-snug group-hover:text-secondary transition-colors">The Geopolitics of Semiconductors: A Cold War for Silica.</h4>
-                  <p className="font-label-sm text-label-sm text-on-surface-variant mt-2">Dr. Aris Varma • Economy</p>
-                </div>
-                <div className="group cursor-pointer">
-                  <h4 className="font-headline-md text-headline-md leading-snug group-hover:text-secondary transition-colors">Why Megacities are Failing the Climate Test.</h4>
-                  <p className="font-label-sm text-label-sm text-on-surface-variant mt-2">Sarah Jenkins • Climate</p>
-                </div>
-                <div className="group cursor-pointer">
-                  <h4 className="font-headline-md text-headline-md leading-snug group-hover:text-secondary transition-colors">The Death of the Centrist: Polarisation in 2024.</h4>
-                  <p className="font-label-sm text-label-sm text-on-surface-variant mt-2">Leonid Volkov • Politics</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        )}
 
         {/* Columnists Grid Section */}
         <section className="py-section-gap">

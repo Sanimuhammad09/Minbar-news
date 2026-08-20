@@ -1,12 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
+import { getEditorialDashboardData } from '../../server/articles'
 
 export const Route = createFileRoute('/admin/editorial')({
+  loader: async () => await getEditorialDashboardData(),
   component: EditorialDashboard,
 })
 
 function EditorialDashboard() {
   const [isFocused, setIsFocused] = useState(false)
+  const stats: any = Route.useLoaderData()
+  const { drafts, recentActivity, publishedToday, totalViews } = stats
 
   return (
     <>
@@ -23,7 +27,7 @@ function EditorialDashboard() {
       </div>
 
       {/* Dashboard Body */}
-      <div className="max-w-7xl mx-auto px-grid-margin py-stack-lg space-y-stack-lg w-full">
+      <div className="w-full px-6 md:px-8 lg:px-12 py-stack-lg space-y-stack-lg">
         {/* Header Section */}
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -54,7 +58,7 @@ function EditorialDashboard() {
               <span className="font-label-bold text-label-bold text-on-surface-variant uppercase">Articles Published Today</span>
               <span className="material-symbols-outlined text-primary text-[24px]">check_circle</span>
             </div>
-            <span className="font-display-lg text-display-lg text-primary">12</span>
+            <span className="font-display-lg text-display-lg text-primary">{publishedToday}</span>
             <div className="mt-2 flex items-center text-green-600 gap-1">
               <span className="material-symbols-outlined text-sm">trending_up</span>
               <span className="font-label-sm text-label-sm">+4 vs yesterday</span>
@@ -66,8 +70,8 @@ function EditorialDashboard() {
               <span className="font-label-bold text-label-bold text-on-surface-variant uppercase">Active Drafts</span>
               <span className="material-symbols-outlined text-secondary text-[24px]">pending_actions</span>
             </div>
-            <span className="font-display-lg text-display-lg text-primary">08</span>
-            <div className="mt-2 font-label-sm text-label-sm text-on-surface-variant">4 under priority review</div>
+            <span className="font-display-lg text-display-lg text-primary">{drafts.length}</span>
+            <div className="mt-2 font-label-sm text-label-sm text-on-surface-variant">Synced from database</div>
           </div>
           
           <div className="bg-surface-container-lowest p-6 rounded-lg flex flex-col border-t-4 border-primary shadow-[0_4px_12px_rgba(12,30,61,0.04)]">
@@ -75,7 +79,7 @@ function EditorialDashboard() {
               <span className="font-label-bold text-label-bold text-on-surface-variant uppercase">Site Traffic</span>
               <span className="material-symbols-outlined text-primary text-[24px]">monitoring</span>
             </div>
-            <span className="font-display-lg text-display-lg text-primary">48.2k</span>
+            <span className="font-display-lg text-display-lg text-primary">{totalViews >= 1000 ? (totalViews / 1000).toFixed(1) + 'k' : totalViews}</span>
             <div className="mt-2 flex items-center text-on-surface-variant gap-1">
               <span className="font-label-sm text-label-sm">Concurrent users: 1.2k</span>
             </div>
@@ -104,69 +108,25 @@ function EditorialDashboard() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-outline-variant">
-                    <tr className="hover:bg-surface-container-low transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="font-headline-md text-[16px] text-primary leading-snug">The Geopolitical Shift in the Global Energy Sector</div>
-                        <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">World • Updated 2h ago</div>
-                      </td>
-                      <td className="px-6 py-4 font-body-md text-body-md whitespace-nowrap">Sarah Jenkins</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">Published</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
-                          <span className="material-symbols-outlined text-primary">more_vert</span>
-                        </button>
-                      </td>
-                    </tr>
-                    
-                    <tr className="hover:bg-surface-container-low transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="font-headline-md text-[16px] text-primary leading-snug">Impact Analysis: The New Trade Agreement</div>
-                        <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">Economy • Updated 4h ago</div>
-                      </td>
-                      <td className="px-6 py-4 font-body-md text-body-md whitespace-nowrap">Marcus Thorne</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300">Under Review</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
-                          <span className="material-symbols-outlined text-primary">more_vert</span>
-                        </button>
-                      </td>
-                    </tr>
-                    
-                    <tr className="hover:bg-surface-container-low transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="font-headline-md text-[16px] text-primary leading-snug">Rethinking Urban Infrastructure for 2050</div>
-                        <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">Analysis • Draft saved 10m ago</div>
-                      </td>
-                      <td className="px-6 py-4 font-body-md text-body-md whitespace-nowrap">Elena Rodriguez</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300">Draft</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
-                          <span className="material-symbols-outlined text-primary">more_vert</span>
-                        </button>
-                      </td>
-                    </tr>
-                    
-                    <tr className="hover:bg-surface-container-low transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="font-headline-md text-[16px] text-primary leading-snug">Cultural Perspectives: The Rise of Virtual Museums</div>
-                        <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">Opinion • Published 6h ago</div>
-                      </td>
-                      <td className="px-6 py-4 font-body-md text-body-md whitespace-nowrap">Julian Voss</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">Published</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
-                          <span className="material-symbols-outlined text-primary">more_vert</span>
-                        </button>
-                      </td>
-                    </tr>
+                    {drafts.slice(0, 5).map((article: any) => (
+                      <tr key={article.id} className="hover:bg-surface-container-low transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="font-headline-md text-[16px] text-primary leading-snug">{article.title}</div>
+                          <div className="font-label-sm text-label-sm text-on-surface-variant mt-1">{article.categories?.name || 'World'} • Updated {new Date(article.updated_at).toLocaleDateString()}</div>
+                        </td>
+                        <td className="px-6 py-4 font-body-md text-body-md whitespace-nowrap">{article.users?.full_name || 'Staff'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide ${article.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                            {article.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button className="p-1 hover:bg-surface-container-highest rounded transition-colors cursor-pointer">
+                            <span className="material-symbols-outlined text-primary">more_vert</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -196,8 +156,8 @@ function EditorialDashboard() {
                     <div className="font-label-sm text-label-sm text-on-surface-variant">Fact Check Score</div>
                   </div>
                   <div className="text-center p-3 bg-surface-container-lowest rounded border border-outline-variant">
-                    <div className="font-headline-md text-headline-md text-secondary">1.2m</div>
-                    <div className="font-label-sm text-label-sm text-on-surface-variant">Total Monthly Views</div>
+                    <div className="font-headline-md text-headline-md text-secondary">{totalViews >= 1000000 ? (totalViews / 1000000).toFixed(1) + 'm' : totalViews >= 1000 ? (totalViews / 1000).toFixed(1) + 'k' : totalViews}</div>
+                    <div className="font-label-sm text-label-sm text-on-surface-variant">Total Views</div>
                   </div>
                 </div>
               </div>
@@ -208,35 +168,23 @@ function EditorialDashboard() {
               <h4 className="font-label-bold text-label-bold text-primary uppercase mb-4">Recent Activity</h4>
               <div className="space-y-6">
                 
-                <div className="flex gap-4">
-                  <div className="h-8 w-8 bg-primary rounded-full flex-shrink-0 flex items-center justify-center">
-                    <span className="text-white text-[10px] font-bold">SJ</span>
+                {recentActivity.length > 0 ? recentActivity.map((activity: any, idx: number) => (
+                  <div key={activity.id} className="flex gap-4">
+                    <div className={`h-8 w-8 rounded-full flex-shrink-0 flex items-center justify-center ${idx === 0 ? 'bg-primary text-white' : idx === 1 ? 'bg-secondary text-white' : 'bg-surface-container-highest border border-outline-variant text-primary'}`}>
+                      <span className="text-[10px] font-bold">
+                        {activity.users?.full_name?.substring(0, 2).toUpperCase() || 'ST'}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-body-md text-body-md text-on-surface">
+                        <span className="font-bold">{activity.users?.full_name || 'Staff'}</span> {activity.status === 'published' ? 'published' : 'updated'} "{activity.title.substring(0, 20)}..."
+                      </p>
+                      <span className="font-label-sm text-label-sm text-on-surface-variant">{new Date(activity.updated_at).toLocaleString()}</span>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-body-md text-body-md text-on-surface"><span className="font-bold">Sarah J.</span> published "The Geopolitical Shift..."</p>
-                    <span className="font-label-sm text-label-sm text-on-surface-variant">2 minutes ago</span>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <div className="h-8 w-8 bg-secondary rounded-full flex-shrink-0 flex items-center justify-center">
-                    <span className="text-white text-[10px] font-bold">MT</span>
-                  </div>
-                  <div>
-                    <p className="font-body-md text-body-md text-on-surface"><span className="font-bold">Marcus T.</span> submitted a new draft for review</p>
-                    <span className="font-label-sm text-label-sm text-on-surface-variant">45 minutes ago</span>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <div className="h-8 w-8 bg-surface-container-highest rounded-full flex-shrink-0 flex items-center justify-center border border-outline-variant">
-                    <span className="text-primary text-[10px] font-bold">ER</span>
-                  </div>
-                  <div>
-                    <p className="font-body-md text-body-md text-on-surface"><span className="font-bold">Elena R.</span> updated "Rethinking Urban..."</p>
-                    <span className="font-label-sm text-label-sm text-on-surface-variant">1 hour ago</span>
-                  </div>
-                </div>
+                )) : (
+                  <p className="text-sm text-on-surface-variant">No recent activity.</p>
+                )}
                 
               </div>
             </div>
@@ -253,21 +201,9 @@ function EditorialDashboard() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="w-full mt-section-gap py-stack-lg bg-primary border-t-4 border-secondary flex flex-col items-center justify-center space-y-stack-md px-grid-margin">
-        <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="Minbar News Logo" className="h-8 w-auto object-contain rounded" />
-          <h2 className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-widest">
-            MINBAR NEWS
-          </h2>
-        </div>
-        <div className="flex flex-wrap justify-center gap-6">
-          <a className="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors cursor-pointer">Editorial Guidelines</a>
-          <a className="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors cursor-pointer">Privacy Policy</a>
-          <a className="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors cursor-pointer">Terms of Service</a>
-          <a className="font-label-sm text-label-sm text-surface-variant hover:text-on-primary transition-colors cursor-pointer">Archive</a>
-        </div>
-        <p className="font-body-md text-body-md text-on-primary opacity-60">© {new Date().getFullYear()} Minbar News. Truth. Perspective. Impact.</p>
+      {/* Admin Footer */}
+      <footer className="w-full mt-auto py-6 border-t border-outline-variant bg-surface-container-lowest flex justify-center">
+        <p className="font-label-sm text-label-sm text-on-surface-variant">© {new Date().getFullYear()} Minbar News Editorial System. Secure Portal.</p>
       </footer>
     </>
   )

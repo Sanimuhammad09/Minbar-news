@@ -1,55 +1,26 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
+import { getStaffDashboardData } from '../../server/users'
 
 export const Route = createFileRoute('/admin/staff')({
+  loader: async () => await getStaffDashboardData(),
   component: StaffManagement,
 })
 
 function StaffManagement() {
   const [searchTerm, setSearchTerm] = useState('')
+  const { staff: dbStaff, activeCount, assignmentCount, avgScore, hotTopics } = Route.useLoaderData()
 
-  const staff = [
-    {
-      name: 'Julian Thorne',
-      role: 'Senior Political Correspondent',
-      status: 'Active',
-      statusColor: 'bg-green-500',
-      statusBg: 'bg-green-100 text-green-800',
-      time: '4.2h',
-      rating: 4,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCnnqurX_44GglgqQOcYzmBLdM-H7NHsEVdvjIETcctKFBgLt896UIUlWgmS6p0M5hm8ylxPpW3Ww4GyTyRKG5IPJAozGU7aiVwdj-Zy-Vjw_IKwwcMkkoxTGlkN8DsUJ5z6NvCZdCgoMDaLGgHTslb2XqAOZB_0plQ1TLavaGxOKJaNo_Eq34s6wjowpjX4Ah4rop_2-Sv-Waxdd_zVF0MUpOobGiDXHj2FT5UUJSk9_BKJEZO_WQ',
-    },
-    {
-      name: 'Elena Rodriguez',
-      role: 'Field Reporter - Middle East',
-      status: 'On Assignment',
-      statusColor: 'bg-amber-500',
-      statusBg: 'bg-amber-100 text-amber-800',
-      time: '6.8h',
-      rating: 5,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDZTcPtd6BnRnzupkZorerYXt7q8savsYsO0WzWorKlKy_6ZYbjSlZyjlwMPrBFQ3JyCmSSRolvE9irzReRiDGa2GMaegVPbq4hHJ4PusvBCRUKngeuKd31KEY1zAHoNbIme-QYrvdrpGgWNoH4HlyymlmpSbcM4n9ebEIjRa94WcD1UVy4UXd6ZPBsqpJch4wR6CCGhfn1hp7wasJjsgXeWu30cvjIQkoDDus79VeKubo15JUSK_c',
-    },
-    {
-      name: 'Marcus Chen',
-      role: 'Data Investigative Editor',
-      status: 'Out',
-      statusColor: 'bg-red-500',
-      statusBg: 'bg-red-100 text-red-800',
-      time: '3.5h',
-      rating: 3,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAPWFmLLLDQzqnfPogmATwAPS0POl8ZFkKhh36kuxcsNE_K0psFG4DBE9iHGcZTrvuq_uDCbNTbRmeLITY7dPSop7NJb7M5AQSxODV0DiqSVs99ZJia0ZlgiURU0cC4Mf7GFIeaKZayLQDO4CJNBZvdvuP_S5Uzp5OhD8hj2k7DaDPriPKRMXZ3dVLCYQQd_72Ff9cYCAJbdhDfe8Ab6ipIcVy8xwkXh0A2WanjLoYLltma_usqeDo',
-    },
-    {
-      name: 'Sarah Jenkins',
-      role: 'Global Economy Editor',
-      status: 'Active',
-      statusColor: 'bg-green-500',
-      statusBg: 'bg-green-100 text-green-800',
-      time: '5.1h',
-      rating: 5,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDhKGsNIvcqSKQg0JrEGOzZnOqj8kmMxT6o917dhCaxkbex94nCYMWBe40LsZVPG-9XuBYOux3rHC9r6Af48zd9Zb6HAQFDGYqGwQtiIo6Tr5X9iC5QMDUnk1X0lp3DcUKAGkK_VCbpgAAiQqJwnym60bGV2QP1oEwwGG0LH20nciJKBDg5U53eyi_-qSfVrey9Emo9-qYEUirRFNCtGNjwrHmPMS_5Zl2VEiOOvkZeJ5k8FJpQvcQ',
-    }
-  ]
+  const staff = dbStaff.map((user: any) => ({
+    name: user.full_name || user.email || 'Unknown User',
+    role: user.role || 'Contributor',
+    status: 'Active',
+    statusColor: 'bg-green-500',
+    statusBg: 'bg-green-100 text-green-800',
+    time: '4.2h',
+    rating: 4,
+    image: user.avatar_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCnnqurX_44GglgqQOcYzmBLdM-H7NHsEVdvjIETcctKFBgLt896UIUlWgmS6p0M5hm8ylxPpW3Ww4GyTyRKG5IPJAozGU7aiVwdj-Zy-Vjw_IKwwcMkkoxTGlkN8DsUJ5z6NvCZdCgoMDaLGgHTslb2XqAOZB_0plQ1TLavaGxOKJaNo_Eq34s6wjowpjX4Ah4rop_2-Sv-Waxdd_zVF0MUpOobGiDXHj2FT5UUJSk9_BKJEZO_WQ',
+  }))
 
   const filteredStaff = staff.filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
@@ -84,30 +55,30 @@ function StaffManagement() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
           <div className="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
             <p className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Staff</p>
-            <h3 className="font-headline-md text-headline-md text-primary mt-1">142</h3>
-            <div className="mt-2 text-xs text-green-600 font-medium">+4 this month</div>
+            <h3 className="font-headline-md text-headline-md text-primary mt-1">{staff.length}</h3>
+            <div className="mt-2 text-xs text-green-600 font-medium">Synced from Database</div>
           </div>
           <div className="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
             <p className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Currently Active</p>
-            <h3 className="font-headline-md text-headline-md text-primary mt-1">86</h3>
+            <h3 className="font-headline-md text-headline-md text-primary mt-1">{activeCount}</h3>
             <div className="mt-2 flex items-center">
-              <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5 inline-block"></span>
+              <span className={`w-2 h-2 rounded-full ${activeCount > 0 ? 'bg-green-500' : 'bg-outline'} mr-1.5 inline-block`}></span>
               <span className="text-xs text-on-surface-variant">In Office/Remote</span>
             </div>
           </div>
           <div className="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
             <p className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">On Assignment</p>
-            <h3 className="font-headline-md text-headline-md text-primary mt-1">24</h3>
+            <h3 className="font-headline-md text-headline-md text-primary mt-1">{assignmentCount}</h3>
             <div className="mt-2 flex items-center">
-              <span className="w-2 h-2 rounded-full bg-amber-500 mr-1.5 inline-block"></span>
+              <span className={`w-2 h-2 rounded-full ${assignmentCount > 0 ? 'bg-amber-500' : 'bg-outline'} mr-1.5 inline-block`}></span>
               <span className="text-xs text-on-surface-variant">Field Reporting</span>
             </div>
           </div>
           <div className="bg-surface-container-lowest p-stack-md border border-outline-variant rounded-lg">
             <p className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Avg Content Score</p>
-            <h3 className="font-headline-md text-headline-md text-primary mt-1">8.4</h3>
+            <h3 className="font-headline-md text-headline-md text-primary mt-1">{avgScore.toFixed(1)}</h3>
             <div className="mt-2 w-full bg-surface-container-high h-1 rounded-full overflow-hidden">
-              <div className="bg-primary h-full w-[84%]"></div>
+              <div className="bg-primary h-full" style={{ width: `${(avgScore / 10) * 100}%` }}></div>
             </div>
           </div>
         </div>
@@ -168,17 +139,13 @@ function StaffManagement() {
           
           {/* Pagination */}
           <div className="px-6 py-4 bg-surface-container border-t border-outline-variant flex flex-col sm:flex-row items-center justify-between gap-4">
-            <span className="font-label-sm text-label-sm text-on-surface-variant">Showing 1 to {filteredStaff.length} of 142 entries</span>
+            <span className="font-label-sm text-label-sm text-on-surface-variant">Showing {filteredStaff.length > 0 ? 1 : 0} to {filteredStaff.length} of {staff.length} entries</span>
             <div className="flex items-center gap-1">
-              <button className="p-1 rounded hover:bg-surface-container-high transition-all cursor-pointer">
+              <button className="p-1 rounded hover:bg-surface-container-high transition-all cursor-pointer opacity-50" disabled>
                 <span className="material-symbols-outlined text-xl">chevron_left</span>
               </button>
               <button className="w-8 h-8 rounded bg-primary text-on-primary font-label-bold text-label-bold cursor-pointer">1</button>
-              <button className="w-8 h-8 rounded hover:bg-surface-container-high font-label-bold text-label-bold cursor-pointer">2</button>
-              <button className="w-8 h-8 rounded hover:bg-surface-container-high font-label-bold text-label-bold cursor-pointer">3</button>
-              <span className="px-2">...</span>
-              <button className="w-8 h-8 rounded hover:bg-surface-container-high font-label-bold text-label-bold cursor-pointer">36</button>
-              <button className="p-1 rounded hover:bg-surface-container-high transition-all cursor-pointer">
+              <button className="p-1 rounded hover:bg-surface-container-high transition-all cursor-pointer opacity-50" disabled>
                 <span className="material-symbols-outlined text-xl">chevron_right</span>
               </button>
             </div>
@@ -194,16 +161,19 @@ function StaffManagement() {
               <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>local_fire_department</span>
             </div>
             <div className="space-y-stack-sm flex-grow">
-              <div className="p-3 border-l-4 border-secondary bg-surface-container-low rounded">
-                <p className="text-xs font-bold text-secondary uppercase mb-1">Breaking</p>
-                <p className="font-label-bold text-label-bold text-on-surface mb-2">G7 Summit: Unexpected Trade Shift</p>
-                <button className="text-xs font-bold text-primary hover:underline cursor-pointer">Draft Brief →</button>
-              </div>
-              <div className="p-3 border-l-4 border-primary bg-surface-container-low rounded">
-                <p className="text-xs font-bold text-primary uppercase mb-1">Analysis</p>
-                <p className="font-label-bold text-label-bold text-on-surface mb-2">The Future of AI in Regional Markets</p>
-                <button className="text-xs font-bold text-primary hover:underline cursor-pointer">Draft Brief →</button>
-              </div>
+              {hotTopics.length > 0 ? (
+                hotTopics.map((topic: any, index: number) => (
+                  <div key={index} className={`p-3 border-l-4 ${index === 0 ? 'border-secondary' : 'border-primary'} bg-surface-container-low rounded`}>
+                    <p className={`text-xs font-bold ${index === 0 ? 'text-secondary' : 'text-primary'} uppercase mb-1`}>{topic.categories?.name || 'Uncategorized'}</p>
+                    <p className="font-label-bold text-label-bold text-on-surface mb-2 truncate">{topic.title}</p>
+                    <button className="text-xs font-bold text-primary hover:underline cursor-pointer">Draft Brief →</button>
+                  </div>
+                ))
+              ) : (
+                <div className="p-3 bg-surface-container-low rounded text-center text-on-surface-variant text-sm py-8">
+                  No pending drafts available.
+                </div>
+              )}
             </div>
           </div>
           
@@ -214,24 +184,24 @@ function StaffManagement() {
               <span className="material-symbols-outlined text-outline">map</span>
             </div>
             <div className="h-32 bg-surface-container-high rounded flex items-center justify-center relative group">
-              <img className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 transition-all duration-500" alt="Map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF46L1-Y3EmuWa21k5mrRQBA22HUrlcuJ1jiWebWC2qBvumZY9-RF_QZV-S-nmMSEUwI7jxIAFQ4W5CrFrXJF0QCqR3zDNxQLXX1QUBU3yRmLwp9f70hwhi0ljq6eIA86NU2RVsPpJfW2pWxe4YgY90nblp6bVCzLiA159g-bg_9U_muQTP7n3jv0JQrWaI7ezSwTqoRkTvECGqPIJI6W4-S4VZ9HwEjdv47ZHi0N8CazTHuD5NSM" />
+              <img className="w-full h-full object-cover opacity-50 grayscale transition-all duration-500" alt="Map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF46L1-Y3EmuWa21k5mrRQBA22HUrlcuJ1jiWebWC2qBvumZY9-RF_QZV-S-nmMSEUwI7jxIAFQ4W5CrFrXJF0QCqR3zDNxQLXX1QUBU3yRmLwp9f70hwhi0ljq6eIA86NU2RVsPpJfW2pWxe4YgY90nblp6bVCzLiA159g-bg_9U_muQTP7n3jv0JQrWaI7ezSwTqoRkTvECGqPIJI6W4-S4VZ9HwEjdv47ZHi0N8CazTHuD5NSM" />
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <p className="font-label-bold text-label-bold text-primary">12 Active Regions</p>
-                <p className="text-[10px] text-on-surface-variant">Live Dispatch View</p>
+                <p className="font-label-bold text-label-bold text-primary">0 Active Regions</p>
+                <p className="text-[10px] text-on-surface-variant">No reporters in field</p>
               </div>
             </div>
             <div className="mt-4 flex gap-4">
-              <div className="flex-1 text-center">
+              <div className="flex-1 text-center opacity-50">
                 <p className="text-[10px] text-on-surface-variant uppercase">Europe</p>
-                <p className="font-label-bold text-label-bold">8</p>
+                <p className="font-label-bold text-label-bold">0</p>
               </div>
-              <div className="flex-1 text-center border-x border-outline-variant">
+              <div className="flex-1 text-center border-x border-outline-variant opacity-50">
                 <p className="text-[10px] text-on-surface-variant uppercase">Asia</p>
-                <p className="font-label-bold text-label-bold">14</p>
+                <p className="font-label-bold text-label-bold">0</p>
               </div>
-              <div className="flex-1 text-center">
+              <div className="flex-1 text-center opacity-50">
                 <p className="text-[10px] text-on-surface-variant uppercase">NA</p>
-                <p className="font-label-bold text-label-bold">22</p>
+                <p className="font-label-bold text-label-bold">0</p>
               </div>
             </div>
           </div>

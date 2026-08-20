@@ -1,0 +1,49 @@
+{
+  "settings": {
+    "brandName": "Minbar News",
+    "primaryFont": "Source Serif 4",
+    "disclaimer": "© 2024 Minbar News Agency. All rights reserved.",
+    "seoTitle": "| Minbar News Agency",
+    "seoDescription": "Leading global news agency providing real-time analysis, breaking reports, and investigative journalism for decision-makers."
+  },
+  "media": [
+    {
+      "id": "1",
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuA1nXn1MEXAhffrjGfaGtM4Wsme6ms2Tgr1h9TlbZnjyB-PT4qASY_VPsHUu3wmriDkjnaY_WKQYL037eF6PVshwl-jJLrS3r1S84AD8N2uH26gEZ15jgxYibguj3TDHB2Po3OrmM72IG1-jic2GOoRn6aFPZ6RIelIm-gSE0W6ncYGLgIKVoQD1ePdL27CVMiyJF911TfvD3SFtbZCpnDaMBauyxs1pxD0eIMLTBsy5xaGo4ruEW4",
+      "name": "ceo-profile.jpg",
+      "type": "image/jpeg",
+      "size": "245 KB",
+      "date": "2024-03-01T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDCQR6sLQYN7mvM3EHcFMt65M2Hm2lvXLsSwtyAbfMCGA3wrZo_sdP5g6ugjXh2j3xyXRHbt9HXB_v4Pa9hO7ZuI_8yK9rgH70c2UAK0IpwsQwBsuzSelJNmpWFy_YWM30oDl3q09wtjotZWv7YinpFcPmCXDb_HTqGkLNFYlchxkGUn4NDz1eEvauDOC0R9rC9Ww2-B-5vwtC0NgPNnxC4i__S_70dLqgnNNr2CA-NcpjWeS0BMII",
+      "name": "article-header.jpg",
+      "type": "image/jpeg",
+      "size": "412 KB",
+      "date": "2024-03-05T14:30:00Z"
+    },
+    {
+      "id": "1787256819067",
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDppgLg9h6i1rm3KEfTWh5wxJkSa6qG6g_aeuN8P0W1MC21XPjsV4RorMyQsoObziDOpnhhrM9V6HtqHlr20ZOHaf34UWbp0-TB5Rkk3cWKSeWz-JryhbS2M2OqmBtr7xNMj_zjxG2FxEU-F_kWF6F_N1Msy3E7WvFuNXzOLcX9izmz8dj7hd0rHv21z05d09Yx8oJm9unPvt1LujLCaaJL9AwLGgJWUDPBHzt65pjpj0MnKDrQFfU",
+      "name": "new-upload-1787256818977.jpg",
+      "type": "image/jpeg",
+      "size": "1.2 MB",
+      "date": "2026-08-20T20:13:39.067Z"
+    }
+  ],
+  "docs": [
+    {
+      "id": "1",
+      "title": "Editorial Guidelines",
+      "content": "Always verify sources twice before publishing. No exceptions.",
+      "category": "Editorial"
+    },
+    {
+      "id": "2",
+      "title": "Content formatting",
+      "content": "Use H2 for main section headers, H3 for sub-sections. Keep paragraphs under 5 sentences.",
+      "category": "Style Guide"
+    }
+  ]
+}

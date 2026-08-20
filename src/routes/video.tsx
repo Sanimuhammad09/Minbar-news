@@ -1,7 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
+import { getArticlesByCategory } from '../server/articles'
 
 export const Route = createFileRoute('/video')({
+  loader: async () => await getArticlesByCategory({ data: 'video' }),
   component: VideoHub,
 })
 
@@ -13,6 +15,9 @@ function VideoHub() {
     { author: 'Moderator', text: 'Welcome to the Minbar News Live Portal. Please keep discussions professional.', color: 'text-secondary', italic: true },
     { author: 'Dr. Marcus Vane', text: 'Watching closely from Singapore. The carbon tax credits are the real story here.', color: 'text-primary' }
   ])
+
+  const articles: any = Route.useLoaderData()
+  const videos = articles.slice(0, 4)
 
   const handleSend = () => {
     if (chatInput.trim() !== '') {
@@ -120,81 +125,29 @@ function VideoHub() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
             
-            {/* Video Card 1 */}
-            <article className="group cursor-pointer">
-              <div className="relative aspect-video mb-3 overflow-hidden border border-outline-variant">
-                <div 
-                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" 
-                  style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAluMMJmYsf5gIyWfoME5WOQCQGyp9DOOfS-ebnZyhp87pLQGLQRPGJ2-yGGD9pb4a92lvgv8UB34leuHLii3Bj5np65qA60fXT_kjDeUzGMR3foe5SxiLkaD8h2KXs6UscRJQ7xYMdhByxSRIt9Ly8Q1-sU6VPKrqs3viJ4bt_Rq3LZLSvciFBCf80Ay96b8sPJzVDACjE1zZuMqRF65gEg4XfSWvXvFzQUPey2a3RsPTwDSRme2k')" }}
-                ></div>
-                <span className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1 font-label-bold">12:45</span>
-                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white text-[48px] material-symbols-filled">play_circle</span>
-                </div>
-              </div>
-              <div className="border-t-2 border-slate-200 pt-2">
-                <span className="font-label-bold text-label-sm text-secondary uppercase">Economy</span>
-                <h4 className="font-label-bold text-body-lg text-primary mt-1 line-clamp-2">Quarterly Analysis: Tech Sector Resiliency in Emerging Markets</h4>
-                <p className="font-label-sm text-label-sm text-on-surface-variant mt-2">2 hours ago • 45k views</p>
-              </div>
-            </article>
-            
-            {/* Video Card 2 */}
-            <article className="group cursor-pointer">
-              <div className="relative aspect-video mb-3 overflow-hidden border border-outline-variant">
-                <div 
-                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" 
-                  style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuD07kzNDb-InHEaR9Fi565gnWqMm-RAanWEzqMLV8vL00G-M4_YpwVtHTWukkkzj7JRISIRl08olldfdIEYYpdWUG8kf7I8KyOWkmR2-noPIletdRQJgyfsUBE9oDKFqYSODZ9SQ5wrU5mL2z8aZ6Oecx5ThSJ8-qzexQ2JO3JZC8fZy8tJLEoRK4FtFFNRs5v0PnhfiWmMstERmDzyPlHKGMpI_HRuERpM4nYEYK1461W24wC5PjI')" }}
-                ></div>
-                <span className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1 font-label-bold">08:20</span>
-                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white text-[48px] material-symbols-filled">play_circle</span>
-                </div>
-              </div>
-              <div className="border-t-2 border-slate-200 pt-2">
-                <span className="font-label-bold text-label-sm text-secondary uppercase">Science</span>
-                <h4 className="font-label-bold text-body-lg text-primary mt-1 line-clamp-2">Automation Frontiers: The Next Phase of Industrial Evolution</h4>
-                <p className="font-label-sm text-label-sm text-on-surface-variant mt-2">5 hours ago • 12k views</p>
-              </div>
-            </article>
-            
-            {/* Video Card 3 */}
-            <article className="group cursor-pointer">
-              <div className="relative aspect-video mb-3 overflow-hidden border border-outline-variant">
-                <div 
-                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" 
-                  style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRO_Bdf7D8oP30anOqX7knxK3VyZzotA4QSfYG1I7mNlJdyyKFjGs9KeMC1nN5xzAsZXCwyEwdKUjCMa3GdHldkXB45GRR87Op34Yp-4-B5cI0MluCQ305UBJn2dAHZvZiXGZn2OuOkIiPjKawyg_ONdK1zvXUcnWEqa3Uef7-BBEhq7rQUVuA79aBBVPNwEKEZoc_kE_1GWLK_zkEOXNxLOh545tX8O1Lv_Jhw9NFUFPgBtrPFSU')" }}
-                ></div>
-                <span className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1 font-label-bold">15:10</span>
-                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white text-[48px] material-symbols-filled">play_circle</span>
-                </div>
-              </div>
-              <div className="border-t-2 border-slate-200 pt-2">
-                <span className="font-label-bold text-label-sm text-secondary uppercase">Trade</span>
-                <h4 className="font-label-bold text-body-lg text-primary mt-1 line-clamp-2">Supply Chain Realignment: Navigating the New Maritime Corridors</h4>
-                <p className="font-label-sm text-label-sm text-on-surface-variant mt-2">Yesterday • 89k views</p>
-              </div>
-            </article>
-            
-            {/* Video Card 4 */}
-            <article className="group cursor-pointer">
-              <div className="relative aspect-video mb-3 overflow-hidden border border-outline-variant">
-                <div 
-                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" 
-                  style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDyUcyURWr5Hi26efivvlP_47f8-4ctx_1UiwMqfAqrqbI6VCSaOugm1u10gUM76ms01ycX23PNr-2AlY_baUkbqNvS6HY3zbMZ4NzqopBiDpRjfXBlf1vKgsmgRUWfFomdlfaNf9UjrkN_Sfv7zRw5lNp_K_9Toq8TaE68gNgV0ekFB-ZSfp_KtJcrNQuuk3oWiJTfHuBzng71s_MEKau3ojsd1CwCpWq9a7GvTsELgmka9ouU_J8')" }}
-                ></div>
-                <span className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1 font-label-bold">22:30</span>
-                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white text-[48px] material-symbols-filled">play_circle</span>
-                </div>
-              </div>
-              <div className="border-t-2 border-slate-200 pt-2">
-                <span className="font-label-bold text-label-sm text-secondary uppercase">Documentary</span>
-                <h4 className="font-label-bold text-body-lg text-primary mt-1 line-clamp-2">Legacy of Diplomacy: Behind the Closed Doors of History</h4>
-                <p className="font-label-sm text-label-sm text-on-surface-variant mt-2">2 days ago • 150k views</p>
-              </div>
-            </article>
+            {videos.length === 0 ? (
+              <p className="text-on-surface-variant font-body-md text-body-md py-8">No recent broadcasts available.</p>
+            ) : (
+              videos.map((video: any, i: number) => (
+                <Link to={`/article/${video.slug}`} key={video.id} className="group cursor-pointer block">
+                  <div className="relative aspect-video mb-3 overflow-hidden border border-outline-variant">
+                    <div 
+                      className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" 
+                      style={{ backgroundImage: `url('${video.featured_image || 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800'}')` }}
+                    ></div>
+                    <span className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-1 font-label-bold">12:{i}5</span>
+                    <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="material-symbols-outlined text-white text-[48px] material-symbols-filled">play_circle</span>
+                    </div>
+                  </div>
+                  <div className="border-t-2 border-slate-200 pt-2">
+                    <span className="font-label-bold text-label-sm text-secondary uppercase">Video</span>
+                    <h4 className="font-label-bold text-body-lg text-primary mt-1 line-clamp-2">{video.title}</h4>
+                    <p className="font-label-sm text-label-sm text-on-surface-variant mt-2">{new Date(video.published_at || video.created_at).toLocaleDateString()} • {video.views_count} views</p>
+                  </div>
+                </Link>
+              ))
+            )}
             
           </div>
         </section>

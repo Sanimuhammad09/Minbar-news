@@ -1,13 +1,33 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { createFileRoute, useNavigate, Link } from '@tanstack/react-router'
+import { useState, useEffect } from 'react'
+import { searchArticles } from '../server/articles'
+import { z } from 'zod'
 
 export const Route = createFileRoute('/search')({
+  validateSearch: z.object({
+    q: z.string().optional().catch(''),
+  }),
+  loaderDeps: ({ search: { q } }) => ({ q }),
+  loader: async ({ deps: { q } }) => await searchArticles({ data: q || '' }),
   component: SearchResults,
 })
 
 function SearchResults() {
-  const [searchQuery, setSearchQuery] = useState('Global recession')
+  const { q } = Route.useSearch()
+  const results: any = Route.useLoaderData()
+  const navigate = useNavigate({ from: '/search' })
+  const [searchQuery, setSearchQuery] = useState(q || '')
   const [isFocused, setIsFocused] = useState(false)
+
+  // Sync local state when URL changes
+  useEffect(() => {
+    setSearchQuery(q || '')
+  }, [q])
+
+  const handleSearchSubmit = (e?: React.FormEvent) => {
+    e?.preventDefault()
+    navigate({ search: { q: searchQuery } })
+  }
 
   return (
     <div className="bg-background text-on-background min-h-screen flex flex-col">
@@ -20,24 +40,28 @@ function SearchResults() {
           <div className="flex flex-col space-y-stack-md border-b border-outline-variant pb-stack-md">
             
             {/* Search Input for Mobile/Inline */}
-            <div className={`md:hidden flex items-center bg-surface-container border px-3 py-2 rounded-sm w-full mb-4 transition-colors ${isFocused ? 'border-secondary' : 'border-outline-variant'}`}>
-              <span className="material-symbols-outlined text-on-surface-variant text-sm mr-2">search</span>
+            <form onSubmit={handleSearchSubmit} className={`flex items-center bg-surface-container border px-3 py-2 rounded-sm w-full mb-4 transition-colors ${isFocused ? 'border-secondary' : 'border-outline-variant'}`}>
+              <span className="material-symbols-outlined text-on-surface-variant text-sm mr-2 cursor-pointer" onClick={handleSearchSubmit}>search</span>
               <input 
                 className="bg-transparent border-none focus:outline-none focus:ring-0 text-sm w-full p-0" 
-                placeholder="Search..." 
+                placeholder="Search articles..." 
                 type="text" 
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
               />
-            </div>
+            </form>
 
             <div className="flex items-baseline justify-between">
               <h1 className="font-headline-md text-headline-md text-primary">
-                Search Results for <span className="italic">"{searchQuery}"</span>
+                {q ? (
+                  <>Search Results for <span className="italic">"{q}"</span></>
+                ) : (
+                  <>Search All Articles</>
+                )}
               </h1>
-              <span className="font-label-sm text-label-sm text-on-surface-variant">2,482 results found</span>
+              <span className="font-label-sm text-label-sm text-on-surface-variant">{results.length} results found</span>
             </div>
             
             <div className="flex flex-wrap gap-stack-sm items-center">
@@ -61,83 +85,44 @@ function SearchResults() {
           {/* Results List */}
           <div className="space-y-stack-lg">
             
-            {/* Result Item 1 */}
-            <article className="flex gap-stack-md border-b border-outline-variant pb-stack-lg group cursor-pointer">
-              <div className="flex-grow space-y-2">
-                <div className="flex items-center space-x-2">
-                  <span className="font-label-bold text-label-bold text-secondary uppercase tracking-widest border-b border-secondary">Economy</span>
-                  <span className="text-on-surface-variant text-xs">•</span>
-                  <time className="font-label-sm text-label-sm text-on-surface-variant">Oct 24, 2024</time>
-                </div>
-                <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors font-serif leading-tight">
-                  The Specter of Global Recession: Why Central Banks are Raising Rates Again
-                </h2>
-                <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
-                  As inflationary pressures mount across European and North American markets, the World Bank warns of a systemic slowdown. Analysts suggest that the aggressive fiscal policies of the last decade are finally reaching a breaking point, necessitating a sharp pivot towards austerity measures.
-                </p>
-                <div className="flex items-center space-x-4 pt-2">
-                  <span className="font-label-bold text-label-bold text-primary">By Elena Rostova</span>
-                  <span className="flex items-center text-on-surface-variant text-xs">
-                    <span className="material-symbols-outlined text-sm mr-1">schedule</span> 8 min read
-                  </span>
-                </div>
+            {results.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="font-body-md text-on-surface-variant">No results found. Try a different keyword.</p>
               </div>
-              <div className="hidden sm:block flex-shrink-0 w-48 h-32 bg-surface-container overflow-hidden">
-                <img className="w-full h-full object-cover grayscale-0 group-hover:scale-105 transition-transform duration-500" alt="News 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8q6sytREBtZ5lBaVeWwpimpC81GhqydLFgWl6l11o-1nLx97Z3orZ-dqJWg7neFUW7dCbtIYLvLnYWdJ_dxSur5q_YTNBVeSn5JoarpFNJi_8Vu2bf3JhqlyNDIhEVnvNsFbQ7VXkiF5xY8xir6nJu6Gm9AVoczd5KL2unSx9okjHZx2J4ll65nGeTsDxho2oTzWe1IjlmLiM53yCwDuk5MsTTH2LpWbp57aa9WCn4qJuqSlZ1j8" />
-              </div>
-            </article>
-            
-            {/* Result Item 2 */}
-            <article className="flex gap-stack-md border-b border-outline-variant pb-stack-lg group cursor-pointer">
-              <div className="flex-grow space-y-2">
-                <div className="flex items-center space-x-2">
-                  <span className="font-label-bold text-label-bold text-secondary uppercase tracking-widest border-b border-secondary">Analysis</span>
-                  <span className="text-on-surface-variant text-xs">•</span>
-                  <time className="font-label-sm text-label-sm text-on-surface-variant">Oct 22, 2024</time>
-                </div>
-                <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors font-serif leading-tight">
-                  Supply Chain Fragility: A Hidden Driver of the Coming Economic Contraction
-                </h2>
-                <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
-                  Deep dive into how geopolitical tensions in the South China Sea are impacting semiconductor shipments, potentially triggering a localized industrial recession that could go global by Q1 2025.
-                </p>
-                <div className="flex items-center space-x-4 pt-2">
-                  <span className="font-label-bold text-label-bold text-primary">By Marcus Chen</span>
-                  <span className="flex items-center text-on-surface-variant text-xs">
-                    <span className="material-symbols-outlined text-sm mr-1">schedule</span> 12 min read
-                  </span>
-                </div>
-              </div>
-              <div className="hidden sm:block flex-shrink-0 w-48 h-32 bg-surface-container overflow-hidden">
-                <img className="w-full h-full object-cover grayscale-0 group-hover:scale-105 transition-transform duration-500" alt="News 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjmufj4zrOyuXdnRXlO9y7ZNilZe6SjPse1aVmybAGob0ZXB-mpkP3wNIMswbGNunYaQGqqRq-QAFnEQlXAN6P23Uv-LzheVXnDdTVLWlvOo7EBCfUHswhQc6IuLcv_8Cp_ng4OY59ECaydTXsaDK1Urvuhbim4HfNUFdXpRtQGJ-csDX0SJb8gAhz1Lhf0tbDtHZ7bXarBaM5QR2tX66ey0guV61hwFSoAtZsITaA6UFV-qHBcK8" />
-              </div>
-            </article>
-
-            {/* Result Item 3 (Analysis variant) */}
-            <article className="flex gap-stack-md border-b border-outline-variant pb-stack-lg group cursor-pointer">
-              <div className="flex-grow space-y-2">
-                <div className="flex items-center space-x-2">
-                  <span className="font-label-bold text-label-bold text-secondary uppercase tracking-widest border-b border-secondary">Economy</span>
-                  <span className="text-on-surface-variant text-xs">•</span>
-                  <time className="font-label-sm text-label-sm text-on-surface-variant">Oct 19, 2024</time>
-                </div>
-                <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors font-serif leading-tight">
-                  The Middle Class Squeeze: Consumer Confidence Hits Record Lows in Major Hubs
-                </h2>
-                <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
-                  From New York to Tokyo, the cost of living crisis is altering consumer behavior at a fundamental level. Retailers report a significant drop in non-essential spending as households prepare for a long, cold economic winter.
-                </p>
-                <div className="flex items-center space-x-4 pt-2">
-                  <span className="font-label-bold text-label-bold text-primary">By Sarah Jenkins</span>
-                  <span className="flex items-center text-on-surface-variant text-xs">
-                    <span className="material-symbols-outlined text-sm mr-1">schedule</span> 6 min read
-                  </span>
-                </div>
-              </div>
-              <div className="hidden sm:block flex-shrink-0 w-48 h-32 bg-surface-container overflow-hidden">
-                <img className="w-full h-full object-cover grayscale-0 group-hover:scale-105 transition-transform duration-500" alt="News 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1xHRQlHuVSWH5UGoERj1MSsx1F8XSIm0oul-MqxtErun6SqnKrsjA0igQ_jo_-1Jvbj_4G20_ZCw2LW5iDa6BDILM96gFlSi1wR3hFLoRHputudoYbum_OVl4WwddMaazuwCW4zT5jdfahymkgtnhMlvK_ZaIk2VZQBn_k6Fe4QmE6Er4hfGzIqtsqBmO-ptOvbmRx5rE_sT0muLOqXwOjOz1VDh_MUdITaVYtFT5CJHeyrSaV0g" />
-              </div>
-            </article>
+            ) : (
+              results.map((article: any) => (
+                <Link to={`/article/${article.slug}`} key={article.id} className="flex flex-col sm:flex-row gap-stack-md border-b border-outline-variant pb-stack-lg group cursor-pointer block">
+                  <div className="flex-grow space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <span className="font-label-bold text-label-bold text-secondary uppercase tracking-widest border-b border-secondary">
+                        {article.categories?.name || 'General'}
+                      </span>
+                      <span className="text-on-surface-variant text-xs">•</span>
+                      <time className="font-label-sm text-label-sm text-on-surface-variant">
+                        {new Date(article.published_at || article.created_at).toLocaleDateString()}
+                      </time>
+                    </div>
+                    <h2 className="font-headline-md text-headline-md group-hover:text-secondary transition-colors font-serif leading-tight">
+                      {article.title}
+                    </h2>
+                    <p className="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                      {article.excerpt || 'No excerpt available.'}
+                    </p>
+                    <div className="flex items-center space-x-4 pt-2">
+                      <span className="font-label-bold text-label-bold text-primary">By {article.users?.full_name || 'Staff'}</span>
+                      <span className="flex items-center text-on-surface-variant text-xs">
+                        <span className="material-symbols-outlined text-sm mr-1">visibility</span> {article.views_count} views
+                      </span>
+                    </div>
+                  </div>
+                  {article.featured_image && (
+                    <div className="hidden sm:block flex-shrink-0 w-48 h-32 bg-surface-container overflow-hidden rounded-sm">
+                      <img className="w-full h-full object-cover grayscale-0 group-hover:scale-105 transition-transform duration-500" alt={article.title} src={article.featured_image} />
+                    </div>
+                  )}
+                </Link>
+              ))
+            )}
 
             {/* Pagination */}
             <div className="flex items-center justify-center py-stack-lg space-x-4">
