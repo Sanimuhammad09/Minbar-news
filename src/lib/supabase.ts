@@ -7,4 +7,17 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('⚠️ Supabase URL or Anon Key is missing. Check your environment variables.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Provide a fallback so the app doesn't crash with 500 error on Vercel before env vars are added
+export const supabase = supabaseUrl && supabaseAnonKey
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : {
+      from: () => ({
+        select: () => ({
+          eq: () => ({ single: () => Promise.resolve({ data: null, error: { message: 'No DB config' } }) }),
+          order: () => Promise.resolve({ data: [], error: { message: 'No DB config' } })
+        }),
+        insert: () => Promise.resolve({ data: null, error: { message: 'No DB config' } }),
+        update: () => ({ eq: () => Promise.resolve({ data: null, error: { message: 'No DB config' } }) }),
+        delete: () => ({ eq: () => Promise.resolve({ data: null, error: { message: 'No DB config' } }) })
+      })
+    } as any
