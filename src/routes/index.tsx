@@ -48,11 +48,11 @@ function Home() {
           <div>
             <h3 className="font-label-bold text-label-bold uppercase text-primary border-b border-outline-variant pb-2 mb-4">Trending</h3>
             <ul className="space-y-4">
-              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#DigitalSovereignty</a></li>
-              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#ClimateDebt</a></li>
-              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Election2024</a></li>
-              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#MarketVolatility</a></li>
-              <li><a className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#GreenInfrastructure</a></li>
+              <li><Link to="/search" search={{ q: 'Global' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Global</Link></li>
+              <li><Link to="/search" search={{ q: 'Politics' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Politics</Link></li>
+              <li><Link to="/search" search={{ q: 'Economy' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Economy</Link></li>
+              <li><Link to="/search" search={{ q: 'Analysis' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Analysis</Link></li>
+              <li><Link to="/search" search={{ q: 'Tech' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Tech</Link></li>
             </ul>
           </div>
           

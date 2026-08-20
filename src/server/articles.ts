@@ -1,4 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
+import Parser from 'rss-parser'
+import * as cheerio from 'cheerio'
 import { supabase } from '../lib/supabase'
 
 export const getArticles = createServerFn({ method: 'GET' })
@@ -216,4 +218,117 @@ export const getCategories = createServerFn({ method: 'GET' })
     }
     
     return data || []
+  })
+
+export const syncAlJazeeraNews = createServerFn({ method: 'POST' })
+  .handler(async () => {
+    try {
+      const parser = new Parser()
+      const feed = await parser.parseURL('https://www.aljazeera.com/xml/rss/all.xml')
+      
+      // Fetch all available categories so we can distribute articles across them
+      const { data: categories } = await supabase
+        .from('categories')
+        .select('id, slug, name')
+        
+      const availableCategories = categories || []
+      
+      // Preferred categories to dominate the homepage
+      const homepageSlugs = ['world', 'politics', 'economy', 'opinion', 'news']
+      const targetCategories = availableCategories.filter(c => homepageSlugs.includes(c.slug))
+      
+      if (targetCategories.length === 0) {
+        throw new Error('No valid categories found in the database')
+      }
+
+      // Take the top 10 articles from the feed and fetch their HTML for images and full content
+      const newArticles = await Promise.all(feed.items.slice(0, 10).map(async (item) => {
+        let featured_image = null
+        let full_content = item.contentSnippet || ''
+        
+        // Fetch the actual article page to get the high-res og:image and full article body
+        try {
+          if (item.link) {
+            const res = await fetch(item.link)
+            const html = await res.text()
+            
+            // 1. Extract image
+            const match = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]+)"/i)
+            if (match && match[1]) {
+              featured_image = match[1]
+            }
+            
+            // 2. Extract full article content using cheerio
+            const $ = cheerio.load(html)
+            const paragraphs = $('main p, .wysiwyg--all-content p, article p').map((i, el) => {
+              const text = $(el).text().trim()
+              // Ignore empty paragraphs or short UI text
+              if (text.length > 20 && !text.includes('Sign up for our newsletters')) {
+                return `<p>${text}</p>`
+              }
+              return null
+            }).get().filter(Boolean)
+            
+            if (paragraphs.length > 0) {
+              // Get unique paragraphs to avoid duplication if multiple selectors matched the same elements
+              full_content = Array.from(new Set(paragraphs)).join('')
+            }
+          }
+        } catch (e) {
+          console.error("Failed to fetch content for:", item.link)
+        }
+        
+        // Try enclosure fallback
+        if (!featured_image && item.enclosure && item.enclosure.url) {
+          featured_image = item.enclosure.url
+        } 
+        
+        // Absolute fallback for missing images
+        if (!featured_image) {
+           featured_image = 'https://www.aljazeera.com/wp-content/uploads/2023/06/AJ-English-1685601275.jpg' 
+        }
+        
+        // Intelligently assign a category based on RSS tags, or randomly distribute
+        let assignedCategoryId = targetCategories[0].id
+        
+        if (item.categories && item.categories.length > 0) {
+          const match = targetCategories.find(c => 
+            item.categories.some((rssCat: string) => rssCat.toLowerCase().includes(c.slug))
+          )
+          if (match) {
+            assignedCategoryId = match.id
+          } else {
+            // Randomly distribute to dominate the homepage
+            assignedCategoryId = targetCategories[Math.floor(Math.random() * targetCategories.length)].id
+          }
+        } else {
+           // Randomly distribute to dominate the homepage
+           assignedCategoryId = targetCategories[Math.floor(Math.random() * targetCategories.length)].id
+        }
+        
+        return {
+          title: item.title || 'Untitled',
+          slug: item.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Date.now().toString().slice(-4) || `article-${Date.now()}`,
+          content: full_content,
+          excerpt: item.contentSnippet || '',
+          status: 'published',
+          published_at: item.isoDate || new Date().toISOString(),
+          category_id: assignedCategoryId,
+          featured_image
+        }
+      }))
+      
+      // Insert into Supabase
+      const { data, error } = await supabase
+        .from('articles')
+        .insert(newArticles)
+        .select()
+        
+      if (error) throw error
+      
+      return { ok: true, count: data.length }
+    } catch (error: any) {
+      console.error('RSS Sync error:', error)
+      throw new Error(error.message || 'Failed to sync Al Jazeera news')
+    }
   })

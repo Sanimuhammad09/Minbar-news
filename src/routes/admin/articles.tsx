@@ -1,6 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
-import { getArticleLibraryData } from '../../server/articles'
+import { useServerFn } from '@tanstack/react-start'
+import { getArticleLibraryData, syncAlJazeeraNews } from '../../server/articles'
 
 export const Route = createFileRoute('/admin/articles')({
   component: ArticleLibrary,
@@ -8,9 +9,25 @@ export const Route = createFileRoute('/admin/articles')({
 })
 
 function ArticleLibrary() {
+  const router = useRouter()
   const { articles, publishedCount, draftCount, totalViews } = Route.useLoaderData()
   const [isFocused, setIsFocused] = useState(false)
   const [filterActive, setFilterActive] = useState(false)
+  const [isSyncing, setIsSyncing] = useState(false)
+  const syncFn = useServerFn(syncAlJazeeraNews)
+
+  const handleSync = async () => {
+    setIsSyncing(true)
+    try {
+      const res = await syncFn()
+      alert(`Successfully imported ${res.count} articles from Al Jazeera!`)
+      router.invalidate() // Refresh loader data
+    } catch (e: any) {
+      alert(e.message || 'Failed to sync')
+    } finally {
+      setIsSyncing(false)
+    }
+  }
 
   return (
     <>
@@ -22,6 +39,15 @@ function ArticleLibrary() {
         </div>
         
         <div className="flex items-center gap-4">
+          <button 
+            onClick={handleSync}
+            disabled={isSyncing}
+            className="flex items-center gap-2 bg-[#f2a900] text-black px-4 py-2 hover:bg-[#d99700] transition-all font-label-bold text-label-bold uppercase cursor-pointer disabled:opacity-50"
+          >
+            <span className="material-symbols-outlined text-[18px]">sync</span>
+            {isSyncing ? 'Syncing...' : 'Fetch Al Jazeera News'}
+          </button>
+          
           <div className="relative group">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
             <input 

@@ -38,13 +38,13 @@ export default function BreakingTicker() {
         </div>
         <div className="breaking-ticker-animation font-label-bold text-label-bold uppercase flex gap-x-12 px-6 whitespace-nowrap">
           {breakingNews.map((article: any) => (
-            <Link key={article.id} to="/article/$articleId" params={{ articleId: article.slug }} className="hover:opacity-80 transition-opacity">
+            <Link key={article.id} to="/article/$articleId" params={{ articleId: article.slug }} preload="intent" className="hover:opacity-80 transition-opacity">
               {article.title}
             </Link>
           ))}
           {/* Duplicate the list for seamless CSS marquee looping */}
           {breakingNews.map((article: any) => (
-            <Link key={`dup-${article.id}`} to="/article/$articleId" params={{ articleId: article.slug }} className="hover:opacity-80 transition-opacity">
+            <Link key={`dup-${article.id}`} to="/article/$articleId" params={{ articleId: article.slug }} preload="intent" className="hover:opacity-80 transition-opacity">
               {article.title}
             </Link>
           ))}
