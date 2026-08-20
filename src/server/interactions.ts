@@ -2,7 +2,7 @@ import { createServerFn } from '@tanstack/react-start'
 import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { getUser } from './auth'
+import { getAuthSession } from './auth'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -34,7 +34,7 @@ export const getArticleInteractions = createServerFn({ method: 'GET' })
 export const checkUserSaved = createServerFn({ method: 'GET' })
   .validator((articleId: string) => articleId)
   .handler(async ({ data: articleId }) => {
-    const user = await getUser()
+    const user = await getAuthSession()
     if (!user) return false
     const db = await readDB()
     return db.saves.some((s: any) => s.articleId === articleId && s.userId === user.id)
@@ -43,7 +43,7 @@ export const checkUserSaved = createServerFn({ method: 'GET' })
 export const toggleSaveArticle = createServerFn({ method: 'POST' })
   .validator((articleId: string) => articleId)
   .handler(async ({ data: articleId }) => {
-    const user = await getUser()
+    const user = await getAuthSession()
     if (!user) throw new Error("Must be logged in to save articles")
     
     const db = await readDB()
@@ -65,7 +65,7 @@ export const toggleSaveArticle = createServerFn({ method: 'POST' })
 export const addComment = createServerFn({ method: 'POST' })
   .validator((data: { articleId: string, content: string }) => data)
   .handler(async ({ data }) => {
-    const user = await getUser()
+    const user = await getAuthSession()
     if (!user) throw new Error("Must be logged in to comment")
       
     const db = await readDB()
