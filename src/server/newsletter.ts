@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
-import { supabase } from './supabase'
+import { supabase } from '../lib/supabase'
 
 export const subscribeNewsletter = createServerFn({ method: 'POST' })
   .validator((email: string) => email)
