@@ -5,26 +5,33 @@ import { getArticleBySlug } from '../server/articles'
 import { getArticleInteractions, toggleSaveArticle, addComment, checkUserSaved } from '../server/interactions'
 
 export const Route = createFileRoute('/article/$articleId')({
-  loader: async ({ params }) => await getArticleBySlug({ data: params.articleId }),
+  loader: async ({ params }) => {
+    const article = await getArticleBySlug({ data: params.articleId })
+    const { getTrendingArticles, getArticles } = await import('../server/articles')
+    const trending = await getTrendingArticles()
+    const allArticles = await getArticles()
+    const latest = allArticles.filter((a: any) => a.id !== article?.id).slice(0, 3)
+    return { article, trending: trending.slice(0, 3), latest }
+  },
   head: ({ loaderData }) => ({
     meta: [
-      { title: loaderData ? `${loaderData.title} | Minbar News` : 'Article | Minbar News' },
-      { name: 'description', content: loaderData?.excerpt },
-      { property: 'og:title', content: loaderData?.title },
-      { property: 'og:description', content: loaderData?.excerpt },
-      { property: 'og:image', content: loaderData?.featured_image },
+      { title: loaderData?.article ? `${loaderData.article.title} | Minbar News` : 'Article | Minbar News' },
+      { name: 'description', content: loaderData?.article?.excerpt },
+      { property: 'og:title', content: loaderData?.article?.title },
+      { property: 'og:description', content: loaderData?.article?.excerpt },
+      { property: 'og:image', content: loaderData?.article?.featured_image },
       { property: 'og:type', content: 'article' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: loaderData?.title },
-      { name: 'twitter:description', content: loaderData?.excerpt },
-      { name: 'twitter:image', content: loaderData?.featured_image },
+      { name: 'twitter:description', content: loaderData?.article?.excerpt },
+      { name: 'twitter:image', content: loaderData?.article?.featured_image },
     ],
   }),
   component: ArticleView,
 })
 
 function ArticleView() {
-  const article: any = Route.useLoaderData()
+  const { article, trending, latest } = Route.useLoaderData() as any
   const [scrollProgress, setScrollProgress] = useState(0)
   const router = useRouter()
   
@@ -254,26 +261,27 @@ function ArticleView() {
           <div>
             <h3 className="font-label-bold text-label-bold uppercase text-secondary mb-stack-md flex items-center">
               <span className="w-8 h-[2px] bg-secondary mr-2"></span>
-              Latest Analysis
+              Trending Analysis
             </h3>
             <div className="space-y-stack-md">
-              <article className="group cursor-pointer">
-                <div className="aspect-video w-full overflow-hidden mb-2 bg-surface-container">
-                  <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Related 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZwSQHo0wGLfeywrBFb9v4r-BtRsWEKZDrfaBUPbKaeo7KcGcYfecCvpmZjajbdAdox_3XjCY-j5b74tAVz1swIV42SWniFwqC0uzm1cHRdzjt1VFw-FzB2G-VZ1RQhgBqya2RPY1rSwnf8Lb8MQzUbf9KIu_JKd7xD9JV6R8Pb4rpPbYL63o5ndahbY4MlTzV4dSU8Lm8-A5oie4iKP3d-vbGzTwVlyj3KgM0sAHJZIhJSFcnkPE" />
+              {trending.map((trendArticle: any, idx: number) => (
+                <div key={trendArticle.id}>
+                  <Link to="/article/$articleId" params={{ articleId: trendArticle.slug }} className="group cursor-pointer block">
+                    {idx === 0 && (
+                      <div className="aspect-video w-full overflow-hidden mb-2 bg-surface-container">
+                        {trendArticle.featured_image && (
+                          <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={trendArticle.title} src={trendArticle.featured_image} />
+                        )}
+                      </div>
+                    )}
+                    <h4 className="font-headline-md text-[18px] text-primary group-hover:text-secondary transition-colors leading-tight">{trendArticle.title}</h4>
+                    <span className="font-label-sm text-label-sm text-outline-variant mt-1 block">
+                      {Math.max(1, Math.ceil((trendArticle.content?.length || 0) / 1000))} min read
+                    </span>
+                  </Link>
+                  {idx < trending.length - 1 && <div className="h-[1px] bg-outline-variant w-full mt-stack-md"></div>}
                 </div>
-                <h4 className="font-headline-md text-[18px] text-primary group-hover:text-secondary transition-colors leading-tight">Reimagining Judicial Accountability in the Age of AI.</h4>
-                <span className="font-label-sm text-label-sm text-outline-variant mt-1 block">5 min read</span>
-              </article>
-              <div className="h-[1px] bg-outline-variant w-full"></div>
-              <article className="group cursor-pointer">
-                <h4 className="font-headline-md text-[18px] text-primary group-hover:text-secondary transition-colors leading-tight">The Green Corridor: Infrastructure as a Catalyst for Peace.</h4>
-                <span className="font-label-sm text-label-sm text-outline-variant mt-1 block">12 min read</span>
-              </article>
-              <div className="h-[1px] bg-outline-variant w-full"></div>
-              <article className="group cursor-pointer">
-                <h4 className="font-headline-md text-[18px] text-primary group-hover:text-secondary transition-colors leading-tight">Cyber-Resilience: The New Frontier of National Defense.</h4>
-                <span className="font-label-sm text-label-sm text-outline-variant mt-1 block">9 min read</span>
-              </article>
+              ))}
             </div>
           </div>
         </aside>
@@ -283,30 +291,22 @@ function ArticleView() {
       <section className="max-w-7xl mx-auto px-grid-margin py-section-gap border-t border-outline-variant">
         <h2 className="font-headline-lg text-headline-lg text-primary mb-stack-lg">Explore Further Impact</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-          <div className="flex flex-col group cursor-pointer">
-            <div className="aspect-[16/9] bg-surface-container overflow-hidden mb-4">
-              <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Grid 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtellVVaayH5p3NE-q2sAHBSqgQnWKHudQ7xf8RcNWQ7GlnJEm0l05_La_a77QzD1vh1zahBLxytGdwAsyYZooJbrDxIEB69dVUpybzM6JatY9MFhSmGzXHUssHuMcTSsqHCU8ZPfWj43EOycZqgpoIorWyTUk0lhKMOJVv6k9UrSGsv-G2xajEHPiaBDbkp9stQ4e8B2NtiFqzXHw2PcG7hEPmuVFs-68g1HBw80fXqu-yqbt0OA" />
-            </div>
-            <span className="font-label-sm text-[10px] uppercase font-bold text-secondary tracking-widest mb-2">World News</span>
-            <h3 className="font-headline-md text-headline-md text-primary mb-2 group-hover:text-secondary transition-colors">Navigating the New Silk Road: Economic Realities.</h3>
-            <p className="font-body-md text-body-md text-on-surface-variant line-clamp-2">A deep-dive into the logistical and ethical implications of trans-continental trade networks.</p>
-          </div>
-          <div className="flex flex-col group cursor-pointer">
-            <div className="aspect-[16/9] bg-surface-container overflow-hidden mb-4">
-              <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Grid 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7yytjaImX2AFkcalQw6ishl6U1PpxFBZNHBkXc-QG4eiQ7yb0mR5pJkvqUffP2rT_AkYd6I0eqwXCE7_aLc6K1SLx2rLbsaZ9ADU18fEdJAPhXIo65E5Y8f7Xkp-hvY9GPaHLnbGeDxmWEtClE0FJz02zRc6sal5xqClNNbhy_vyswxel2i-dg1k_ZUTcwZT3ewuQ1Zm09jl6og3bSHs4QzhjVIU9z2Zf0Id_DkZaE2Ej2aYqAm4" />
-            </div>
-            <span className="font-label-sm text-[10px] uppercase font-bold text-secondary tracking-widest mb-2">Analysis</span>
-            <h3 className="font-headline-md text-headline-md text-primary mb-2 group-hover:text-secondary transition-colors">The Algorithms of Choice: Predicting Human Intent.</h3>
-            <p className="font-body-md text-body-md text-on-surface-variant line-clamp-2">How predictive modeling is fundamentally altering the landscape of political discourse.</p>
-          </div>
-          <div className="flex flex-col group cursor-pointer">
-            <div className="aspect-[16/9] bg-surface-container overflow-hidden mb-4">
-              <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Grid 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzz8DeEatSPNbdFZps9GOui0_BoVgkrAnJcTwo2UrSEmbaz2VJketDL8HfPbYSUdGqyqN1Sl2EEMRsDjmW_33u-iaX_pTeBzW55_p28GaDtQNuxsQ23R5za5iony69fVNFmTImOv_11_c-wuoqvFuaJfH9rrZeL1T2_vlYiAjFh5IFb_Zm4eL4D471sx8xY5m90JWJccgT6weCoD3K6fBhVtq776EJeEzaX2HFo6_Mx0BGww0oRjs" />
-            </div>
-            <span className="font-label-sm text-[10px] uppercase font-bold text-secondary tracking-widest mb-2">Impact</span>
-            <h3 className="font-headline-md text-headline-md text-primary mb-2 group-hover:text-secondary transition-colors">Sustainable Cities: Lessons from the Vanguard.</h3>
-            <p className="font-body-md text-body-md text-on-surface-variant line-clamp-2">Exploring the urban centers that have successfully integrated nature with hyper-efficiency.</p>
-          </div>
+          {latest.map((item: any) => (
+            <Link key={item.id} to="/article/$articleId" params={{ articleId: item.slug }} className="flex flex-col group cursor-pointer">
+              <div className="aspect-[16/9] bg-surface-container overflow-hidden mb-4">
+                {item.featured_image ? (
+                  <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={item.title} src={item.featured_image} />
+                ) : (
+                  <span className="material-symbols-outlined text-outline-variant text-4xl w-full h-full flex items-center justify-center">public</span>
+                )}
+              </div>
+              <span className="font-label-sm text-[10px] uppercase font-bold text-secondary tracking-widest mb-2">
+                {item.categories?.name || 'News'}
+              </span>
+              <h3 className="font-headline-md text-headline-md text-primary mb-2 group-hover:text-secondary transition-colors">{item.title}</h3>
+              <p className="font-body-md text-body-md text-on-surface-variant line-clamp-2">{item.excerpt || item.content?.replace(/<[^>]*>?/gm, '').substring(0, 150)}</p>
+            </Link>
+          ))}
         </div>
       </section>
     </div>
