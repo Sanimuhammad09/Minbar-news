@@ -232,14 +232,6 @@ export const syncAlJazeeraNews = createServerFn({ method: 'POST' })
         .select('id, slug, name')
         
       const availableCategories = categories || []
-      
-      // Preferred categories to dominate the homepage
-      const homepageSlugs = ['world', 'politics', 'economy', 'opinion', 'news']
-      const targetCategories = availableCategories.filter(c => homepageSlugs.includes(c.slug))
-      
-      if (targetCategories.length === 0) {
-        throw new Error('No valid categories found in the database')
-      }
 
       // Take the top 10 articles from the feed and fetch their HTML for images and full content
       const newArticles = await Promise.all(feed.items.slice(0, 10).map(async (item) => {
@@ -278,6 +270,17 @@ export const syncAlJazeeraNews = createServerFn({ method: 'POST' })
           console.error("Failed to fetch content for:", item.link)
         }
         
+        // Append tags to the bottom of the content
+        if (item.categories && item.categories.length > 0) {
+          const tagsHtml = `<div class="mt-8 pt-4 border-t border-gray-200">
+            <h4 class="font-bold text-sm uppercase text-gray-500 mb-2">Tags</h4>
+            <div class="flex flex-wrap gap-2">
+              ${item.categories.map((tag: string) => `<span class="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-bold rounded-full">${tag}</span>`).join('')}
+            </div>
+          </div>`
+          full_content += tagsHtml
+        }
+        
         // Try enclosure fallback
         if (!featured_image && item.enclosure && item.enclosure.url) {
           featured_image = item.enclosure.url
@@ -288,22 +291,36 @@ export const syncAlJazeeraNews = createServerFn({ method: 'POST' })
            featured_image = 'https://www.aljazeera.com/wp-content/uploads/2023/06/AJ-English-1685601275.jpg' 
         }
         
-        // Intelligently assign a category based on RSS tags, or randomly distribute
-        let assignedCategoryId = targetCategories[0].id
-        
-        if (item.categories && item.categories.length > 0) {
-          const match = targetCategories.find(c => 
-            item.categories.some((rssCat: string) => rssCat.toLowerCase().includes(c.slug))
-          )
-          if (match) {
-            assignedCategoryId = match.id
-          } else {
-            // Randomly distribute to dominate the homepage
-            assignedCategoryId = targetCategories[Math.floor(Math.random() * targetCategories.length)].id
+        // Intelligently assign a category based on URL or tags
+        let primaryCategorySlug = 'news'
+        if (item.link) {
+          try {
+            const urlParts = new URL(item.link).pathname.split('/').filter(Boolean)
+            if (urlParts.length > 0 && !['news', 'features', 'gallery', 'program'].includes(urlParts[0])) {
+              primaryCategorySlug = urlParts[0]
+            } else if (item.categories && item.categories.length > 0) {
+              primaryCategorySlug = item.categories[0].toLowerCase().replace(/[^a-z0-9]+/g, '-')
+            }
+          } catch (e) {
+            // fallback
           }
+        }
+        
+        // Find existing category or create it
+        let assignedCategoryId = availableCategories[0]?.id
+        let existingCat = availableCategories.find(c => c.slug === primaryCategorySlug)
+        
+        if (existingCat) {
+          assignedCategoryId = existingCat.id
         } else {
-           // Randomly distribute to dominate the homepage
-           assignedCategoryId = targetCategories[Math.floor(Math.random() * targetCategories.length)].id
+          // Create missing category on the fly
+          const catName = primaryCategorySlug.charAt(0).toUpperCase() + primaryCategorySlug.slice(1).replace(/-/g, ' ')
+          const { data: newCat, error: catErr } = await supabase.from('categories').insert({ slug: primaryCategorySlug, name: catName }).select().single()
+          
+          if (!catErr && newCat) {
+             assignedCategoryId = newCat.id
+             availableCategories.push(newCat)
+          }
         }
         
         return {
