@@ -6,17 +6,25 @@ import { subscribeNewsletter } from '../server/newsletter'
 
 export const Route = createFileRoute('/')({
   component: Home,
-  loader: async () => await getArticles()
+  loader: async () => {
+    const { getArticles, getCategories } = await import('../server/articles')
+    const [articles, categories] = await Promise.all([
+      getArticles(),
+      getCategories()
+    ])
+    return { articles, categories }
+  }
 })
 
 function Home() {
-  const articles = Route.useLoaderData()
+  const { articles, categories } = Route.useLoaderData() as any
   const heroArticle = articles.length > 0 ? articles[0] : null;
   const worldArticles = articles.filter((a: any) => a.categories?.slug === 'world').slice(0, 2);
   const politicsArticles = articles.filter((a: any) => a.categories?.slug === 'politics').slice(0, 2);
   const economyArticles = articles.filter((a: any) => a.categories?.slug === 'economy').slice(0, 2);
   const opinionArticles = articles.filter((a: any) => a.categories?.slug === 'opinion').slice(0, 3);
   const latestArticles = articles.slice(0, 4);
+  const trendingCategories = categories.slice(0, 5);
   
   const [hoveredArticle, setHoveredArticle] = useState<string | null>(null)
   
@@ -48,11 +56,13 @@ function Home() {
           <div>
             <h3 className="font-label-bold text-label-bold uppercase text-primary border-b border-outline-variant pb-2 mb-4">Trending</h3>
             <ul className="space-y-4">
-              <li><Link to="/search" search={{ q: 'Global' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Global</Link></li>
-              <li><Link to="/search" search={{ q: 'Politics' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Politics</Link></li>
-              <li><Link to="/search" search={{ q: 'Economy' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Economy</Link></li>
-              <li><Link to="/search" search={{ q: 'Analysis' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Analysis</Link></li>
-              <li><Link to="/search" search={{ q: 'Tech' }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">#Tech</Link></li>
+              {trendingCategories.map((cat: any) => (
+                <li key={cat.id}>
+                  <Link to="/search" search={{ q: cat.name }} className="font-label-sm text-label-sm text-on-surface hover:text-secondary transition-colors cursor-pointer block">
+                    #{cat.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           
