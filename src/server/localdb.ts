@@ -51,13 +51,21 @@ export async function getDb(): Promise<LocalDb> {
     return JSON.parse(data)
   } catch (error: any) {
     if (error.code === 'ENOENT') {
-      await fs.writeFile(DB_PATH, JSON.stringify(defaultDb, null, 2))
+      try {
+        await fs.writeFile(DB_PATH, JSON.stringify(defaultDb, null, 2))
+      } catch (e) {
+        console.warn('Could not write db.json, returning default', e)
+      }
       return defaultDb
     }
-    throw error
+    return defaultDb
   }
 }
 
 export async function saveDb(data: LocalDb): Promise<void> {
-  await fs.writeFile(DB_PATH, JSON.stringify(data, null, 2))
+  try {
+    await fs.writeFile(DB_PATH, JSON.stringify(data, null, 2))
+  } catch (e) {
+    console.warn('Could not write to db.json (read-only filesystem)', e)
+  }
 }

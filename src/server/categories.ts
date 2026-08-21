@@ -19,8 +19,8 @@ export const getCategoryBySlug = createServerFn({ method: 'GET' })
       .from('categories')
       .select('*, articles(*, users(full_name, avatar_url))')
       .eq('slug', slug)
-      .single()
+      .limit(1)
       
     if (error) throw new Error(error.message)
-    return data
+    return data?.[0] || null
   })
